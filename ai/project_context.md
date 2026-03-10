@@ -36,13 +36,13 @@ The page includes these sections:
 
 Design direction:
 
-The site is currently being converted from a white theme to a darker premium plant-store theme.
+The site features a warm modern interior-design aesthetic.
 
 Design goals:
 
-- warm dark background
-- plant themed aesthetic
-- green accent colors
+- warm sand beige backgrounds
+- light taupe sections
+- muted tan accents
 - modern ecommerce look
 - subtle gradients
 - soft shadows

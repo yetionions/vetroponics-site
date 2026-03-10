@@ -5,11 +5,30 @@
     box-sizing: border-box;
 }
 
+/* Color Palette Variables */
+:root {
+    --bg-primary: #f4e4bc; /* soft warm sand beige */
+    --bg-secondary: #d2b48c; /* light taupe / warm clay */
+    --bg-alternate: #cd853f; /* muted tan */
+    --text-heading: #3e2723; /* dark espresso brown */
+    --text-body: #5d4037; /* soft dark brown */
+    --text-secondary: #8d6e63; /* muted brown-gray */
+    --button-primary: #d2691e; /* warm caramel */
+    --button-hover: #b8571f; /* darker caramel */
+    --button-text: #fff8dc; /* cream */
+    --nav-bg: #2f1b14; /* deep chocolate brown */
+    --nav-text: #f5f5dc; /* warm beige */
+    --card-bg: #f5f5dc; /* soft beige */
+    --shadow: rgba(101, 67, 33, 0.2); /* subtle warm shadow */
+    --border: #a0522d; /* muted brown */
+    --accent: #daa520; /* subtle gold-like warmth */
+}
+
 body {
     font-family: 'Poppins', sans-serif;
     line-height: 1.6;
-    color: #f0e6d2; /* Soft warm off-white */
-    background: linear-gradient(180deg, #2a1a0f 0%, #1a0f0a 50%, #0f0a05 100%); /* Warm bourbon gradient */
+    color: var(--text-body);
+    background: var(--bg-primary);
     min-height: 100vh;
 }
 
@@ -24,10 +43,10 @@ header {
     position: fixed;
     top: 0;
     width: 100%;
-    background: linear-gradient(135deg, #2a1a0f 0%, #1a0f0a 50%, #2a1a0f 100%);
-    border-bottom: 1px solid #3d2a1a;
+    background: var(--nav-bg);
+    border-bottom: 1px solid var(--border);
     z-index: 1000;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.8), 0 2px 10px rgba(0,0,0,0.6);
+    box-shadow: 0 4px 20px var(--shadow);
     min-height: 80px;
     padding-bottom: 20px;
 }
@@ -53,10 +72,10 @@ nav {
 .logo img {
     height: 80px;
     width: auto;
-    border: 4px solid #1a0f0a;
+    border: 4px solid var(--nav-bg);
     border-radius: 10px;
-    background: linear-gradient(135deg, #2a1a0f 0%, #1a0f0a 100%);
-    box-shadow: 0 6px 24px rgba(0,0,0,0.9), 0 3px 12px rgba(0,0,0,0.7);
+    background: var(--nav-bg);
+    box-shadow: 0 6px 24px var(--shadow);
     transition: transform 0.3s ease;
 }
 
@@ -75,13 +94,13 @@ nav {
 
 .nav-links a {
     text-decoration: none;
-    color: #f5f5f0;
+    color: var(--nav-text);
     font-weight: 500;
     transition: color 0.3s;
 }
 
 .nav-links a:hover {
-    color: #daa520; /* Amber accent */
+    color: var(--accent);
 }
 
 .hamburger {
@@ -93,7 +112,7 @@ nav {
 .hamburger span {
     width: 25px;
     height: 3px;
-    background: #f5f5f0;
+    background: var(--nav-text);
     margin: 3px 0;
     transition: 0.3s;
 }
@@ -105,7 +124,7 @@ nav {
     align-items: center;
     min-height: 85vh;
     padding: 130px 2rem 4rem;
-    background: radial-gradient(ellipse at center, #2a1a0f 0%, #1a0f0a 50%, #0f0a05 100%);
+    background: var(--bg-secondary);
     text-align: center;
     position: relative;
     margin-bottom: 4rem;
@@ -118,7 +137,7 @@ nav {
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(ellipse at center, rgba(218, 165, 32, 0.15) 0%, transparent 70%);
+    background: radial-gradient(ellipse at center, rgba(218, 165, 32, 0.1) 0%, transparent 70%);
     pointer-events: none;
 }
 
@@ -130,7 +149,7 @@ nav {
     max-width: 480px;
     height: auto;
     border-radius: 18px;
-    box-shadow: 0 18px 54px rgba(0,0,0,0.9), 0 9px 27px rgba(0,0,0,0.7), 0 0 0 3px rgba(218,165,32,0.25);
+    box-shadow: 0 18px 54px var(--shadow);
     transition: transform 0.3s ease;
 }
 
@@ -146,29 +165,29 @@ nav {
     font-size: 3rem;
     font-weight: 700;
     margin-bottom: 2rem;
-    color: #f0e6d2;
-    text-shadow: 0 4px 8px rgba(0,0,0,0.8);
+    color: var(--text-heading);
+    text-shadow: 0 4px 8px var(--shadow);
 }
 
 .hero .price {
     font-size: 3rem;
     font-weight: 700;
-    color: #daa520;
+    color: var(--accent);
     margin-bottom: 2rem;
-    text-shadow: 0 3px 6px rgba(0,0,0,0.6);
+    text-shadow: 0 3px 6px var(--shadow);
 }
 
 .hero p {
     font-size: 1.2rem;
     margin-bottom: 2.5rem;
-    color: #d0d0d0;
+    color: var(--text-body);
 }
 
 label[for="product-selector"] {
     display: block;
     font-weight: 600;
     margin-bottom: 0.5rem;
-    color: #f5f5f0;
+    color: var(--text-heading);
 }
 
 #product-selector {
@@ -176,24 +195,24 @@ label[for="product-selector"] {
     max-width: 420px;
     padding: 1.2rem;
     font-size: 1.1rem;
-    border: 1px solid #4a3a2a;
+    border: 1px solid var(--border);
     border-radius: 12px;
-    background: linear-gradient(135deg, #2a1a0f 0%, #1f1f1f 100%);
-    color: #f0e6d2;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05);
+    background: var(--card-bg);
+    color: var(--text-body);
+    box-shadow: 0 4px 16px var(--shadow);
     margin-bottom: 2rem;
     transition: border-color 0.3s;
 }
 
 #product-selector:focus {
     outline: none;
-    border-color: #daa520;
-    box-shadow: 0 4px 16px rgba(218,165,32,0.3), inset 0 1px 0 rgba(255,255,255,0.05);
+    border-color: var(--accent);
+    box-shadow: 0 4px 16px rgba(218,165,32,0.3);
 }
 
 .add-to-cart {
-    background: linear-gradient(135deg, #daa520 0%, #b8860b 100%);
-    color: #1a0f0a;
+    background: var(--button-primary);
+    color: var(--button-text);
     border: none;
     padding: 1.8rem 4rem;
     font-size: 1.4rem;
@@ -201,7 +220,7 @@ label[for="product-selector"] {
     border-radius: 18px;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 10px 36px rgba(218, 165, 32, 0.5), 0 5px 18px rgba(218, 165, 32, 0.3);
+    box-shadow: 0 10px 36px rgba(210, 105, 30, 0.3);
     position: relative;
     overflow: hidden;
 }
@@ -218,8 +237,8 @@ label[for="product-selector"] {
 }
 
 .add-to-cart:hover {
-    background: linear-gradient(135deg, #f4c430 0%, #daa520 100%);
-    box-shadow: 0 18px 54px rgba(218, 165, 32, 0.7), 0 9px 27px rgba(218, 165, 32, 0.4), 0 0 0 3px rgba(218,165,32,0.3);
+    background: var(--button-hover);
+    box-shadow: 0 18px 54px rgba(210, 105, 30, 0.4);
     transform: translateY(-5px);
 }
 
@@ -230,10 +249,10 @@ label[for="product-selector"] {
 /* Gallery Section */
 .gallery {
     padding: 6rem 0;
-    background: linear-gradient(to bottom, #2a1a0f 0%, #1a0f0a 50%, #0f0a05 100%);
+    background: var(--bg-alternate);
     margin: 4rem 0;
     border-radius: 24px;
-    box-shadow: 0 18px 54px rgba(0,0,0,0.7), 0 9px 27px rgba(0,0,0,0.5);
+    box-shadow: 0 18px 54px var(--shadow);
     position: relative;
     overflow: hidden;
 }
@@ -253,8 +272,8 @@ label[for="product-selector"] {
     text-align: center;
     font-size: 2.4rem;
     margin-bottom: 3rem;
-    color: #f0e6d2;
-    text-shadow: 0 4px 8px rgba(0,0,0,0.8);
+    color: var(--text-heading);
+    text-shadow: 0 4px 8px var(--shadow);
     position: relative;
     z-index: 1;
 }
@@ -273,7 +292,7 @@ label[for="product-selector"] {
     position: relative;
     overflow: hidden;
     border-radius: 18px;
-    box-shadow: 0 18px 54px rgba(0,0,0,0.9), 0 9px 27px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.1);
+    box-shadow: 0 18px 54px var(--shadow);
     flex: 1;
     max-width: 580px;
 }
@@ -304,18 +323,18 @@ label[for="product-selector"] {
     cursor: pointer;
     transition: all 0.3s ease;
     border: 4px solid transparent;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.7), 0 5px 15px rgba(0,0,0,0.5);
+    box-shadow: 0 10px 30px var(--shadow);
     position: relative;
 }
 
 .thumbnails img:hover {
     transform: translateY(-5px) scale(1.1);
-    box-shadow: 0 18px 54px rgba(0,0,0,0.9), 0 9px 27px rgba(0,0,0,0.7), 0 0 0 5px rgba(218,165,32,0.6);
+    box-shadow: 0 18px 54px var(--shadow);
 }
 
 .thumbnails img.active {
-    border-color: #daa520;
-    box-shadow: 0 14px 42px rgba(218, 165, 32, 0.7), 0 7px 21px rgba(218, 165, 32, 0.4), 0 0 0 5px rgba(218,165,32,0.8);
+    border-color: var(--accent);
+    box-shadow: 0 14px 42px rgba(218, 165, 32, 0.4);
 }
 
 /* Modal for gallery */
@@ -327,7 +346,7 @@ label[for="product-selector"] {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.95);
+    background-color: rgba(62, 39, 35, 0.95); /* dark espresso with opacity */
 }
 
 .modal-content {
@@ -341,7 +360,7 @@ label[for="product-selector"] {
     position: absolute;
     top: 15px;
     right: 35px;
-    color: #f1f1f1;
+    color: var(--button-text);
     font-size: 40px;
     font-weight: bold;
     cursor: pointer;
@@ -350,10 +369,10 @@ label[for="product-selector"] {
 /* Section Styles */
 section {
     padding: 6rem 0;
-    background: linear-gradient(135deg, #2a1a0f 0%, #1f1f1f 50%, #2a1a0f 100%);
+    background: var(--bg-secondary);
     border-radius: 24px;
     margin: 4rem 0;
-    box-shadow: 0 18px 54px rgba(0,0,0,0.8), 0 9px 27px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.08);
+    box-shadow: 0 18px 54px var(--shadow);
     position: relative;
     overflow: hidden;
 }
@@ -373,8 +392,8 @@ section h2 {
     text-align: center;
     font-size: 2.4rem;
     margin-bottom: 3rem;
-    color: #f0e6d2;
-    text-shadow: 0 4px 8px rgba(0,0,0,0.8);
+    color: var(--text-heading);
+    text-shadow: 0 4px 8px var(--shadow);
     position: relative;
     z-index: 1;
 }
@@ -383,7 +402,7 @@ section p {
     margin-bottom: 1.2rem;
     font-size: 1.1rem;
     line-height: 1.8;
-    color: #d0d0d0;
+    color: var(--text-body);
 }
 
 section ul {
@@ -394,17 +413,17 @@ section ul {
 section li {
     margin-bottom: 0.7rem;
     font-size: 1.1rem;
-    color: #d0d0d0;
+    color: var(--text-body);
 }
 
 section i {
-    color: #daa520;
+    color: var(--accent);
     margin-right: 0.5rem;
 }
 
 /* Why Need Section */
 .why-need {
-    background: linear-gradient(135deg, #2a2a2a 0%, #1f1f1f 100%);
+    background: var(--bg-alternate);
 }
 
 /* Features Section */
@@ -423,7 +442,7 @@ section i {
 
 /* How Works Section */
 .how-works {
-    background: linear-gradient(135deg, #2a2a2a 0%, #1f1f1f 100%);
+    background: var(--bg-alternate);
 }
 
 .steps {
@@ -436,10 +455,10 @@ section i {
     text-align: center;
     max-width: 320px;
     margin: 1.5rem;
-    background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+    background: var(--card-bg);
     padding: 2.5rem;
     border-radius: 15px;
-    box-shadow: 0 12px 36px rgba(0,0,0,0.7), 0 6px 18px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+    box-shadow: 0 12px 36px var(--shadow);
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
@@ -447,7 +466,7 @@ section i {
 
 .step:hover {
     transform: translateY(-6px);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 10px 30px rgba(0,0,0,0.6), 0 0 0 3px rgba(218,165,32,0.4);
+    box-shadow: 0 20px 60px var(--shadow);
 }
 
 .step::before {
@@ -469,8 +488,8 @@ section i {
 .step-number {
     width: 70px;
     height: 70px;
-    background: linear-gradient(135deg, #daa520 0%, #b8860b 100%);
-    color: #1a0f0a;
+    background: var(--button-primary);
+    color: var(--button-text);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -478,45 +497,45 @@ section i {
     font-size: 1.8rem;
     font-weight: 700;
     margin: 0 auto 2rem;
-    box-shadow: 0 6px 18px rgba(218,165,32,0.5);
+    box-shadow: 0 6px 18px rgba(210, 105, 30, 0.3);
 }
 
 .step h3 {
     font-size: 1.3rem;
     margin-bottom: 0.7rem;
-    color: #f5f5f0;
+    color: var(--text-heading);
 }
 
 /* About Section */
 .about {
-    background: linear-gradient(135deg, #2a2a2a 0%, #1f1f1f 100%);
+    background: var(--bg-alternate);
 }
 
 /* Shipping Section */
 .shipping {
-    background: linear-gradient(135deg, #2a2a2a 0%, #1f1f1f 100%);
+    background: var(--bg-alternate);
 }
 
 .shipping p {
     text-align: center;
     font-size: 1.2rem;
-    color: #d0d0d0;
+    color: var(--text-body);
 }
 
 /* FAQ Section */
 .faq {
-    background: linear-gradient(135deg, #2a2a2a 0%, #1f1f1f 100%);
+    background: var(--bg-alternate);
 }
 
 .faq-item {
     max-width: 900px;
     margin: 0 auto 2.5rem;
-    border-bottom: 1px solid #666;
+    border-bottom: 1px solid var(--border);
     padding-bottom: 1.5rem;
-    background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+    background: var(--card-bg);
     padding: 2.5rem;
     border-radius: 15px;
-    box-shadow: 0 12px 36px rgba(0,0,0,0.7), 0 6px 18px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+    box-shadow: 0 12px 36px var(--shadow);
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
@@ -524,23 +543,23 @@ section i {
 
 .faq-item:hover {
     transform: translateY(-4px);
-    box-shadow: 0 16px 48px rgba(0,0,0,0.8), 0 8px 24px rgba(0,0,0,0.6), 0 0 0 3px rgba(218,165,32,0.3);
+    box-shadow: 0 16px 48px var(--shadow);
 }
 
 .faq-item h3 {
     font-size: 1.3rem;
     margin-bottom: 0.7rem;
-    color: #f5f5f0;
+    color: var(--text-heading);
 }
 
 /* Final CTA Section */
 .final-cta {
-    background: linear-gradient(135deg, #3d2a1a 0%, #2a1a0f 50%, #3d2a1a 100%);
-    color: white;
+    background: var(--bg-primary);
+    color: var(--text-body);
     text-align: center;
     border-radius: 24px;
     margin: 4rem 0;
-    box-shadow: 0 22px 66px rgba(61, 42, 26, 0.5), 0 11px 33px rgba(61, 42, 26, 0.3), inset 0 1px 0 rgba(255,255,255,0.1);
+    box-shadow: 0 22px 66px var(--shadow);
     position: relative;
     overflow: hidden;
     padding: 6rem 0;
@@ -553,45 +572,45 @@ section i {
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(ellipse at center, rgba(218, 165, 32, 0.2) 0%, transparent 70%);
+    background: radial-gradient(ellipse at center, rgba(218, 165, 32, 0.1) 0%, transparent 70%);
     pointer-events: none;
     border-radius: 24px;
 }
 
 .final-cta h2 {
-    color: #f0e6d2;
+    color: var(--text-heading);
     font-size: 2.8rem;
 }
 
 .final-cta p {
-    color: #d0d0d0;
+    color: var(--text-body);
     font-size: 1.3rem;
 }
 
 .final-cta .price {
-    color: #daa520;
+    color: var(--accent);
     font-size: 2.4rem;
     margin: 2rem 0;
 }
 
 .final-cta .add-to-cart {
-    background: linear-gradient(135deg, #daa520 0%, #b8860b 100%);
+    background: var(--button-primary);
     margin-top: 2rem;
-    box-shadow: 0 8px 24px rgba(218, 165, 32, 0.5);
+    box-shadow: 0 8px 24px rgba(210, 105, 30, 0.3);
 }
 
 .final-cta .add-to-cart:hover {
-    box-shadow: 0 10px 30px rgba(107, 142, 35, 0.6);
+    box-shadow: 0 10px 30px rgba(210, 105, 30, 0.4);
     transform: translateY(-3px);
 }
 
 /* Footer */
 footer {
-    background: linear-gradient(to top, #0f0a05 0%, #1a0f0a 50%, #2a1a0f 100%);
-    color: #f0e6d2;
+    background: var(--nav-bg);
+    color: var(--nav-text);
     padding: 4rem 0 2rem;
-    border-top: 1px solid #3d2a1a;
-    box-shadow: inset 0 10px 36px rgba(0,0,0,0.6);
+    border-top: 1px solid var(--border);
+    box-shadow: inset 0 10px 36px var(--shadow);
 }
 
 .footer-content {

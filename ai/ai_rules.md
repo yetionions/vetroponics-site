@@ -50,12 +50,12 @@ Do not reorganize the project structure unless specifically instructed.
 
 DESIGN RULES
 
-The design direction is a modern plant-themed ecommerce style.
+The design direction is a warm modern interior-design aesthetic.
 
 Visual goals:
 
-dark warm backgrounds  
-plant-green accent colors  
+warm sand beige backgrounds  
+light taupe and muted tan sections  
 soft shadows  
 subtle gradients  
 rounded UI elements  

@@ -149,9 +149,9 @@ style.textContent = `
         top: 100%;
         left: 0;
         width: 100%;
-        background: #1a1a1a;
+        background: var(--nav-bg);
         padding: 1rem 0;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 2px 10px var(--shadow);
     }
 
     .nav-links.active li {
@@ -171,8 +171,8 @@ style.textContent = `
     }
 
     header.scrolled {
-        background: linear-gradient(to bottom, rgba(26, 26, 26, 0.95) 0%, rgba(15, 15, 15, 0.95) 100%);
-        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.6), 0 3px 12px rgba(0, 0, 0, 0.4);
+        background: var(--nav-bg);
+        box-shadow: 0 6px 24px var(--shadow);
     }
 `;
 document.head.appendChild(style);

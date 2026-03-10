@@ -87,12 +87,12 @@ Footer
 
 # CURRENT DESIGN DIRECTION
 
-The website is transitioning from a **light theme** to a **modern dark plant-themed ecommerce design**.
+The website features a **warm modern interior-design aesthetic**.
 
 Design Goals
 
-Warm dark background colors  
-Plant-inspired green accent colors  
+Warm sand beige and taupe background colors  
+Subtle gold-like accent colors  
 Soft shadows and depth  
 Subtle gradient lighting  
 Rounded UI elements and cards  
@@ -106,7 +106,8 @@ Clean and modern ecommerce styling
 
 - Updated "Add to Cart" button to redirect to Etsy listing instead of showing alert popup.  
 - Added product-specific Etsy URLs: trellis variants redirect to trellis listing, caps redirect to caps listing.
-- Fixed Trellis – 2 Pack to use its own Etsy listing URL.  
+- Fixed Trellis – 2 Pack to use its own Etsy listing URL.
+- Redesigned entire color palette to warm modern interior-design aesthetic with CSS variables.  
 
 
 ---

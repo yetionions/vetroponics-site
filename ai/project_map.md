@@ -73,12 +73,13 @@ Uses cap_product_image images.
 
 DESIGN GOALS
 
-The site is transitioning to a darker plant-store aesthetic.
+The site features a warm modern interior-design aesthetic.
 
 Theme direction:
 
-- dark warm background
-- plant green accent colors
+- warm sand beige backgrounds
+- light taupe sections
+- muted tan accents
 - modern ecommerce feel
 - soft shadows
 - subtle gradient lighting
