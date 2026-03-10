@@ -149,7 +149,7 @@ style.textContent = `
         top: 100%;
         left: 0;
         width: 100%;
-        background: var(--nav-bg);
+        background: var(--bg-nav);
         padding: 1rem 0;
         box-shadow: 0 2px 10px var(--shadow);
     }
@@ -171,8 +171,8 @@ style.textContent = `
     }
 
     header.scrolled {
-        background: var(--nav-bg);
-        box-shadow: 0 6px 24px var(--shadow);
+        background: var(--bg-nav);
+        box-shadow: 0 4px 16px var(--shadow);
     }
 `;
 document.head.appendChild(style);

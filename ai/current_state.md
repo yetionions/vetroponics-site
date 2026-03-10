@@ -87,17 +87,15 @@ Footer
 
 # CURRENT DESIGN DIRECTION
 
-The website features a **warm modern interior-design aesthetic**.
+The website features a **bright, clean, modern product landing page aesthetic**.
 
 Design Goals
 
-Warm sand beige and taupe background colors  
-Subtle gold-like accent colors  
-Soft shadows and depth  
-Subtle gradient lighting  
-Rounded UI elements and cards  
-Premium product presentation  
-Clean and modern ecommerce styling
+Soft off-white and light neutral background colors  
+Deep forest green and warm gold accent colors  
+High contrast and excellent readability  
+Minimal, elegant, product-focused design  
+Premium feel with strong typography hierarchy
 
 
 ---
@@ -107,7 +105,8 @@ Clean and modern ecommerce styling
 - Updated "Add to Cart" button to redirect to Etsy listing instead of showing alert popup.  
 - Added product-specific Etsy URLs: trellis variants redirect to trellis listing, caps redirect to caps listing.
 - Fixed Trellis – 2 Pack to use its own Etsy listing URL.
-- Redesigned entire color palette to warm modern interior-design aesthetic with CSS variables.  
+- Redesigned entire color palette to warm modern interior-design aesthetic with CSS variables.
+- Redesigned color system and typography for ultra-premium modern product landing page with high contrast and readability.  
 
 
 ---

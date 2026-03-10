@@ -1,26 +1,26 @@
-Brand color: warm sand beige
-Accent color: subtle gold-like warmth
-Style: modern luxury interior design
+Brand color: deep forest green
+Accent color: warm gold
+Style: premium modern ecommerce
 Focus: product conversion
 
 
 DESIGN RULES
 
 Theme style:
-warm modern interior-design aesthetic
+bright, clean, modern product landing page
 
 Color direction:
 
-background: soft warm sand beige, light taupe, muted tan
-accent: subtle gold-like warmth, warm caramel
-text: dark espresso brown, soft dark brown, muted brown-gray
-cards: soft beige, warm shadows, thin muted brown borders
+background: soft off-white, very light neutral, pure white
+accent: deep forest green, warm gold
+text: near-black, neutral gray, light gray
+cards: pure white, subtle shadows, light borders
 
 UI rules:
 
+high contrast and excellent readability
+minimal, elegant, product-focused
 rounded corners
 soft shadows
-subtle amber gradient lighting
-boutique plant shop product cards
-hover animations
-cozy premium feel
+premium feel
+strong typography hierarchy
