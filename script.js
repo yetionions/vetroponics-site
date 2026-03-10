@@ -46,21 +46,24 @@ const products = {
         price: '$29.99',
         description: 'Single decorative trellis panel designed for the Gardyn Home hydroponic system.',
         mainImage: 'trellis_product_image1.jpg',
-        galleryImages: ['image11.jpg', 'image22.jpg', 'image33.jpg', 'image44.jpg', 'image55.jpg', 'image66.jpg', 'image77.jpg']
+        galleryImages: ['image11.jpg', 'image22.jpg', 'image33.jpg', 'image44.jpg', 'image55.jpg', 'image66.jpg', 'image77.jpg'],
+        etsyUrl: 'https://www.etsy.com/listing/4397538500/trellis-for-gardyn-home-hydroponic'
     },
     '2pack': {
         name: 'Trellis – 2 Pack',
         price: '$49.99',
         description: 'Two trellis panels for supporting larger plants.',
         mainImage: 'trellis_product_image1.jpg',
-        galleryImages: ['image11.jpg', 'image22.jpg', 'image33.jpg', 'image44.jpg', 'image55.jpg', 'image66.jpg', 'image77.jpg']
+        galleryImages: ['image11.jpg', 'image22.jpg', 'image33.jpg', 'image44.jpg', 'image55.jpg', 'image66.jpg', 'image77.jpg'],
+        etsyUrl: 'https://www.etsy.com/listing/4397538500/trellis-for-gardyn-home-hydroponic'
     },
     caps: {
         name: 'Gardyn Compatible Caps – 5 Pack',
         price: '$18.49',
         description: 'Decorative 3D printed Gardyn compatible caps with epoxy leaf design.',
         mainImage: 'cap_product_image2.jpg',
-        galleryImages: ['cap_product_image2.jpg', 'cap_product_image3.jpg', 'cap_product_image4.jpg', 'cap_product_image5.jpg', 'cap_product_image6.jpg', 'cap_product_image7.jpg']
+        galleryImages: ['cap_product_image2.jpg', 'cap_product_image3.jpg', 'cap_product_image4.jpg', 'cap_product_image5.jpg', 'cap_product_image6.jpg', 'cap_product_image7.jpg'],
+        etsyUrl: 'https://www.etsy.com/listing/4419864362/3d-printed-gardyn-compatible-cap-hand?ls=r&ref=items-pagination-3&frs=1&crt=1&sts=1&content_source=58b3d5a1a84a8767ef141753b3173f4f%253ALTedb37031e5b743ca85bd1a09549ae415ed317e3a&logging_key=58b3d5a1a84a8767ef141753b3173f4f%3ALTedb37031e5b743ca85bd1a09549ae415ed317e3a'
     }
 };
 
@@ -121,7 +124,8 @@ document.querySelectorAll('.add-to-cart').forEach(button => {
     button.addEventListener('click', () => {
         const selected = document.getElementById('product-selector').value;
         const product = products[selected];
-        alert(`Added ${product.name} to cart! This would redirect to checkout in a real ecommerce site.`);
+        // Open Etsy listing in a new tab
+        window.open(product.etsyUrl, '_blank');
     });
 });
 
