@@ -75,7 +75,7 @@ productSelector.addEventListener('change', function() {
     
     // Update hero content
     document.querySelector('.hero h1').textContent = product.name;
-    document.querySelector('.hero .price').textContent = product.price;
+    document.querySelector('.hero .price').innerHTML = '<img src="tiny_plant_icon.png" alt="" class="price-icon"> <span class="price-text">' + product.price + '</span> <img src="tiny_plant_icon.png" alt="" class="price-icon">';
     document.querySelector('.hero p').textContent = product.description;
     document.querySelector('.hero-image img').src = 'images/' + product.mainImage;
     

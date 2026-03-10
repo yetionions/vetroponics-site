@@ -7,22 +7,22 @@
 
 /* Color Palette Variables */
 :root {
-    --bg-primary: #F7F7F5; /* soft off-white */
-    --bg-secondary: #EFEFEA; /* very light neutral */
-    --bg-card: #FFFFFF; /* pure white */
-    --bg-nav: #2A2A2A; /* deep charcoal */
-    --text-primary: #1A1A1A; /* near-black */
-    --text-secondary: #555555; /* neutral gray */
-    --text-muted: #777777; /* light gray */
-    --accent-primary: #1E5A44; /* deep forest green */
-    --accent-secondary: #C49A3A; /* warm gold */
-    --button-primary: #1E5A44; /* deep forest green */
-    --button-primary-hover: #256B52; /* brighter green */
+    --bg-primary: #a1ae9c; /* dark charcoal */
+    --bg-secondary: #96b3a5; /* deep charcoal */
+    --bg-card: #9db6aa; /* dark gray */
+    --bg-nav: #0F0F0F; /* very dark charcoal */
+    --text-primary: #082810; /* white */
+    --text-secondary: #060505; /* light gray */
+    --text-muted: #999999; /* muted gray */
+    --accent-primary: #3a4b04; /* muted green */
+    --accent-secondary: #66BB6A; /* light muted green */
+    --button-primary: #133414; /* muted green */
+    --button-primary-hover: #66BB6A; /* brighter green */
     --button-secondary: #FFFFFF; /* white */
-    --button-secondary-border: #1E5A44; /* green border */
+    --button-secondary-border: #4CAF50; /* green border */
     --button-text: #FFFFFF; /* white */
-    --shadow: rgba(0, 0, 0, 0.1); /* subtle shadow */
-    --border: #E0E0E0; /* light border */
+    --shadow: rgba(0, 0, 0, 0.3); /* stronger shadow */
+    --border: #555555; /* dark border */
 }
 
 body {
@@ -171,11 +171,23 @@ nav {
 }
 
 .hero .price {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 3rem;
+}
+
+.price-text {
     font-size: 3.5rem;
     font-weight: 700;
     color: var(--accent-primary);
-    margin-bottom: 3rem;
     text-shadow: 0 2px 4px var(--shadow);
+}
+
+.price-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 8px;
 }
 
 .hero p {

@@ -219,3 +219,7 @@ Updated website styling to warm bourbon / amber indoor plant shop aesthetic with
 Updated How It Works section card hover effects to use warm amber/golden glow instead of green, matching the bourbon-inspired color palette.
 
 Removed remaining green accent colors and replaced with warm amber/bourbon tones across footer links, Add to Cart button glow, and FAQ card hover effects for consistent indoor plant shop aesthetic.
+
+- Added decorative plant icon next to the main product price in the hero section, which persists when switching product variants.
+
+- Expanded plant icon feature to display icons on both sides of the price (icon $29.99 icon) and doubled the icon size for enhanced visual framing.
