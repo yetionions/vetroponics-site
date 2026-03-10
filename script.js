@@ -55,7 +55,7 @@ const products = {
         description: 'Two trellis panels for supporting larger plants.',
         mainImage: 'trellis_product_image1.jpg',
         galleryImages: ['image11.jpg', 'image22.jpg', 'image33.jpg', 'image44.jpg', 'image55.jpg', 'image66.jpg', 'image77.jpg'],
-        etsyUrl: 'https://www.etsy.com/listing/4397538500/trellis-for-gardyn-home-hydroponic'
+        etsyUrl: 'https://www.etsy.com/listing/4406810128/trellis-2-pack-for-gardyn-home'
     },
     caps: {
         name: 'Gardyn Compatible Caps – 5 Pack',

@@ -105,7 +105,8 @@ Clean and modern ecommerce styling
 # RECENT CHANGES
 
 - Updated "Add to Cart" button to redirect to Etsy listing instead of showing alert popup.  
-- Added product-specific Etsy URLs: trellis variants redirect to trellis listing, caps redirect to caps listing.  
+- Added product-specific Etsy URLs: trellis variants redirect to trellis listing, caps redirect to caps listing.
+- Fixed Trellis – 2 Pack to use its own Etsy listing URL.  
 
 
 ---
