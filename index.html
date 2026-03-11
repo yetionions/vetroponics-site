@@ -25,6 +25,7 @@
                 <li><a href="#shipping">Shipping</a></li>
                 <li><a href="#faq">FAQ</a></li>
             </ul>
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle light/dark theme">☀ Light</button>
             <div class="hamburger">
                 <span></span>
                 <span></span>
@@ -35,11 +36,11 @@
 
     <section id="hero" class="hero">
         <div class="container hero-image">
-            <img src="images/trellis_product_image1.jpg" alt="Trellis Kit for Gardyn Home">
+            <img src="images/trellis_product_image_with_vines.png" alt="Trellis Kit for Gardyn Home">
         </div>
         <div class="hero-content">
             <h1>Trellis Kit for Gardyn Home Hydroponic System</h1>
-            <div class="price"><img src="tiny_plant_icon.png" alt="" class="price-icon"> <span class="price-text">$29.99</span> <img src="tiny_plant_icon.png" alt="" class="price-icon"></div>
+            <div class="price" style="visibility:hidden"><img src="tiny_plant_icon.png" alt="" class="price-icon"> <span class="price-text"></span> <img src="tiny_plant_icon.png" alt="" class="price-icon"></div>
             <p>Give your Gardyn Home system the support it deserves. This custom trellis kit is designed and 3D-printed by VetROponics Systems, a veteran-owned small business passionate about helping growers succeed.</p>
             <select id="product-selector">
                 <option value="" disabled selected>Choose Product Option</option>
@@ -47,6 +48,37 @@
                 <option value="2pack">Trellis – 2 Pack - $49.99</option>
                 <option value="caps">Gardyn Compatible Caps – 5 Pack - $18.49</option>
             </select>
+
+            <div id="color-selector" style="display:none;">
+                <h3 class="color-selector-title">Leaf Colors</h3>
+                <div class="color-options">
+                    <div class="color-option">
+                        <img class="color-circle" src="images/cap_color_image_copper.png" alt="Copper" data-color="Copper" title="Copper">
+                        <span class="color-label">Copper</span>
+                    </div>
+                    <div class="color-option">
+                        <img class="color-circle" src="images/cap_color_image_azure_blue.png" alt="Azure Blue" data-color="Azure Blue" title="Azure Blue">
+                        <span class="color-label">Azure Blue</span>
+                    </div>
+                    <div class="color-option">
+                        <img class="color-circle" src="images/cap_color_image_scarlet_red.png" alt="Scarlet Red" data-color="Scarlet Red" title="Scarlet Red">
+                        <span class="color-label">Scarlet Red</span>
+                    </div>
+                    <div class="color-option">
+                        <img class="color-circle" src="images/cap_color_image_light_green.png" alt="Light Green" data-color="Light Green" title="Light Green">
+                        <span class="color-label">Light Green</span>
+                    </div>
+                    <div class="color-option">
+                        <img class="color-circle" src="images/cap_color_image_silver_ash.png" alt="Silver Ash" data-color="Silver Ash" title="Silver Ash">
+                        <span class="color-label">Silver Ash</span>
+                    </div>
+                    <div class="color-option">
+                        <img class="color-circle" src="images/cap_color_image_custom.png" alt="Custom" data-color="Custom" title="Custom color combination">
+                        <span class="color-label">Custom</span>
+                    </div>
+                </div>
+            </div>
+
             <button class="add-to-cart">Buy Now</button>
         </div>
     </section>
@@ -114,7 +146,7 @@
     <section id="included" class="included">
         <div class="container">
             <h2>What's Included</h2>
-            <ul>
+            <ul id="included-list">
                 <li><i class="fas fa-cubes"></i> 12 trellis panels</li>
                 <li><i class="fas fa-link"></i> Top clips</li>
                 <li><i class="fas fa-paperclip"></i> Panel clips</li>
@@ -224,6 +256,13 @@
 
     <!-- Decorative Animation Layer (for floating leaves, vines, etc.) -->
     <div id="animation-layer"></div>
+
+    <!-- Promo Popup -->
+    <div id="promo-popup" class="promo-popup" role="dialog" aria-label="Promotional offer">
+        <button class="promo-popup__close" id="promo-popup-close" aria-label="Close promotion">&times;</button>
+        <p class="promo-popup__body">Use code <strong>AMERICA</strong> for <strong>10% off</strong> your order.</p>
+        <p class="promo-popup__sub">Thanks for supporting small creators.</p>
+    </div>
 
     <script src="script.js"></script>
 </body>

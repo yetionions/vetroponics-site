@@ -12,6 +12,20 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
+// Theme toggle
+const themeToggleBtn = document.getElementById('theme-toggle');
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme === 'light') {
+    document.body.classList.add('light-theme');
+    themeToggleBtn.textContent = '🌙 Dark';
+}
+themeToggleBtn.addEventListener('click', () => {
+    const isLight = document.body.classList.toggle('light-theme');
+    themeToggleBtn.textContent = isLight ? '🌙 Dark' : '☀ Light';
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+});
+
+
 // Mobile menu toggle
 const hamburger = document.querySelector('.hamburger');
 const navLinks = document.querySelector('.nav-links');
@@ -45,27 +59,75 @@ const products = {
         name: 'Trellis – Single',
         price: '$29.99',
         description: 'Single decorative trellis panel designed for the Gardyn Home hydroponic system.',
-        mainImage: 'trellis_product_image1.jpg',
+        mainImage: 'singleset_trellis_product_image.png',
         galleryImages: ['image11.jpg', 'image22.jpg', 'image33.jpg', 'image44.jpg', 'image55.jpg', 'image66.jpg', 'image77.jpg'],
-        etsyUrl: 'https://www.etsy.com/listing/4397538500/trellis-for-gardyn-home-hydroponic'
+        etsyUrl: 'https://www.etsy.com/listing/4397538500/trellis-for-gardyn-home-hydroponic',
+        hasColorSelector: false,
+        includedItems: [
+            { icon: 'fas fa-cubes',       text: '12 trellis panels' },
+            { icon: 'fas fa-link',        text: 'Top clips x1' },
+            { icon: 'fas fa-paperclip',   text: 'Panel clips x1' },
+            { icon: 'fas fa-bracket-curly', text: 'Bottom brackets x1' },
+            { icon: 'fas fa-hand-paper',  text: 'Hook and loop mounting sections' }
+        ]
     },
     '2pack': {
         name: 'Trellis – 2 Pack',
         price: '$49.99',
         description: 'Two trellis panels for supporting larger plants.',
-        mainImage: 'trellis_product_image1.jpg',
+        mainImage: 'setof_two_trellis_product_image.png',
         galleryImages: ['image11.jpg', 'image22.jpg', 'image33.jpg', 'image44.jpg', 'image55.jpg', 'image66.jpg', 'image77.jpg'],
-        etsyUrl: 'https://www.etsy.com/listing/4406810128/trellis-2-pack-for-gardyn-home'
+        etsyUrl: 'https://www.etsy.com/listing/4406810128/trellis-2-pack-for-gardyn-home',
+        hasColorSelector: false,
+        includedItems: [
+            { icon: 'fas fa-cubes',       text: '24 trellis panels' },
+            { icon: 'fas fa-link',        text: 'Top clips x2' },
+            { icon: 'fas fa-paperclip',   text: 'Panel clips x2' },
+            { icon: 'fas fa-bracket-curly', text: 'Bottom brackets x2' },
+            { icon: 'fas fa-hand-paper',  text: 'Hook and loop mounting sections' }
+        ]
     },
     caps: {
         name: 'Gardyn Compatible Caps – 5 Pack',
         price: '$18.49',
         description: 'Decorative 3D printed Gardyn compatible caps with epoxy leaf design.',
-        mainImage: 'cap_product_image2.jpg',
+        mainImage: 'cap_product_main_image.png',
         galleryImages: ['cap_product_image2.jpg', 'cap_product_image3.jpg', 'cap_product_image4.jpg', 'cap_product_image5.jpg', 'cap_product_image6.jpg', 'cap_product_image7.jpg'],
-        etsyUrl: 'https://www.etsy.com/listing/4419864362/3d-printed-gardyn-compatible-cap-hand?ls=r&ref=items-pagination-3&frs=1&crt=1&sts=1&content_source=58b3d5a1a84a8767ef141753b3173f4f%253ALTedb37031e5b743ca85bd1a09549ae415ed317e3a&logging_key=58b3d5a1a84a8767ef141753b3173f4f%3ALTedb37031e5b743ca85bd1a09549ae415ed317e3a'
+        etsyUrl: 'https://www.etsy.com/listing/4419864362/3d-printed-gardyn-compatible-cap-hand?ls=r&ref=items-pagination-3&frs=1&crt=1&sts=1&content_source=58b3d5a1a84a8767ef141753b3173f4f%253ALTedb37031e5b743ca85bd1a09549ae415ed317e3a&logging_key=58b3d5a1a84a8767ef141753b3173f4f%3ALTedb37031e5b743ca85bd1a09549ae415ed317e3a',
+        hasColorSelector: true,
+        includedItems: [
+            { icon: 'fas fa-star',        text: '5 decorative Gardyn compatible caps' },
+            { icon: 'fas fa-palette',     text: 'Custom epoxy leaf colors' },
+            { icon: 'fas fa-utensils',    text: 'Food-safe durable material' }
+        ]
     }
 };
+
+// Default mixed gallery shown before any product is selected
+const defaultGalleryImages = [
+    'image11.jpg', 'image22.jpg', 'image33.jpg', 'image44.jpg',
+    'image55.jpg', 'image66.jpg', 'image77.jpg',
+    'cap_product_image2.jpg', 'cap_product_image3.jpg', 'cap_product_image4.jpg',
+    'cap_product_image5.jpg', 'cap_product_image6.jpg', 'cap_product_image7.jpg'
+];
+
+function loadGallery(images, altPrefix) {
+    document.getElementById('main-image').src = 'images/' + images[0];
+    const thumbnailRow = document.querySelector('.thumbnail-row');
+    thumbnailRow.innerHTML = '';
+    images.forEach((imgFile, index) => {
+        const img = document.createElement('img');
+        img.src = 'images/' + imgFile;
+        img.alt = altPrefix + ' Image ' + (index + 1);
+        if (index === 0) img.classList.add('active');
+        img.addEventListener('click', function() { changeImage(this.src, this); });
+        thumbnailRow.appendChild(img);
+    });
+    document.getElementById('gallery').style.display = 'block';
+}
+
+// Show default gallery on page load
+loadGallery(defaultGalleryImages, 'Product');
 
 // Product selector functionality
 const productSelector = document.getElementById('product-selector');
@@ -74,28 +136,42 @@ productSelector.addEventListener('change', function() {
     const product = products[selected];
     
     // Update hero content
-    document.querySelector('.hero h1').textContent = product.name;
-    document.querySelector('.hero .price').innerHTML = '<img src="tiny_plant_icon.png" alt="" class="price-icon"> <span class="price-text">' + product.price + '</span> <img src="tiny_plant_icon.png" alt="" class="price-icon">';
-    document.querySelector('.hero p').textContent = product.description;
-    document.querySelector('.hero-image img').src = 'images/' + product.mainImage;
-    
-    // Update gallery
-    document.getElementById('main-image').src = 'images/' + product.galleryImages[0];
-    const thumbnails = document.querySelectorAll('.thumbnails img');
-    thumbnails.forEach((img, index) => {
-        if (index < product.galleryImages.length) {
-            img.src = 'images/' + product.galleryImages[index];
-            img.style.display = 'block';
-        } else {
-            img.style.display = 'none';
+    const priceEl = document.querySelector('.hero .price');
+    const gallerySection = document.getElementById('gallery');
+    if (product) {
+        document.querySelector('.hero h1').textContent = product.name;
+        document.querySelector('.hero p').textContent = product.description;
+        document.querySelector('.hero-image img').src = 'images/' + product.mainImage;
+        document.querySelector('.hero .price-text').textContent = product.price;
+        priceEl.style.visibility = 'visible';
+
+        // Update gallery
+        loadGallery(product.galleryImages, product.name);
+
+        // Update What's Included
+        const includedList = document.getElementById('included-list');
+        if (includedList) {
+            includedList.innerHTML = product.includedItems.map(
+                item => `<li><i class="${item.icon}"></i> ${item.text}</li>`
+            ).join('');
         }
-    });
-    
-    // Reset active thumbnail to first
-    thumbnails.forEach(img => img.classList.remove('active'));
-    if (thumbnails.length > 0) {
-        thumbnails[0].classList.add('active');
+
+        // Show/hide color selector
+        document.getElementById('color-selector').style.display =
+            product.hasColorSelector ? 'block' : 'none';
+    } else {
+        priceEl.style.visibility = 'hidden';
+        loadGallery(defaultGalleryImages, 'Product');
+        document.getElementById('color-selector').style.display = 'none';
     }
+});
+
+// Color thumbnail selection (single-select)
+document.querySelectorAll('.color-circle').forEach(img => {
+    img.addEventListener('click', function() {
+        document.querySelectorAll('.color-circle').forEach(el => el.classList.remove('selected'));
+        this.classList.add('selected');
+    });
 });
 
 // Modal functionality for image zoom
@@ -130,6 +206,22 @@ document.querySelectorAll('.add-to-cart').forEach(button => {
 });
 
 // Header background on scroll
+const promoPopup = document.getElementById('promo-popup');
+const promoClose = document.getElementById('promo-popup-close');
+const PROMO_KEY = 'promo_dismissed';
+let promoShown = false;
+
+function showPromo() {
+    if (promoShown || sessionStorage.getItem(PROMO_KEY)) return;
+    promoShown = true;
+    promoPopup.classList.add('promo-popup--visible');
+}
+
+promoClose.addEventListener('click', () => {
+    promoPopup.classList.remove('promo-popup--visible');
+    sessionStorage.setItem(PROMO_KEY, '1');
+});
+
 window.addEventListener('scroll', () => {
     const header = document.querySelector('header');
     if (window.scrollY > 100) {
@@ -137,6 +229,10 @@ window.addEventListener('scroll', () => {
     } else {
         header.classList.remove('scrolled');
     }
+
+    // Show promo after 35% scroll
+    const scrolled = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+    if (scrolled >= 0.35) showPromo();
 });
 
 // Add CSS for animations and mobile menu
