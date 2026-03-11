@@ -1,4 +1,8 @@
-# RECENT CHANGES (2026-03-10)
+# RECENT CHANGES (2026-03-11)
+- Switched site to full dark theme: `--bg-primary`, `--bg-secondary`, `--bg-card`, `--bg-nav` changed from light khaki/white to dark forest-green tones (`#111d16`, `#162219`, `#1a2820`). `--text-primary` and `--text-secondary` updated to light values (`#dce8dd`, `#8aaa8e`). `--border` changed from light beige to subtle dark green (`#2a3e2d`). All hardcoded dark text colors inside the footer, cards, and global links updated to use CSS variables so they remain readable on the dark background. Hamburger icon and modal close button colors corrected. Footer divider line and background blend into the dark theme. No HTML or layout changes were made.
+- Footer background changed from dark `#2B2B2B` gradient to `var(--bg-primary)` (soft khaki at the time, now dark forest with the dark-theme switch). Footer horizontal divider updated to use `var(--bg-card)` so it blends nearly invisibly.
+
+# PREVIOUS CHANGES (2026-03-10)
 - Removed bottom price display from CTA section; Buy Now button remains centered and functional.
 - Changed all product button text from 'Add to Cart' to 'Buy Now'.
 - Site structure and product selection logic were rebuilt from scratch for reliability and maintainability. All core files (HTML, CSS, JS) were rewritten to ensure clean, modern, and robust product selection and price updating.
