@@ -223,3 +223,21 @@ Removed remaining green accent colors and replaced with warm amber/bourbon tones
 - Added decorative plant icon next to the main product price in the hero section, which persists when switching product variants.
 
 - Expanded plant icon feature to display icons on both sides of the price (icon $29.99 icon) and doubled the icon size for enhanced visual framing.
+
+---
+
+# RECENT CHANGES
+
+- Updated site design to a lighter, bourbon-inspired warm dark theme for a premium indoor plant shop aesthetic.
+- Replaced charcoal/black tones with warm wood and amber palette.
+- Updated style.css for new color variables, gradients, soft shadows, and amber glow hover effects.
+- Added 'section' class to main sections in index.html for consistent styling.
+- Updated design_rules.md to reflect new theme and palette.
+
+---
+
+# RECENT CHANGES
+
+- Rebuilt site as a clean modern ecommerce landing page for VetROponics Systems.
+- index.html and style.css fully redesigned with new structure, color palette, and responsive layout.
+- Brand aesthetic now reflects premium indoor gardening, warm natural materials, hydroponic tech, and cozy modern greenhouse style.
