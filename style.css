@@ -24,7 +24,7 @@
     --button-primary: #4F6F52;
     --button-primary-hover: #3F5D42;
     --button-text: #e8f8ea;
-    --shadow: 0 10px 30px rgba(0,0,0,0.08);
+    --shadow: rgba(0,0,0,0.30);
     --glow-shadow: 0 0 80px rgba(127,183,126,0.15) inset;
     --border: #2e4a35;
 }
@@ -43,7 +43,9 @@ body::before {
     position: fixed;
     inset: 0;
     pointer-events: none;
-    box-shadow: var(--glow-shadow);
+    background:
+        linear-gradient(to bottom, rgba(114,184,118,0.09) 0%, transparent 22%),
+        linear-gradient(to top,   rgba(114,184,118,0.07) 0%, transparent 18%);
     z-index: 0;
 }
 body::after {
@@ -62,7 +64,7 @@ body::after {
     padding: 40px;
     background: var(--bg-card);
     border-radius: 16px;
-    box-shadow: var(--shadow);
+    box-shadow: 0 10px 30px var(--shadow);
     margin-bottom: 24px;
 }
 
@@ -174,10 +176,11 @@ nav {
     align-items: center;
     min-height: 90vh;
     padding: 140px 2rem 6rem;
-    background: var(--bg-secondary);
+    background: radial-gradient(ellipse at 50% 0%, rgba(114,184,118,0.10) 0%, var(--bg-secondary) 58%);
     text-align: center;
     position: relative;
     margin-bottom: 6rem;
+    border-bottom: 1px solid var(--border);
 }
 
 .hero::before {
@@ -316,6 +319,8 @@ label[for="product-selector"] {
     background: var(--bg-primary);
     margin: 6rem 0;
     border-radius: 24px;
+    border: 1px solid var(--border);
+    border-top: 1px solid rgba(114,184,118,0.14);
     box-shadow: 0 8px 32px var(--shadow);
     position: relative;
     overflow: hidden;
@@ -410,7 +415,9 @@ label[for="product-selector"] {
   flex-direction: column;
   align-items: center;
   border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  border: 1px solid var(--border);
+  border-top: 1px solid rgba(114,184,118,0.14);
+  box-shadow: 0 10px 30px var(--shadow);
   background: var(--bg-card);
   padding: 32px 16px;
   max-width: 700px;
@@ -492,6 +499,8 @@ section {
     border-radius: 24px;
     margin: 6rem 0;
     box-shadow: 0 8px 32px var(--shadow);
+    border: 1px solid var(--border);
+    border-top: 1px solid rgba(114,184,118,0.13);
     position: relative;
     overflow: hidden;
 }
@@ -576,6 +585,8 @@ section i {
     background: var(--bg-card);
     padding: 3rem;
     border-radius: 20px;
+    border: 1px solid var(--border);
+    border-top: 1px solid rgba(114,184,118,0.13);
     box-shadow: 0 8px 32px var(--shadow);
     transition: all 0.3s ease;
     position: relative;
@@ -654,6 +665,8 @@ section i {
     background: var(--bg-card);
     padding: 3rem;
     border-radius: 20px;
+    border: 1px solid var(--border);
+    border-top: 1px solid rgba(114,184,118,0.13);
     box-shadow: 0 8px 32px var(--shadow);
     transition: all 0.3s ease;
     position: relative;
@@ -679,6 +692,8 @@ section i {
     text-align: center;
     border-radius: 24px;
     margin: 6rem 0;
+    border: 1px solid rgba(114,184,118,0.10);
+    border-top: 1px solid rgba(114,184,118,0.18);
     box-shadow: 0 12px 40px var(--shadow);
     position: relative;
     overflow: hidden;
@@ -1049,9 +1064,10 @@ a:hover {
     border-radius: 10px;
     border: 3px solid transparent;
     cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
     box-shadow: 0 2px 8px rgba(0,0,0,0.35);
     display: block;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .color-circle:hover {
@@ -1061,8 +1077,13 @@ a:hover {
 
 .color-circle.selected {
     border-color: var(--accent-primary);
-    box-shadow: 0 0 0 3px rgba(114, 184, 118, 0.35), 0 4px 16px rgba(0,0,0,0.4);
-    transform: scale(1.06);
+    box-shadow: 0 0 0 4px rgba(114, 184, 118, 0.55), 0 6px 20px rgba(0,0,0,0.45);
+    transform: scale(1.12);
+    outline: none;
+}
+
+.color-circle.selected:hover {
+    transform: scale(1.12);
 }
 
 /* Light theme overrides for popup */
@@ -1131,7 +1152,7 @@ body.light-theme {
     --text-secondary: #3a5c42;
     --border: #b8d8be;
     --glow-shadow: 0 0 80px rgba(60,140,80,0.08) inset;
-    --shadow: 0 10px 30px rgba(0,0,0,0.06);
+    --shadow: rgba(0,0,0,0.07);
 }
 
 body.light-theme {
@@ -1140,7 +1161,9 @@ body.light-theme {
 }
 
 body.light-theme::before {
-    box-shadow: var(--glow-shadow);
+    background:
+        linear-gradient(to bottom, rgba(60,140,80,0.07) 0%, transparent 20%),
+        linear-gradient(to top,   rgba(60,140,80,0.05) 0%, transparent 18%);
 }
 
 body.light-theme header {
@@ -1183,7 +1206,7 @@ body.light-theme .container {
 }
 
 body.light-theme .hero {
-    background: var(--bg-secondary);
+    background: radial-gradient(ellipse at 50% 0%, rgba(60,140,80,0.08) 0%, var(--bg-secondary) 58%);
 }
 
 body.light-theme .hero h1 {
