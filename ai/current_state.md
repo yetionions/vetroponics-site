@@ -1,4 +1,20 @@
-# CURRENT PROJECT STATE
+# RECENT CHANGES (2026-03-10)
+- Removed bottom price display from CTA section; Buy Now button remains centered and functional.
+- Changed all product button text from 'Add to Cart' to 'Buy Now'.
+- Site structure and product selection logic were rebuilt from scratch for reliability and maintainability. All core files (HTML, CSS, JS) were rewritten to ensure clean, modern, and robust product selection and price updating.
+- Fixed price updating: hero and sticky prices now update dynamically with dropdown selection.
+- Hero product title updates based on dropdown selection.
+- Fixed tiny_plant_icon.png path for correct image loading.
+- Updated color palette to lighter, organic tones (khaki, sage green, warm beige, soft cream).
+- Added subtle linen/paper texture overlay to site background using CSS.
+- Improved hero section polish: increased spacing, card-style background, cleaner price row alignment.
+- Enhanced gallery cards: consistent border radius, subtle shadow, hover lift animation.
+- Upgraded product gallery to modern ecommerce layout: main image above horizontal thumbnail row, tighter section padding, responsive scrollable thumbnails, improved gallery styling and interaction.
+- Fixed plant icon image path in price and sticky buy bar (now loads from root).
+- Product dropdown now updates hero price, sticky bar price, and hero title dynamically.
+- Header is now sticky and collapses to a hamburger menu on scroll/mobile; hamburger toggles nav links.
+- Reduced vertical spacing sitewide: section padding, card margin, gallery max-height, footer margin, and mobile spacing for a cleaner, tighter layout.
+- Further reduced vertical spacing: section padding, card margin, gallery max-height, and footer margin for an even tighter, cleaner layout.
 
 ## Project Overview
 This project is a single-product ecommerce landing page for **VetROponics Systems**.
@@ -241,3 +257,14 @@ Removed remaining green accent colors and replaced with warm amber/bourbon tones
 - Rebuilt site as a clean modern ecommerce landing page for VetROponics Systems.
 - index.html and style.css fully redesigned with new structure, color palette, and responsive layout.
 - Brand aesthetic now reflects premium indoor gardening, warm natural materials, hydroponic tech, and cozy modern greenhouse style.
+
+---
+
+# RECENT CHANGES
+
+- Enhanced landing page for premium hydroponics ecommerce style.
+- Buy Now button replaces Add to Cart and redirects to Etsy based on dropdown.
+- Price element uses plant icons for visual effect.
+- Responsive hero and gallery layouts for mobile/tablet/desktop.
+- Improved Buy Now button and dropdown styling.
+- Added sticky buy bar for mobile devices.

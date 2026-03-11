@@ -34,7 +34,7 @@ function changeImage(src, thumbnail) {
     const mainImage = document.getElementById('main-image');
     mainImage.src = src;
     // Remove active class from all thumbnails
-    document.querySelectorAll('.thumbnails img').forEach(img => img.classList.remove('active'));
+    document.querySelectorAll('.thumbnail-row img').forEach(img => img.classList.remove('active'));
     // Add active class to clicked thumbnail
     thumbnail.classList.add('active');
 }

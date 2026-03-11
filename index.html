@@ -3,156 +3,227 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VetROponics Systems - Trellis Kit for Gardyn</title>
+    <title>VetROponics Systems</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <!-- Navigation Bar -->
     <header>
-        <nav class="navbar">
+        <nav>
             <div class="logo">
                 <img src="images/product_logo_image.jpg" alt="VetROponics Systems">
             </div>
             <ul class="nav-links">
                 <li><a href="#hero">Home</a></li>
                 <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#features">Features</a></li>
                 <li><a href="#why-need">Why You Need</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#included">Included</a></li>
+                <li><a href="#how-works">How It Works</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#shipping">Shipping</a></li>
                 <li><a href="#faq">FAQ</a></li>
             </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </nav>
     </header>
 
-    <!-- Hero Section -->
-    <section id="hero" class="hero-section">
+    <section id="hero" class="hero">
+        <div class="container hero-image">
+            <img src="images/trellis_product_image1.jpg" alt="Trellis Kit for Gardyn Home">
+        </div>
         <div class="hero-content">
-            <div class="hero-image">
-                <img src="images/trellis_product_image1.jpg" alt="Trellis Kit for Gardyn Home">
-            </div>
-            <div class="hero-details">
-                <h1>Trellis Kit for Gardyn Home Hydroponic System</h1>
-                <div class="price">
-                    <span>$29.99</span>
-                </div>
-                <p class="hero-desc">Give your Gardyn Home system the support it deserves. This custom trellis kit is designed and 3D-printed by VetROponics Systems, a veteran-owned small business passionate about helping growers succeed.</p>
-                <label for="product-selector">Choose Product Option</label>
-                <select id="product-selector">
-                    <option value="single" selected>Trellis – Single - $29.99</option>
-                    <option value="2pack">Trellis – 2 Pack - $49.99</option>
-                    <option value="caps">Gardyn Compatible Caps – 5 Pack - $18.49</option>
-                </select>
-                <button class="add-to-cart">Add to Cart</button>
-            </div>
+            <h1>Trellis Kit for Gardyn Home Hydroponic System</h1>
+            <div class="price"><img src="tiny_plant_icon.png" alt="" class="price-icon"> <span class="price-text">$29.99</span> <img src="tiny_plant_icon.png" alt="" class="price-icon"></div>
+            <p>Give your Gardyn Home system the support it deserves. This custom trellis kit is designed and 3D-printed by VetROponics Systems, a veteran-owned small business passionate about helping growers succeed.</p>
+            <label for="product-selector">Choose Product Option</label>
+            <select id="product-selector">
+                <option value="single" selected>Trellis – Single - $29.99</option>
+                <option value="2pack">Trellis – 2 Pack - $49.99</option>
+                <option value="caps">Gardyn Compatible Caps – 5 Pack - $18.49</option>
+            </select>
+            <button class="add-to-cart">Buy Now</button>
         </div>
     </section>
 
-    <!-- Product Gallery -->
-    <section id="gallery" class="gallery-section">
+    <section id="gallery" class="gallery">
         <div class="container">
             <h2>Product Gallery</h2>
-            <div class="gallery-grid">
-                <img src="images/image11.jpg" alt="Trellis Kit Image 1" class="gallery-img">
-                <img src="images/image22.jpg" alt="Trellis Kit Image 2" class="gallery-img">
-                <img src="images/image33.jpg" alt="Trellis Kit Image 3" class="gallery-img">
-                <img src="images/image44.jpg" alt="Trellis Kit Image 4" class="gallery-img">
-                <img src="images/image55.jpg" alt="Trellis Kit Image 5" class="gallery-img">
-                <img src="images/image66.jpg" alt="Trellis Kit Image 6" class="gallery-img">
-                <img src="images/image77.jpg" alt="Trellis Kit Image 7" class="gallery-img">
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section id="features" class="features-section">
-        <div class="container">
-            <h2>Features</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <i class="fas fa-check"></i>
-                    <span>Compatible with Gardyn Home</span>
+            <div class="gallery-modern">
+                <div class="main-image-modern">
+                    <img id="main-image" src="images/image11.jpg" alt="Trellis Kit Main Image">
                 </div>
-                <div class="feature-card">
-                    <i class="fas fa-utensils"></i>
-                    <span>Food-safe durable material</span>
-                </div>
-                <div class="feature-card">
-                    <i class="fas fa-tools"></i>
-                    <span>No tools required installation</span>
-                </div>
-                <div class="feature-card">
-                    <i class="fas fa-feather"></i>
-                    <span>Lightweight and reusable</span>
-                </div>
-                <div class="feature-card">
-                    <i class="fas fa-flag-usa"></i>
-                    <span>Designed and printed in the USA</span>
+                <div class="thumbnail-row">
+                    <img src="images/image11.jpg" alt="Trellis Kit Image 1" class="active" onclick="changeImage(this.src, this)">
+                    <img src="images/image22.jpg" alt="Trellis Kit Image 2" onclick="changeImage(this.src, this)">
+                    <img src="images/image33.jpg" alt="Trellis Kit Image 3" onclick="changeImage(this.src, this)">
+                    <img src="images/image44.jpg" alt="Trellis Kit Image 4" onclick="changeImage(this.src, this)">
+                    <img src="images/image55.jpg" alt="Trellis Kit Image 5" onclick="changeImage(this.src, this)">
+                    <img src="images/image66.jpg" alt="Trellis Kit Image 6" onclick="changeImage(this.src, this)">
+                    <img src="images/image77.jpg" alt="Trellis Kit Image 7" onclick="changeImage(this.src, this)">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Why You Need It Section -->
-    <section id="why-need" class="why-need-section">
+    <!-- Modal for gallery zoom -->
+    <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <!-- Lightbox Overlay -->
+    <div class="lightbox-overlay" id="lightboxOverlay" style="display:none;">
+      <img class="lightbox-image" id="lightboxImage" src="" alt="Gallery Image" />
+    </div>
+
+    <!-- Sticky Buy Bar -->
+    <div class="sticky-buy-bar" id="stickyBuyBar" style="display:none;">
+      <div class="bar-content">
+        <span id="stickyProductName">Gardyn Trellis Kit</span>
+        <button class="buy-now" id="stickyBuyBtn">Buy Now</button>
+      </div>
+    </div>
+
+    <section id="why-need" class="why-need">
         <div class="container">
             <h2>Why You Need This Trellis Kit</h2>
-            <p>The Gardyn Home system is an excellent hydroponic setup for growing fresh herbs and vegetables indoors. Without proper support, your plants can become unruly and difficult to manage. Our custom trellis kit provides the structure your plants need to grow vertically, maximizing space and yield while keeping your garden organized and beautiful.</p>
+            <p>The Gardyn Home system is an excellent hydroponic setup for growing fresh herbs and vegetables indoors. However, without proper support, your plants can become unruly and difficult to manage. Our custom trellis kit provides the structure your plants need to grow vertically, maximizing space and yield while keeping your garden organized and beautiful.</p>
             <p>Designed specifically for the Gardyn Home, this kit ensures perfect compatibility and easy installation, giving you professional-grade results without the hassle.</p>
         </div>
     </section>
 
-    <!-- FAQ Section -->
-    <section id="faq" class="faq-section">
+    <section id="features" class="features">
         <div class="container">
-            <h2>Frequently Asked Questions</h2>
-            <div class="faq-list">
-                <div class="faq-item">
-                    <h3>Do I need any tools to install it?</h3>
-                    <p>No tools are required. The kit uses a simple clip system that attaches directly to the Gardyn Home unit for quick and easy installation.</p>
+            <h2>Features</h2>
+            <ul>
+                <li><i class="fas fa-check"></i> Compatible with Gardyn Home</li>
+                <li><i class="fas fa-utensils"></i> Food-safe durable material</li>
+                <li><i class="fas fa-tools"></i> No tools required installation</li>
+                <li><i class="fas fa-feather"></i> Lightweight and reusable</li>
+                <li><i class="fas fa-flag-usa"></i> Designed and printed in the USA</li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="included" class="included">
+        <div class="container">
+            <h2>What's Included</h2>
+            <ul>
+                <li><i class="fas fa-cubes"></i> 12 trellis panels</li>
+                <li><i class="fas fa-link"></i> Top clips</li>
+                <li><i class="fas fa-paperclip"></i> Panel clips</li>
+                <li><i class="fas fa-brackets-curly"></i> Bottom brackets</li>
+                <li><i class="fas fa-hand-paper"></i> Hook and loop mounting sections</li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="how-works" class="how-works">
+        <div class="container">
+            <h2>How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Attach Bottom Brackets</h3>
+                    <p>Use the hook and loop sections to secure the bottom brackets to your Gardyn Home base.</p>
                 </div>
-                <div class="faq-item">
-                    <h3>Will this help support larger or climbing plants?</h3>
-                    <p>Yes. The trellis provides vertical support for plants that grow taller or produce heavier stems and fruit, helping keep your Gardyn organized and guiding plant growth upward.</p>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Install Trellis Panels</h3>
+                    <p>Clip the trellis panels into place using the provided panel clips for stability.</p>
                 </div>
-                <div class="faq-item">
-                    <h3>Is the trellis compatible with the Gardyn Home system?</h3>
-                    <p>Yes. The trellis kit is designed specifically to fit the Gardyn Home hydroponic system, ensuring a secure fit and proper support for your plants.</p>
-                </div>
-                <div class="faq-item">
-                    <h3>Do you offer returns if it doesn't work for me?</h3>
-                    <p>Yes. We offer a 7-day return window. If the product does not meet your expectations, you may return it within 7 days of delivery for a refund.</p>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Add Top Support</h3>
+                    <p>Secure the top clips to provide additional support and guide your plants as they grow.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container footer-content">
-            <div class="footer-section">
-                <h3>VetROponics Systems</h3>
-                <p>Veteran-owned hydroponic accessories</p>
+    <section id="about" class="about">
+        <div class="container">
+            <h2>About VetROponics Systems</h2>
+            <p>VetROponics Systems is a veteran-owned small business dedicated to providing high-quality hydroponic accessories. Founded by a Gulf War disabled veteran, we bring years of experience in manufacturing and customer service to every product we create.</p>
+            <p>We're passionate about sustainable growing and helping fellow growers achieve success. All our products are designed with care, made in the USA, and backed by our commitment to quality and customer satisfaction.</p>
+        </div>
+    </section>
+
+    <section id="shipping" class="shipping">
+        <div class="container">
+            <h2>Shipping Information</h2>
+            <p><i class="fas fa-truck"></i> Ships from Texas for faster, eco-friendly delivery</p>
+            <p><i class="fas fa-clock"></i> Made to order in 3–5 business days</p>
+            <p><i class="fas fa-box"></i> Carefully packaged to prevent damage</p>
+        </div>
+    </section>
+
+    <section id="faq" class="faq">
+        <div class="container">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-item">
+                <h3>Do I need any tools to install it?</h3>
+                <p>No tools are required. The kit uses a simple clip system that attaches directly to the Gardyn Home unit for quick and easy installation.</p>
             </div>
-            <div class="footer-section">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="#hero">Home</a></li>
-                    <li><a href="#gallery">Gallery</a></li>
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#why-need">Why You Need</a></li>
-                </ul>
+            <div class="faq-item">
+                <h3>Will this help support larger or climbing plants?</h3>
+                <p>Yes. The trellis provides vertical support for plants that grow taller or produce heavier stems and fruit, helping keep your Gardyn organized and guiding plant growth upward.</p>
             </div>
-            <div class="footer-section">
-                <h3>Contact</h3>
-                <p><i class="fas fa-envelope"></i> info@vetroponics.com</p>
-                <p><i class="fas fa-phone"></i> Contact via Etsy</p>
+            <div class="faq-item">
+                <h3>Is the trellis compatible with the Gardyn Home system?</h3>
+                <p>Yes. The trellis kit is designed specifically to fit the Gardyn Home hydroponic system, ensuring a secure fit and proper support for your plants.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Do you offer returns if it doesn't work for me?</h3>
+                <p>Yes. We offer a 7-day return window. If the product does not meet your expectations, you may return it within 7 days of delivery for a refund.</p>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 VetROponics Systems. All rights reserved.</p>
+    </section>
+
+    <section id="final-cta" class="final-cta">
+        <div class="container">
+            <h2>Ready to Upgrade Your Gardyn Home?</h2>
+            <p>Get your custom trellis kit today and take your indoor garden to the next level.</p>
+            <button class="add-to-cart">Buy Now</button>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>VetROponics Systems</h3>
+                    <p>Veteran-owned hydroponic accessories</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#hero">Home</a></li>
+                        <li><a href="#gallery">Gallery</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#about">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p><i class="fas fa-envelope"></i> info@vetroponics.com</p>
+                    <p><i class="fas fa-phone"></i> Contact via Etsy</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 VetROponics Systems. All rights reserved.</p>
+            </div>
         </div>
     </footer>
+
+    <!-- Decorative Animation Layer (for floating leaves, vines, etc.) -->
+    <div id="animation-layer"></div>
 
     <script src="script.js"></script>
 </body>
