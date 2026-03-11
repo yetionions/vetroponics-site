@@ -166,13 +166,7 @@ productSelector.addEventListener('change', function() {
     }
 });
 
-// Color thumbnail selection (single-select)
-document.querySelectorAll('.color-circle').forEach(img => {
-    img.addEventListener('click', function() {
-        document.querySelectorAll('.color-circle').forEach(el => el.classList.remove('selected'));
-        this.classList.add('selected');
-    });
-});
+// Color tiles are display-only; no click interaction.
 
 // Modal functionality for image zoom
 const modal = document.getElementById('imageModal');
@@ -195,14 +189,19 @@ modal.onclick = function(event) {
     }
 }
 
-// Add to cart functionality
-document.querySelectorAll('.add-to-cart').forEach(button => {
+// Add to cart functionality (product selector buttons only)
+document.querySelectorAll('.add-to-cart:not(.cta-shop-btn)').forEach(button => {
     button.addEventListener('click', () => {
         const selected = document.getElementById('product-selector').value;
         const product = products[selected];
         // Open Etsy listing in a new tab
         window.open(product.etsyUrl, '_blank');
     });
+});
+
+// Final CTA button — always opens the Etsy shop page
+document.querySelector('.cta-shop-btn').addEventListener('click', () => {
+    window.open('https://www.etsy.com/shop/VetROponicsSystems?ref=shop-header-name&listing_id=4397538500&from_page=listing', '_blank');
 });
 
 // Header background on scroll

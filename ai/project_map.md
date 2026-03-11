@@ -63,7 +63,7 @@ Key images include:
 trellis_product_image_with_vines.png  ← CURRENT hero/mainImage for all trellis variants
 trellis_product_image1.jpg  ← no longer used as hero image
 product_review1.jpg
-product_logo_image.jpg
+product_logo_image.png
 
 cap_product_image2.jpg
 cap_product_image3.jpg

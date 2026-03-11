@@ -63,7 +63,7 @@ Image folder contains:
 Trellis images
 Caps product images
 Product gallery images (image11.jpg through image77.jpg)
-Logo image (product_logo_image.jpg)
+Logo image (product_logo_image.png)
 
 Important rules:
 
