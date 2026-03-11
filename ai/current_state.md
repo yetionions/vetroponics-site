@@ -435,3 +435,8 @@ Removed remaining green accent colors and replaced with warm amber/bourbon tones
 - Responsive hero and gallery layouts for mobile/tablet/desktop.
 - Improved Buy Now button and dropdown styling.
 - Added sticky buy bar for mobile devices.
+---
+
+# RECENT CHANGES
+
+- Mobile layout tightened: reduced .container padding (40px -> 22px/16px at 768px/480px), section vertical spacing, .gallery outer margin/padding, .gallery-modern card padding, thumbnail sizes, .step card padding + .step-number sizing, .faq-item padding, and .final-cta margin/padding. Desktop layout unchanged.

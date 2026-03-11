@@ -909,10 +909,60 @@ a:hover {
         height: 80px;
     }
 
+    .container {
+        padding: 22px 18px;
+        border-radius: 12px;
+    }
+
     section {
         margin: 2rem 0;
-        padding: 3rem 0;
+        padding: 2rem 0;
         border-radius: 12px;
+    }
+
+    .gallery {
+        margin: 2rem 0;
+        padding: 4rem 0;
+    }
+
+    .gallery h2 {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .gallery-modern {
+        padding: 20px 12px;
+    }
+
+    .thumbnail-row {
+        gap: 10px;
+    }
+
+    .thumbnail-row img {
+        width: 70px;
+        height: 70px;
+    }
+
+    .step {
+        padding: 1.75rem;
+        margin: 0.75rem;
+    }
+
+    .step-number {
+        width: 64px;
+        height: 64px;
+        font-size: 1.6rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .faq-item {
+        padding: 1.75rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .final-cta {
+        margin: 2rem 0;
+        padding: 4rem 0;
     }
 
     footer {
@@ -937,8 +987,58 @@ a:hover {
         height: 45px; /* Even smaller for very small screens */
     }
 
+    .container {
+        padding: 16px 14px;
+        border-radius: 10px;
+    }
+
     section {
+        padding: 1.75rem 0;
+    }
+
+    .gallery {
+        margin: 1.5rem 0;
         padding: 2.5rem 0;
+    }
+
+    .gallery h2 {
+        font-size: 1.7rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .gallery-modern {
+        padding: 14px 8px;
+    }
+
+    .thumbnail-row {
+        gap: 7px;
+    }
+
+    .thumbnail-row img {
+        width: 58px;
+        height: 58px;
+    }
+
+    .step {
+        padding: 1.25rem;
+        margin: 0.6rem;
+    }
+
+    .step-number {
+        width: 52px;
+        height: 52px;
+        font-size: 1.4rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .faq-item {
+        padding: 1.25rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .final-cta {
+        margin: 1.5rem 0;
+        padding: 3rem 0;
     }
 }
 
