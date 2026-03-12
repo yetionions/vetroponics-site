@@ -12,7 +12,7 @@
  *   STRIPE_SECRET_KEY  — your Stripe secret key (sk_live_… or sk_test_…)
  */
 
-const PRICE_ID     = 'price_1T9vwK09XmoK39IfYim6yGw5';
+const PRICE_ID     = 'price_1T9vwK09XmoK39lfYim6yGw5';
 const SUCCESS_URL  = 'https://vetroponics-site.pages.dev/thank-you';
 const CANCEL_URL   = 'https://vetroponics-site.pages.dev/';
 const VALID_COLORS = ['copper', 'azure_blue', 'scarlet_red', 'leaf_green', 'silver_ash'];
