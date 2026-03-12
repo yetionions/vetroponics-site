@@ -240,6 +240,138 @@ function updateBuyButtonState() {
     buyBtn.style.cursor    = ready ? '' : 'not-allowed';
 }
 
+// ==================== PRICE IDS ====================
+const PRICE_IDS = {
+    single:  'price_1T9yT90Bp5FXtpozeljRJdWN',
+    '2pack': 'price_1T9yVq0Bp5FXtpozjdg7vdR6',
+    copper:  'price_1T9xM20Bp5FXtpoznMsIF2sQ',
+    azure:   'price_1T9xM10Bp5FXtpozg01vPEe9',
+    scarlet: 'price_1T9xLy0Bp5FXtpozYZE8cznT',
+    leaf:    'price_1T9xM20Bp5FXtpoz2M5yqtkH',
+    silver:  'price_1T9xLy0Bp5FXtpozvI7Teh0L',
+    custom:  'price_1T9xLy0Bp5FXtpozZAHxtJa2',
+};
+
+const PRODUCT_NAMES = {
+    'price_1T9yT90Bp5FXtpozeljRJdWN': 'Trellis – Single',
+    'price_1T9yVq0Bp5FXtpozjdg7vdR6': 'Trellis – 2 Pack',
+    'price_1T9xM20Bp5FXtpoznMsIF2sQ': 'Caps 5-Pack – Copper',
+    'price_1T9xM10Bp5FXtpozg01vPEe9': 'Caps 5-Pack – Azure Blue',
+    'price_1T9xLy0Bp5FXtpozYZE8cznT': 'Caps 5-Pack – Scarlet Red',
+    'price_1T9xM20Bp5FXtpoz2M5yqtkH': 'Caps 5-Pack – Leaf Green',
+    'price_1T9xLy0Bp5FXtpozvI7Teh0L': 'Caps 5-Pack – Silver Ash',
+    'price_1T9xLy0Bp5FXtpozZAHxtJa2': 'Caps 5-Pack – Custom Mix',
+};
+
+// ==================== CART SYSTEM ====================
+function getCart() {
+    try { return JSON.parse(localStorage.getItem('vetro_cart') || '[]'); }
+    catch { return []; }
+}
+
+function saveCart(cart) {
+    localStorage.setItem('vetro_cart', JSON.stringify(cart));
+}
+
+function addToCart(priceId) {
+    const cart = getCart();
+    const existing = cart.find(item => item.price === priceId);
+    if (existing) {
+        existing.quantity++;
+    } else {
+        cart.push({ price: priceId, quantity: 1, name: PRODUCT_NAMES[priceId] || priceId });
+    }
+    saveCart(cart);
+    renderCart();
+    openCart();
+}
+
+function removeFromCart(priceId) {
+    saveCart(getCart().filter(item => item.price !== priceId));
+    renderCart();
+}
+
+function updateQuantity(priceId, quantity) {
+    if (quantity <= 0) { removeFromCart(priceId); return; }
+    const cart = getCart();
+    const item = cart.find(i => i.price === priceId);
+    if (item) item.quantity = quantity;
+    saveCart(cart);
+    renderCart();
+}
+
+function clearCart() {
+    localStorage.removeItem('vetro_cart');
+    renderCart();
+}
+
+function renderCart() {
+    const cart        = getCart();
+    const itemsEl     = document.getElementById('cart-items');
+    const badge       = document.getElementById('cart-badge');
+    const checkoutBtn = document.getElementById('checkout-btn');
+    const totalQty    = cart.reduce((sum, i) => sum + i.quantity, 0);
+
+    badge.textContent  = totalQty;
+    badge.style.display = totalQty > 0 ? 'flex' : 'none';
+
+    if (cart.length === 0) {
+        itemsEl.innerHTML  = '<p class="cart-empty">Your cart is empty.</p>';
+        checkoutBtn.disabled = true;
+        return;
+    }
+    checkoutBtn.disabled = false;
+    itemsEl.innerHTML = cart.map(item => `
+        <div class="cart-item" data-price="${item.price}">
+            <div class="cart-item-info">
+                <span class="cart-item-name">${item.name}</span>
+                <div class="cart-item-controls">
+                    <button class="cart-qty-btn cart-qty-minus" aria-label="Decrease quantity">&#8722;</button>
+                    <span class="cart-item-qty">${item.quantity}</span>
+                    <button class="cart-qty-btn cart-qty-plus" aria-label="Increase quantity">&#43;</button>
+                </div>
+            </div>
+            <button class="cart-remove-btn" aria-label="Remove item">&#10005;</button>
+        </div>
+    `).join('');
+}
+
+function openCart() {
+    document.getElementById('cart-panel').classList.add('cart-panel--open');
+    document.getElementById('cart-panel').setAttribute('aria-hidden', 'false');
+    document.getElementById('cart-overlay').classList.add('cart-overlay--visible');
+}
+
+function closeCart() {
+    document.getElementById('cart-panel').classList.remove('cart-panel--open');
+    document.getElementById('cart-panel').setAttribute('aria-hidden', 'true');
+    document.getElementById('cart-overlay').classList.remove('cart-overlay--visible');
+}
+
+async function checkout() {
+    const cart = getCart();
+    if (!cart.length) return;
+    const checkoutBtn = document.getElementById('checkout-btn');
+    checkoutBtn.disabled    = true;
+    checkoutBtn.textContent = 'Redirecting…';
+    try {
+        const response = await fetch('/api/create-checkout-session', {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body:    JSON.stringify({ items: cart.map(({ price, quantity }) => ({ price, quantity })) })
+        });
+        if (!response.ok) throw new Error('Server error');
+        const { url } = await response.json();
+        clearCart();
+        window.location.href = url;
+    } catch (err) {
+        console.error('Checkout error:', err);
+        alert('Could not start checkout. Please try again.');
+        checkoutBtn.disabled    = false;
+        checkoutBtn.textContent = 'Secure Checkout';
+    }
+}
+
 // Human-readable label for each cap color key
 const colorLabels = {
     copper:  'Copper',
@@ -338,38 +470,68 @@ modal.onclick = function(event) {
     }
 }
 
-// Add to cart functionality (product selector buttons only)
+// Add to Cart — hero button
 document.querySelectorAll('.add-to-cart:not(.cta-shop-btn)').forEach(button => {
     button.addEventListener('click', () => {
         const selected = document.getElementById('product-selector').value;
-        const product  = products[selected];
-
+        if (!selected) {
+            alert('Please select a product first.');
+            return;
+        }
+        let priceId;
         if (selected === 'caps') {
             const color = document.getElementById('cap-color-selector').value;
-
-            if (color === 'custom') {
-                if (getTotalSelected() !== CAP_TOTAL) {
-                    alert('Please select exactly 5 colors for your Custom pack.');
-                    return;
-                }
-                // Open Stripe payment link for Custom caps in a new tab
-                window.open(capLinks.custom, '_blank', 'noopener');
-            } else {
-                // Non-custom cap color — open direct Stripe or Etsy link
-                const colorUrl = color && capLinks[color];
-                window.open(colorUrl || product.etsyUrl, '_blank', 'noopener');
+            if (!color) {
+                alert('Please select a color first.');
+                return;
             }
+            if (color === 'custom' && getTotalSelected() !== CAP_TOTAL) {
+                alert('Please select exactly 5 colors for your Custom pack.');
+                return;
+            }
+            priceId = PRICE_IDS[color];
         } else {
-            // Trellis products — open Stripe checkout
-            window.open(product.stripeUrl, '_blank', 'noopener');
+            priceId = PRICE_IDS[selected];
         }
+        if (!priceId) {
+            alert('Unable to add item to cart. Please try again.');
+            return;
+        }
+        addToCart(priceId);
     });
 });
 
-// Final CTA button — always opens the Etsy shop page
+// Final CTA button — scrolls back to top of page
 document.querySelector('.cta-shop-btn').addEventListener('click', () => {
-    window.open('https://www.etsy.com/shop/VetROponicsSystems?ref=shop-header-name&listing_id=4397538500&from_page=listing', '_blank');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 });
+
+// Cart icon button
+document.getElementById('cart-icon-btn').addEventListener('click', openCart);
+
+// Cart close
+document.getElementById('cart-close').addEventListener('click', closeCart);
+document.getElementById('cart-overlay').addEventListener('click', closeCart);
+
+// Cart item interactions (event delegation)
+document.getElementById('cart-items').addEventListener('click', (e) => {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    const cartItem = btn.closest('.cart-item');
+    if (!cartItem) return;
+    const priceId = cartItem.dataset.price;
+    const item    = getCart().find(i => i.price === priceId);
+    if (!item) return;
+    if (btn.classList.contains('cart-qty-minus'))  updateQuantity(priceId, item.quantity - 1);
+    else if (btn.classList.contains('cart-qty-plus')) updateQuantity(priceId, item.quantity + 1);
+    else if (btn.classList.contains('cart-remove-btn'))  removeFromCart(priceId);
+});
+
+// Checkout button
+document.getElementById('checkout-btn').addEventListener('click', checkout);
+
+// Initialise cart badge + items on page load
+renderCart();
 
 // Header background on scroll
 window.addEventListener('scroll', () => {

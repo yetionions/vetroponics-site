@@ -1,5 +1,24 @@
 ﻿# CURRENT STATE — VetROponics Systems
-Last updated: 2026-03-11
+Last updated: 2026-03-12
+
+---
+
+## RECENT CHANGES (2026-03-12)
+
+### Full Shopping Cart System
+- Converted single-product direct-checkout to multi-item cart system
+- `localStorage` key `"vetro_cart"` stores `[{ price, quantity, name }, ...]`
+- Added `PRICE_IDS` and `PRODUCT_NAMES` constants to `script.js` mapping all 8 products
+- Cart functions added: `getCart()`, `saveCart()`, `addToCart()`, `removeFromCart()`, `updateQuantity()`, `clearCart()`, `renderCart()`, `openCart()`, `closeCart()`, `checkout()`
+- Hero "Buy Now" button → "Add to Cart" (calls `addToCart(priceId)`)
+- Final CTA "Buy Now" → "Shop Now" (still scrolls to top)
+- Cart icon + badge (`#cart-icon-btn`, `#cart-badge`) added to nav
+- Cart panel HTML added (`#cart-panel`, `#cart-overlay`)
+- Cart panel CSS added to `style.css` (panel, overlay, badge, items, controls, checkout button)
+- `functions/api/create-checkout-session.js` rewritten — now accepts `{ items: [{ price, quantity }] }` instead of `{ colors }`; validates against `VALID_PRICE_IDS` Set; supports up to 20 line items, quantity 1–10
+- Footer "Contact via Etsy" made into clickable `<a>` link
+- CTA button changed from Etsy open to `window.scrollTo({ top: 0, behavior: 'smooth' })`
+- `html { scroll-behavior: smooth; }` added to CSS
 
 ---
 
