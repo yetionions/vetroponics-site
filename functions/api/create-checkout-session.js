@@ -72,6 +72,7 @@ export async function onRequestPost(context) {
         'metadata[cap_leaf_green]':         String(quantities.leaf_green),
         'metadata[cap_silver_ash]':         String(quantities.silver_ash),
         'metadata[cap_selection_summary]':  summary,
+        'custom_text[submit][message]':     `Your cap selections: ${summary}`,
     });
 
     let stripeRes;

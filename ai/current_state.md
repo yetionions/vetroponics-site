@@ -3,22 +3,46 @@ Last updated: 2026-03-12
 
 ---
 
-## RECENT CHANGES (2026-03-12)
+## RECENT CHANGES (2026-03-12) — SESSION 2
 
-### Full Shopping Cart System
-- Converted single-product direct-checkout to multi-item cart system
-- `localStorage` key `"vetro_cart"` stores `[{ price, quantity, name }, ...]`
-- Added `PRICE_IDS` and `PRODUCT_NAMES` constants to `script.js` mapping all 8 products
-- Cart functions added: `getCart()`, `saveCart()`, `addToCart()`, `removeFromCart()`, `updateQuantity()`, `clearCart()`, `renderCart()`, `openCart()`, `closeCart()`, `checkout()`
-- Hero "Buy Now" button → "Add to Cart" (calls `addToCart(priceId)`)
-- Final CTA "Buy Now" → "Shop Now" (still scrolls to top)
-- Cart icon + badge (`#cart-icon-btn`, `#cart-badge`) added to nav
-- Cart panel HTML added (`#cart-panel`, `#cart-overlay`)
-- Cart panel CSS added to `style.css` (panel, overlay, badge, items, controls, checkout button)
-- `functions/api/create-checkout-session.js` rewritten — now accepts `{ items: [{ price, quantity }] }` instead of `{ colors }`; validates against `VALID_PRICE_IDS` Set; supports up to 20 line items, quantity 1–10
-- Footer "Contact via Etsy" made into clickable `<a>` link
-- CTA button changed from Etsy open to `window.scrollTo({ top: 0, behavior: 'smooth' })`
-- `html { scroll-behavior: smooth; }` added to CSS
+### Cart System Fully Removed
+- The full shopping cart system (getCart, saveCart, addToCart, renderCart, openCart, closeCart, checkout, cart icon/badge, cart panel HTML, all cart CSS) was built and then **fully reverted and removed**.
+- All cart-related JS, HTML, and CSS has been deleted.
+- Direct Stripe buy link flow restored for all products.
+
+### Button Class Renamed
+- All `.add-to-cart` references renamed to `.buy-now-btn` across `index.html`, `script.js`, and `style.css`.
+- Hero button: `<button class="buy-now-btn">Buy Now</button>`
+- CTA button: `<button class="buy-now-btn cta-shop-btn">Shop Now</button>` (scrolls to top)
+
+### Custom Cap Checkout — API-Based Flow (Current Implementation)
+- Custom cap "Buy Now" flow POSTs to `POST /api/create-checkout-session` (Cloudflare Pages Function).
+- Frontend sends: `{ copper, azure_blue, scarlet_red, leaf_green, silver_ash }` (integer quantities, total must = 5).
+- Note: `customQty` object in `script.js` uses short keys (`azure`, `scarlet`, `leaf`) — these are mapped to full API keys in the `fetch` call.
+- Backend validates total = 5, builds a human-readable summary (e.g. `"Copper x2, Silver Ash x3"`), creates a Stripe Checkout Session, and returns `{ url }`.
+- Stripe session metadata: `cap_copper`, `cap_azure_blue`, `cap_scarlet_red`, `cap_leaf_green`, `cap_silver_ash`, `cap_selection_summary`.
+- Frontend redirects to returned Stripe `url` via `window.location.href`.
+- Non-custom products (trellises, single-color caps) still use direct `window.location.href = stripeUrl`.
+
+### `create-checkout-session.js` Clean Rewrite
+- File fully rewritten to the quantity-per-color approach (removed all stale `colors[]` array code).
+- See Stripe Checkout section below for current implementation details.
+
+### All 8 Stripe Price IDs Confirmed Correct
+- `PRICE_IDS` in `script.js` and `VALID_PRICE_IDS` in `create-checkout-session.js` both match.
+
+---
+
+## PENDING TASK (not yet implemented)
+
+### Customer-Visible Color Summary on Stripe Checkout Page
+- Currently the `cap_selection_summary` metadata is stored for the store owner (visible in Stripe Dashboard) but **not shown to the customer** on the Stripe Checkout page.
+- **Goal**: Add `'custom_text[submit][message]'` to the `URLSearchParams` in `create-checkout-session.js` so the color selection summary appears above the Pay button.
+- **Exact change needed** in `functions/api/create-checkout-session.js` — add this line to the `params` URLSearchParams object:
+  ```js
+  'custom_text[submit][message]': `Your selected cap colors: ${summary}`,
+  ```
+- Stripe's `custom_text[submit][message]` supports up to 500 characters and displays directly above the Pay button.
 
 ---
 
@@ -85,12 +109,13 @@ Last updated: 2026-03-12
 - Counter: `#custom-color-counter` shows "N / 5 selected"
 - Grid layout: 6-column track, last 2 cards centered via `nth-child(4)` and `nth-child(5)` explicit placement
 
-### Buy Now Button (`.add-to-cart`, first instance only)
-- Trellis Single: `window.open(product.stripeUrl, '_blank', 'noopener')` → `https://buy.stripe.com/eVq3cngNe5cz4isbftcIE06`
-- Trellis 2 Pack: `window.open(product.stripeUrl, '_blank', 'noopener')` → `https://buy.stripe.com/cNi7sD2WofRdg1a97lcIE07`
-- Caps + specific color: `window.open(capLinks[color] || product.etsyUrl, '_blank', 'noopener')`
-- Caps + Custom: `window.open(capLinks.custom, '_blank', 'noopener')`
+### Buy Now Button (`.buy-now-btn`, first instance only — NOT `.add-to-cart`)
+- Trellis Single: `window.location.href = product.stripeUrl` → `https://buy.stripe.com/eVq3cngNe5cz4isbftcIE06`
+- Trellis 2 Pack: `window.location.href = product.stripeUrl` → `https://buy.stripe.com/cNi7sD2WofRdg1a97lcIE07`
+- Caps + specific color: `window.location.href = capLinks[color]`
+- Caps + Custom: POSTs to `/api/create-checkout-session`, then `window.location.href = data.url`
 - Disabled (opacity 0.45, cursor not-allowed) when Custom active and total ≠ 5
+- Button text changes to "Redirecting…" and is disabled while awaiting checkout session for Custom
 
 ### Live Stripe Payment Links (in `capLinks`)
 - Copper:      `https://buy.stripe.com/8x228j8gIeN95mwcjxcIE03`
@@ -102,14 +127,14 @@ Last updated: 2026-03-12
 
 ### Stripe Checkout (`functions/api/create-checkout-session.js`)
 - Cloudflare Pages Function, route: `POST /api/create-checkout-session`
-- Accepts `{ colors: ["copper", "azure_blue", ...] }` (exactly 5 values)
-- Validates each color against `VALID_COLORS`
-- Creates Stripe Checkout Session (REST API, Workers-native fetch)
-- Body: `{ copper, azure_blue, scarlet_red, leaf_green, silver_ash }` (integer quantities, total must = 5)
+- Accepts `{ copper, azure_blue, scarlet_red, leaf_green, silver_ash }` (integer quantities, total must = 5)
+- Validates each value is integer 0–5 and total = 5
+- Creates Stripe Checkout Session via REST API (Workers-native fetch, no npm packages)
 - Metadata: `cap_copper`, `cap_azure_blue`, `cap_scarlet_red`, `cap_leaf_green`, `cap_silver_ash`, `cap_selection_summary`
 - Price ID: `price_1TA1iK0Bp5FXtpozxKMw6UaL` (Custom Mix)
 - Success/cancel URL: `https://vetroponics-site.pages.dev/`
 - Secret key: `env.STRIPE_SECRET_KEY` (Cloudflare Pages dashboard env var)
+- **NOTE**: `custom_text[submit][message]` is NOT yet added — this is the pending task (see PENDING TASK section above)
 
 ### Gallery
 - `#gallery` section with `.gallery-modern` container
@@ -142,66 +167,18 @@ Last updated: 2026-03-12
 
 | Item | Status |
 |---|---|
-| `capLinks` object | All values empty — non-custom cap colors fall back to Etsy |
-| Per-color Stripe or Etsy purchase links | Not yet created/filled |
+| `custom_text[submit][message]` in checkout session | **NEXT TASK** — add to `create-checkout-session.js` params |
+| `capLinks` — all single-color direct Stripe buy links | Filled in and confirmed working |
 | Sticky buy bar (`#stickyBuyBar`) | Present in HTML but not fully wired in JS |
 | Review/testimonial section | Not implemented |
 | Shopify migration | Long-term goal, not started |
-- Picker contains 5 toggle chip buttons (Copper, Azure Blue, Scarlet Red, Leaf Green, Silver Ash) + a "0 / 5 selected" counter
-- Added `customSelections` array + `resetCustomPicker()` + `updateBuyButtonState()` helper functions in `script.js`
-- Buy Now button is disabled (opacity 0.45) whenever Custom is active and fewer than 5 colors are chosen; re-enables at exactly 5
-- Buy Now handler updated to `async`: custom path POSTs `{ colors }` to `/api/create-checkout-session` and redirects to returned Stripe Checkout URL; non-custom caps path unchanged (opens `capLinks[color]` or Etsy fallback)
-- Created `server.js`: Node.js/Express server that serves static files and handles `POST /api/create-checkout-session` — validates 5 colors, creates a Stripe Checkout Session with `color1…color5` metadata, returns `{ url }`
-- Created `package.json` (dependencies: express, stripe, dotenv)
-- Created `.env.example` (documents `STRIPE_SECRET_KEY`, `STRIPE_PRICE_ID_CUSTOM`, `SITE_URL`, `PORT`)
-- Added CSS for `.custom-color-btn`, `.custom-color-btn.selected`, `.custom-color-counter`, `.custom-picker-heading`, `.add-to-cart:disabled`, and light-theme overrides
-
-# RECENT CHANGES (2026-03-11 — previous)
-- Replaced Leaf Color tile swatches with a `<select id="cap-color-selector">` dropdown (options: Select Color, Copper, Azure Blue, Scarlet Red, Leaf Green, Silver Ash, Custom)
-- Added `capColorImages` mapping in `script.js` — selecting a color updates the hero product image to the matching color PNG
-- Added `capPurchaseLinks` placeholder object in `script.js` (all URLs empty, ready to fill in)
-- Color dropdown resets to "Select Color" and hero image resets to default multicolor cap image whenever the caps variant is re-selected from the product selector
-- Buy Now handler updated: for caps, uses `capPurchaseLinks[color]` if set, otherwise falls back to the default caps Etsy URL
-
-# RECENT CHANGES (2026-03-11 — previous)
-- Hero product image replaced with `images/trellis_product_image_with_vines.png` (was `trellis_product_image1.jpg`)
-- Hero image `max-width` increased from `500px` to `720px` for a larger display
-- Both trellis product variants (Single and 2 Pack) updated in `script.js` to use the new `trellis_product_image_with_vines.png` as their `mainImage`
-- Price display hidden on page load (`visibility: hidden`); only shown after a real product is selected from the dropdown
-- Price hides again if the placeholder option is re-selected
-- Price update logic in JS refactored to set `.price-text` content directly and toggle `visibility` instead of rebuilding innerHTML
-
-# RECENT CHANGES (2026-03-11 — earlier)
-- Added scroll-triggered promo popup (AMERICA 10% off), sessionStorage dismissal, slide-in animation
-- Removed flag emoji and "Veteran-Owned Small Business" text from popup, leaving only the discount message and support line
-- Reworked footer leaf graphic: moved from CSS background layer to `footer::after` pseudo-element for proper z-index layering and non-interactive overlap effect
-- Replaced diagonal gradient overlays on cards/sections with `background: none` to fix dark corner fade artifacts
-- Added vertical body gradient (top-to-bottom) as the sole page gradient
-- Deepened bg-secondary and bg-card values for stronger visual separation between layers
-- Final CTA section given distinct `#0f2218` background for contrast
-- All footer text colors updated to bright explicit hardcoded values independent of CSS variables
-- Footer text brightened and made independent from global text color variables
-- Text color variables (`--text-primary`, `--accent-primary`, `--glow-primary` etc.) brightened for better readability on dark backgrounds
-- All white-based text values shifted to light green tones (`--text-primary: #d4f0d8`, `--button-text: #e8f8ea`)
-- Product dropdown default changed to disabled placeholder "Choose Product Option" (no pre-selected product on load)
-- Removed `<label>` above dropdown (placeholder option replaces it)
-- Switched entire site to dark forest-green theme (from previous light khaki palette)
-
-# PREVIOUS CHANGES (2026-03-10)
-- Removed bottom price display from CTA section; Buy Now button remains centered and functional.
-- Changed all product button text from 'Add to Cart' to 'Buy Now'.
-- Site structure and product selection logic rebuilt for reliability.
-- Fixed price updating: hero prices update dynamically with dropdown selection.
-- Hero product title updates based on dropdown selection.
-- Fixed tiny_plant_icon.png path for correct image loading.
-- Updated color palette to lighter organic tones (khaki, sage green, warm beige, soft cream).
-- Added subtle linen/paper texture overlay to site background.
-- Upgraded product gallery to modern ecommerce layout: main image with horizontal thumbnail row.
-- Header is sticky and collapses to hamburger menu on mobile.
-- Buy Now button redirects to product-specific Etsy listings.
-- Spacing reduced sitewide for a tighter, cleaner layout.
 
 ---
+
+## ARCHIVED HISTORY (condensed)
+
+- 2026-03-11: Swapped light/dark theme palettes; dark is now default. Scroll-triggered promo popup added then removed. Footer leaf graphic moved to `footer::after`. Added cap color selector dropdown + hero image swap. Cap color picker system (toggle chips + custom qty). Trellis hero image updated.
+- 2026-03-10: Initial structure, sticky header, gallery, product selector, Etsy buy links, dark theme.
 
 ## Project Overview
 This project is a single-product ecommerce landing page for **VetROponics Systems**.
