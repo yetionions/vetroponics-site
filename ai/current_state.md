@@ -105,9 +105,9 @@ Last updated: 2026-03-12
 - Accepts `{ colors: ["copper", "azure_blue", ...] }` (exactly 5 values)
 - Validates each color against `VALID_COLORS`
 - Creates Stripe Checkout Session (REST API, Workers-native fetch)
-- Metadata: `cap1`–`cap5` + `selected_colors` (human-readable summary)
-- `custom_text[submit][message]` displays color summary on Stripe checkout page
-- Price ID: `price_1T9vwK09XmoK39lfYim6yGw5` (lowercase `l`)
+- Body: `{ copper, azure_blue, scarlet_red, leaf_green, silver_ash }` (integer quantities, total must = 5)
+- Metadata: `cap_copper`, `cap_azure_blue`, `cap_scarlet_red`, `cap_leaf_green`, `cap_silver_ash`, `cap_selection_summary`
+- Price ID: `price_1TA1iK0Bp5FXtpozxKMw6UaL` (Custom Mix)
 - Success/cancel URL: `https://vetroponics-site.pages.dev/`
 - Secret key: `env.STRIPE_SECRET_KEY` (Cloudflare Pages dashboard env var)
 

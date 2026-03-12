@@ -72,10 +72,10 @@ User selects Caps → selects "Custom" → custom quantity picker appears
 ```
 
 ### Stripe Configuration
-- Price ID: `price_1T9vwK09XmoK39lfYim6yGw5` (note lowercase `l` at position ~22)
+- Custom Mix Price ID: `price_1TA1iK0Bp5FXtpozxKMw6UaL`
 - Mode: `payment` (one-time)
-- Metadata: `cap1`–`cap5` (individual color keys) + `selected_colors` (readable summary)
-- `custom_text[submit][message]` shows color summary on Stripe checkout page
+- Metadata: `cap_copper`, `cap_azure_blue`, `cap_scarlet_red`, `cap_leaf_green`, `cap_silver_ash`, `cap_selection_summary`
+- Body format: `{ copper, azure_blue, scarlet_red, leaf_green, silver_ash }` (integer quantities)
 - Success/cancel URL: `https://vetroponics-site.pages.dev/`
 
 ---

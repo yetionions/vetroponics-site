@@ -98,9 +98,9 @@ ai/                 ← AI context files only
 ## STRIPE RULES
 
 - The Cloudflare Function is the only place that calls Stripe.
-- Price ID: `price_1T9vwK09XmoK39lfYim6yGw5` — contains lowercase `l`, not capital `I` (common typo risk).
+- Custom Mix Price ID: `price_1TA1iK0Bp5FXtpozxKMw6UaL`
 - Never expose `STRIPE_SECRET_KEY` in `index.html` or `script.js`.
-- Custom caps checkout flow: frontend POSTs `{ colors: [...] }` → function validates → creates session → returns `{ url }` → frontend redirects.
+- Custom caps checkout flow: frontend POSTs `{ copper, azure_blue, scarlet_red, leaf_green, silver_ash }` → function validates total = 5 → creates session with `cap_*` metadata → returns `{ url }` → frontend redirects.
 
 ---
 

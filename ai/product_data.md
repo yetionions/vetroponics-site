@@ -90,10 +90,10 @@ Last updated: 2026-03-11
 
 #### Checkout method per color selection
 - **Specific color (non-custom):** `window.open(capLinks[color] || product.etsyUrl, '_blank')`  
-  `capLinks` object in `script.js` has all values empty → falls back to main caps Etsy listing  
-  *Fill in `capLinks` when per-color Stripe or Etsy listings are ready.*
+  `capLinks` object in `script.js` maps each color to its direct Stripe buy link  
 - **Custom mix:** POST `/api/create-checkout-session` → Stripe Checkout  
-  Stripe Price ID: `price_1T9vwK09XmoK39lfYim6yGw5` (note lowercase `l`)
+  Stripe Price ID: `price_1TA1iK0Bp5FXtpozxKMw6UaL` (Custom Mix)
+  Body: `{ copper, azure_blue, scarlet_red, leaf_green, silver_ash }` quantities
 
 ---
 

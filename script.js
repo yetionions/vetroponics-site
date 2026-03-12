@@ -359,30 +359,18 @@ document.querySelector('.buy-now-btn:not(.cta-shop-btn)').addEventListener('clic
             return;
         }
         if (color === 'custom') {
-            // POST quantities to API so Stripe metadata contains color breakdown
-            const btn = document.querySelector('.buy-now-btn:not(.cta-shop-btn)');
-            btn.disabled    = true;
-            btn.textContent = 'Redirecting…';
-            fetch('/api/create-checkout-session', {
-                method:  'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    copper:      customQty.copper,
-                    azure_blue:  customQty.azure,
-                    scarlet_red: customQty.scarlet,
-                    leaf_green:  customQty.leaf,
-                    silver_ash:  customQty.silver,
-                }),
-            })
-            .then(res => res.ok ? res.json() : res.json().then(d => Promise.reject(d.error || `Server error ${res.status}`)))
-            .then(data => { window.location.href = data.url; })
-            .catch(err => {
-                console.error('[Checkout] Failed:', err);
-                alert(`Checkout failed: ${err}`);
-                btn.disabled    = false;
-                btn.textContent = 'Buy Now';
-            });
-            return;
+            const colorLabels = {
+                copper:  'Copper',
+                azure:   'Azure Blue',
+                scarlet: 'Scarlet Red',
+                leaf:    'Leaf Green',
+                silver:  'Silver Ash',
+            };
+            const selectionString = Object.entries(customQty)
+                .filter(([, qty]) => qty > 0)
+                .map(([key, qty]) => `${colorLabels[key]} x${qty}`)
+                .join(', ');
+            stripeUrl = `${capLinks.custom}?prefilled_selected_cap_colors=${encodeURIComponent(selectionString)}`;
         } else {
             stripeUrl = capLinks[color];
         }
