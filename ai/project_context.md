@@ -1,78 +1,105 @@
-PROJECT OVERVIEW
+# PROJECT CONTEXT — VetROponics Systems
+Last updated: 2026-03-11
 
-This is a single product ecommerce landing page for a physical product.
+---
 
-Product:
-Trellis Kit for Gardyn Home Hydroponic System
+## OVERVIEW
 
-Additional variants:
-- Trellis Single ($29.99)
-- Trellis 2 Pack ($49.99)
-- Gardyn Compatible Caps 5 Pack ($18.49)
+Single-product ecommerce landing page for **VetROponics Systems** — a veteran-owned small business selling handmade 3D-printed hydroponic accessories.
 
-The website is currently built with:
+**Stack:** HTML + CSS + Vanilla JavaScript (no frameworks)
+**Deployed:** Cloudflare Pages (`https://vetroponics-site.pages.dev/`)
+**Source:** GitHub repository (auto-deploys to Cloudflare on push)
+**Payment:** Stripe (Checkout Sessions via Cloudflare Pages Function)
 
-HTML
-CSS
-Vanilla JavaScript
+---
 
-File structure:
+## PRODUCTS SOLD
 
-index.html
-style.css
-script.js
-images/
-tiny_plant_icon.png
-leaves_footer_image.png
-ai/
+| Product | Price | Checkout Method |
+|---|---|---|
+| Trellis Kit – Single | $29.99 | Etsy listing (new tab) |
+| Trellis Kit – 2 Pack | $49.99 | Etsy listing (new tab) |
+| Gardyn Compatible Caps – 5 Pack | $18.49 | Etsy (standard colors) / Stripe Checkout (custom mix) |
 
-The page includes these sections:
+---
 
-- Navigation bar (with theme toggle button)
-- Product hero section
-- Product gallery
-- Why You Need section
-- Features
-- What's Included
-- How it works
-- About
-- Shipping
-- FAQ
-- Final CTA section
-- Footer (with decorative leaf image)
-- Promo popup (scroll-triggered, bottom-right)
+## ARCHITECTURE
 
-Design direction:
+### Frontend (`index.html`, `style.css`, `script.js`)
+- Single-page layout. All sections embedded in `index.html`.
+- `script.js` handles all interactivity — no framework, no build step.
+- `style.css` uses CSS custom properties for theming.
 
-The site currently uses a dark forest-green plant-themed aesthetic as the default theme.
-A light mode is available via a toggle button in the navigation bar.
+### Backend (`functions/api/create-checkout-session.js`)
+- Cloudflare Pages Function — ESM format (`export async function onRequestPost`).
+- Handles `POST /api/create-checkout-session` from the frontend.
+- Uses Workers-native `fetch` to call Stripe REST API directly (no npm, no node_modules).
+- Reads `STRIPE_SECRET_KEY` from `context.env` (set in Cloudflare Pages dashboard).
+- Returns `{ url }` (Stripe Checkout URL) for frontend redirect.
 
-Design goals:
+### Local Development Only
+- `server.js` — Node.js/Express dev server (serves static files + proxies checkout endpoint)
+- `package.json` — declares express, stripe, dotenv deps
+- `.env.example` — documents required env vars (`STRIPE_SECRET_KEY`, etc.)
+- These files are **not used** by Cloudflare Pages in production.
 
-- deep dark green backgrounds
-- lighter green card surfaces
-- bright light-green text for readability on dark backgrounds
-- green accent colors and glow effects
-- warm khaki footer with leaf graphic
-- subtle vertical page gradient
-- rounded UI elements
-- premium product presentation
+---
 
-Image folder contains:
+## CHECKOUT FLOW
 
-Trellis images
-Caps product images
-Product gallery images (image11.jpg through image77.jpg)
-Logo image (product_logo_image.png)
+### Trellis (Single / 2-Pack)
+```
+User selects product → clicks Buy Now → window.open(product.etsyUrl, '_blank')
+```
 
-Important rules:
+### Caps — Standard Color (not Custom)
+```
+User selects Caps → selects a color → clicks Buy Now
+→ window.open(capLinks[color] || product.etsyUrl, '_blank')
+(capLinks values currently empty — falls back to Etsy)
+```
 
-Do not rebuild the page structure.
-Do not remove sections.
-Only modify styling and small functionality improvements.
-Do not break the theme toggle or promo popup.
-Preserve all CSS variables and the light theme override block.
+### Caps — Custom Mix
+```
+User selects Caps → selects "Custom" → custom quantity picker appears
+→ User picks exactly 5 caps across colors (Copper, Azure Blue, Scarlet Red, Leaf Green, Silver Ash)
+→ Buy Now enabled when total = 5
+→ POST /api/create-checkout-session { colors: ["copper","azure_blue",...] }
+→ Cloudflare Function validates → creates Stripe Checkout Session
+→ Returns { url } → window.location.href = url (redirect to Stripe hosted checkout)
+→ After payment: Stripe redirects to https://vetroponics-site.pages.dev/
+```
 
-Goal of the project:
+### Stripe Configuration
+- Price ID: `price_1T9vwK09XmoK39lfYim6yGw5` (note lowercase `l` at position ~22)
+- Mode: `payment` (one-time)
+- Metadata: `cap1`–`cap5` (individual color keys) + `selected_colors` (readable summary)
+- `custom_text[submit][message]` shows color summary on Stripe checkout page
+- Success/cancel URL: `https://vetroponics-site.pages.dev/`
 
-Create a clean ecommerce landing page that can later be moved to Shopify.
+---
+
+## THEME SYSTEM
+
+- Default: **dark forest-green** (CSS variables in `:root`)
+- Light: `body.light-theme` class triggered by `#theme-toggle` button
+- Persisted in `localStorage` key `"theme"`
+- Light theme overrides live at the **END** of `style.css`
+
+---
+
+## PROMO POPUP
+
+- Appears after 35% scroll depth
+- Content: "Use code AMERICA for 10% off"
+- Dismissal stored in `sessionStorage` key `"promo_dismissed"` (does not re-show in same session)
+
+---
+
+## IMPORTANT CONSTRAINTS
+
+- This is NOT a Shopify site — it is a standalone static site on Cloudflare Pages.
+- Do not add frameworks, build steps, or package managers to the frontend.
+- Do not move `STRIPE_SECRET_KEY` to the browser — it lives only in the Cloudflare Function.
+- The `capLinks` object in `script.js` has all empty values — non-custom cap colors fall back to Etsy.

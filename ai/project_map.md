@@ -1,103 +1,104 @@
-PROJECT MAP
+# PROJECT MAP — VetROponics Systems
+Last updated: 2026-03-11
 
-This is a single-product ecommerce landing page.
+---
 
-MAIN FILES
+## DIRECTORY STRUCTURE
 
-index.html
-Main webpage layout.
+```
+mywebsite/
+├── index.html                      ← Single-page website entry point
+├── style.css                       ← All styling (dark + light theme)
+├── script.js                       ← All frontend interactivity
+├── package.json                    ← Node.js deps (express, stripe, dotenv) — for local dev only
+├── server.js                       ← Express dev server (local only, NOT used on Cloudflare)
+├── .env.example                    ← Env var template (STRIPE_SECRET_KEY etc.)
+├── tiny_plant_icon.png             ← Leaf icon used in price display
+├── leaves_footer_image.png         ← Decorative footer overlay image
+├── favicon.png                     ← Site favicon
+├── functions/
+│   └── api/
+│       └── create-checkout-session.js  ← Cloudflare Pages Function (Stripe Checkout)
+├── images/
+│   ├── product_logo_image.png          ← NavBar logo
+│   ├── trellis_product_image_with_vines.png  ← Hero image: Trellis Single
+│   ├── singleset_trellis_product_image.png   ← Main image: Trellis Single
+│   ├── setof_two_trellis_product_image.png   ← Main image: Trellis 2-Pack
+│   ├── cap_product_main_image.png            ← Main image: Caps (default multicolor)
+│   ├── cap_color_image_copper.png            ← Cap color swatch: Copper
+│   ├── cap_color_image_azure_blue.png        ← Cap color swatch: Azure Blue
+│   ├── cap_color_image_scarlet_red.png       ← Cap color swatch: Scarlet Red
+│   ├── cap_color_image_light_green.png       ← Cap color swatch: Leaf Green
+│   ├── cap_color_image_silver_ash.png        ← Cap color swatch: Silver Ash
+│   ├── cap_color_image_custom.png            ← Cap color swatch: Custom (multicolor)
+│   ├── cap_product_image2.jpg–7.jpg          ← Gallery thumbnails for Caps
+│   ├── image11.jpg–image77.jpg               ← Gallery thumbnails for Trellis
+│   ├── trellis_product_image1.jpg            ← Unused legacy image
+│   └── product_review1.jpg                  ← Unused legacy image
+└── ai/
+    ├── project_map.md
+    ├── project_context.md
+    ├── design_rules.md
+    ├── components.md
+    ├── current_state.md
+    ├── product_data.md
+    ├── ai_rules.md
+    ├── assistant_instructions.md
+    └── prompts.md
+```
 
-Contains sections:
-- navigation bar (with theme toggle button)
-- product hero
-- product gallery
-- why you need section
-- product description / features
-- what's included
-- how it works
-- about
-- shipping
-- FAQ
-- final CTA section
-- footer (with decorative leaf image overlay)
-- promo popup (bottom-right corner, scroll-triggered)
-- animation layer (decorative, non-interactive)
+---
 
+## KEY FILES
 
-style.css
-Controls site styling including:
+### index.html — Entry Point
+Single HTML file. All page sections are inline. Loads style.css and script.js.
 
-- layout spacing
-- dark theme CSS variables (default)
-- light theme overrides via body.light-theme class
-- colors and gradients
-- typography
-- buttons
-- product cards
-- gallery styling
-- theme toggle button
-- promo popup styling
-- footer decorative leaf image layering
-- responsive behavior
+Page sections (in order):
+1. `<header>` — sticky nav with logo, links, theme toggle, hamburger
+2. `#hero` — product image, title, price, description, product selector, color selector, Buy Now
+3. `#gallery` — main image + horizontal thumbnail row + zoom modal
+4. `#why-need` — marketing copy
+5. `#features` — feature bullet list
+6. `#included` — dynamic "What's Included" list (updated by JS on product change)
+7. `#how-works` — 3-step cards
+8. `#about` — company info
+9. `#shipping` — shipping details
+10. `#faq` — 4 FAQ items
+11. `#final-cta` — CTA section with shop button
+12. `<footer>` — links, contact, copyright
+13. `#animation-layer` — decorative, non-interactive
+14. `#promo-popup` — scroll-triggered discount popup
 
+### style.css — All Styling
+- CSS variables in `:root` (dark theme defaults)
+- `body.light-theme` overrides at the END of the file
+- No diagonal gradients on cards/sections
 
-script.js
-Handles front-end interactivity such as:
+### script.js — All Frontend Logic
+- Product variant switching
+- Cap color dropdown + 3-state UI logic
+- Custom color quantity picker
+- Stripe Checkout API call (async Buy Now)
+- Promo popup + sessionStorage
+- Theme toggle + localStorage
+- Gallery, modal, scrolling
 
-- product variant switching (dropdown updates hero title, price, description, gallery)
-- gallery thumbnail behavior
-- Buy Now button → opens Etsy listing in new tab
-- mobile hamburger menu toggle
-- header shadow on scroll
-- theme toggle (dark/light) with localStorage persistence
-- scroll-triggered promo popup with sessionStorage dismissal
-- image zoom modal
+### functions/api/create-checkout-session.js — Cloudflare Pages Function
+- Route: `POST /api/create-checkout-session`
+- Creates Stripe Checkout Session for the "Custom" caps option
+- Reads `STRIPE_SECRET_KEY` from `env` (Cloudflare Pages dashboard env var)
+- Uses Workers-native `fetch` — no npm, no node_modules
 
+---
 
-IMAGES FOLDER
+## DEPLOYMENT
 
-Contains product images used across the page.
-
-Key images include:
-
-trellis_product_image_with_vines.png  ← CURRENT hero/mainImage for all trellis variants
-trellis_product_image1.jpg  ← no longer used as hero image
-product_review1.jpg
-product_logo_image.png
-
-cap_product_image2.jpg
-cap_product_image3.jpg
-cap_product_image4.jpg
-cap_product_image5.jpg
-cap_product_image6.jpg
-cap_product_image7.jpg
-
-image11.jpg through image77.jpg (gallery thumbnails)
-
-
-ROOT-LEVEL ASSETS
-
-tiny_plant_icon.png  — used as price icon in hero and sticky bar
-leaves_footer_image.png  — decorative footer bottom image
-
-
-AI FOLDER
-
-ai/project_map.md
-ai/project_context.md
-ai/design_rules.md
-ai/components.md
-ai/current_state.md
-ai/product_data.md
-ai/ai_rules.md
-ai/assistant_instructions.md
-ai/prompts.md
-
-
-PRODUCTS
-
-Trellis Single
-Price: $29.99
+- Deployed on **Cloudflare Pages**
+- Live URL: `https://vetroponics-site.pages.dev/`
+- Source pushed to **GitHub**, auto-deployed by Cloudflare on push
+- `STRIPE_SECRET_KEY` set as **environment variable** in Cloudflare Pages dashboard
+- `package.json` / `server.js` are for local development only — ignored by Cloudflare
 
 Trellis 2 Pack
 Price: $49.99

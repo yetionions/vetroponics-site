@@ -1,103 +1,174 @@
-COMPONENT MAP
+# COMPONENT MAP — VetROponics Systems
+Last updated: 2026-03-11
 
-This file lists the major UI components used in the website so the AI does not need to scan the full HTML structure repeatedly.
+---
 
+## NAVBAR (`<header>`)
+Fixed/sticky. Collapses to hamburger on mobile.
 
-NAVBAR
-Top navigation bar. Fixed/sticky, collapses to hamburger on mobile.
+Contents:
+- Logo image: `images/product_logo_image.png` (hanging effect, `bottom: -10px`)
+- Nav anchor links: Home, Gallery, Why You Need, Features, Included, How It Works, About, Shipping, FAQ
+- Theme toggle button: `id="theme-toggle"`, class `theme-toggle` — toggles `body.light-theme`
+- Hamburger: class `.hamburger` (3 `<span>` bars) — toggles `.nav-links.active` on mobile
 
-Contains:
-- VetROponics logo (hanging effect, bottom: -10px)
-- navigation anchor links
-- theme toggle button (#theme-toggle, class: .theme-toggle)
-- hamburger menu button (.hamburger)
+Scroll behavior: adds `.scrolled` class to `<header>` when `window.scrollY > 100`.
 
-Links include:
-Home, Gallery, Why You Need, Features, Included, How It Works, About, Shipping, FAQ
+---
 
+## PRODUCT HERO (`id="hero"`)
+Primary conversion section. Critical — do not restructure.
 
-PRODUCT HERO SECTION
-Main product section at the top of the page. id="hero"
+### Hero Image
+`.hero-image img` — Updates dynamically on product/color change.
+- Trellis Single: `images/singleset_trellis_product_image.png`  
+  *(Note: hero starts with `trellis_product_image_with_vines.png` on page load before a product is selected)*
+- Trellis 2-Pack: `images/setof_two_trellis_product_image.png`
+- Caps default: `images/cap_product_main_image.png`
+- Caps with color selected: `images/cap_color_image_<color>.png`
 
-Contains:
-- main product image (.hero-image)
-  Current image: images/trellis_product_image_with_vines.png
-  max-width: 720px (CSS)
-  Updates dynamically when variant is selected (trellis variants use trellis_product_image_with_vines.png; caps use cap_product_image2.jpg)
-- product title (h1, updates dynamically)
-- product price (.price)
-  Starts HIDDEN (visibility: hidden) on page load — no price shown until a product is selected
-  Price text is in .price-text span; icons are tiny_plant_icon.png on each side
-  Becomes visible when a real product option is selected; hides again if placeholder re-selected
-- product description (p, updates dynamically)
-- product option selector (#product-selector)
-  - first option is a disabled placeholder: "Choose Product Option"
-  - real options: Trellis Single, Trellis 2 Pack, Gardyn Compatible Caps 5 Pack
-- Buy Now button (.add-to-cart) — opens Etsy listing in new tab
+### Price Display
+`.price` — starts with `visibility: hidden` on page load (no price until selection).
+`.price-text` span holds the value. Flanked by `tiny_plant_icon.png` leaf icons.
+Becomes visible when a real product is selected; hides again if placeholder re-selected.
 
-This is the most important conversion section of the page.
+### Product Selector
+`id="product-selector"` — `<select>` dropdown.
+Options: disabled placeholder, Trellis Single, Trellis 2-Pack, Caps 5-Pack.
+On change: updates hero title, price, description, hero image, gallery, "What's Included" list.
+Shows/hides `#color-selector` based on `product.hasColorSelector`.
 
+### Color Selector (`id="color-selector"`, hidden by default)
+Only visible when Caps product is selected.
 
-PRODUCT GALLERY
-Image gallery. id="gallery"
+Contains `id="cap-color-selector"` `<select>`:  
+Options: Select Color, Copper, Azure Blue, Scarlet Red, Leaf Green, Silver Ash, Custom.
 
-Uses .gallery-modern container with:
-- main image (.main-image-modern > img#main-image)
-- horizontal scrollable thumbnail row (.thumbnail-row)
-- clicking thumbnail updates main image and sets .active class
-- clicking main image opens zoom modal
+**3-state UI logic (managed by JS):**
 
-Gallery images update when product variant is changed via dropdown.
+| Dropdown value | Visible panel |
+|---|---|
+| `""` (Select Color) | `#color-options-preview` — static 6-swatch grid |
+| specific color (e.g. `copper`) | `#cap-preview-grid` — 5 identical cap previews rendered by JS |
+| `custom` | `#custom-color-picker` — quantity picker |
 
+#### Panel A: Static 6-swatch grid (`id="color-options-preview"`, class `color-options`)
+6 `.color-option` divs, each with `.color-circle` image + `.color-label` text.
+Non-clickable, visual display only. Colors: Copper, Azure Blue, Scarlet Red, Leaf Green, Silver Ash, Custom.
 
-IMAGE ZOOM MODAL
-Overlay modal for enlarged image view. id="imageModal"
+#### Panel B: 5-cap preview (`id="cap-preview-grid"`)
+Populated dynamically by `renderPreviewCaps(color)`.
+Shows 5 identical `.color-option` cards for the selected specific color.
 
-Contains:
-- enlarged image (#modalImage)
-- close button (.close)
-- clicking outside modal also closes it
+#### Panel C: Custom color picker (`id="custom-color-picker"`)
+Shown only when "Custom" selected.
+- Heading: `<p class="custom-picker-heading">Pick 5 Colors</p>`
+- Grid: class `custom-color-picker-grid`
+  - 5 × `.custom-qty-card[data-color="<key>"]` — each with product image, color name, `[-] qty [+]` controls
+  - Color keys: `copper`, `azure`, `scarlet`, `leaf`, `silver`
+  - Qty spans: `id="qty-copper"` through `id="qty-silver"`
+  - Buttons: `.qty-minus[data-color]`, `.qty-plus[data-color]`
+- Counter: `id="custom-color-counter"` — shows "N / 5 selected"
+- `.has-qty` class added to card when qty > 0
+- `CAP_TOTAL = 5` constant enforces total limit
 
+### Buy Now Button
+Class `.add-to-cart` (first instance, not `.cta-shop-btn`).
+- Trellis: `window.open(product.etsyUrl, '_blank')`
+- Caps + specific color: `window.open(capLinks[color] || product.etsyUrl, '_blank')`
+- Caps + custom: `async` — POSTs to `/api/create-checkout-session`, redirects to Stripe URL
+- Disabled (`opacity: 0.45`, `cursor: not-allowed`) when Custom is active and total ≠ 5
 
-PRODUCT VARIANT SYSTEM (IMPLEMENTED)
+---
 
-Products:
-  Trellis – Single  ($29.99)  etsyUrl: trellis listing
-  Trellis – 2 Pack  ($49.99)  etsyUrl: 2-pack listing
-  Gardyn Compatible Caps – 5 Pack  ($18.49)  etsyUrl: caps listing
+## PRODUCT GALLERY (`id="gallery"`)
+`.gallery-modern` container:
+- Main image: `.main-image-modern > img#main-image` — clickable (opens zoom modal)
+- Thumbnails: `.thumbnail-row` — horizontal scroll row of `<img>` tags, `.active` class on selected
+- `loadGallery(images, altPrefix)` JS function replaces thumbnail row content on product change
+- Default gallery (page load): mixed trellis + caps images
 
-Dropdown change event updates:
-- hero title
-- hero price
-- hero description
-- hero product image
-- gallery main image
-- gallery thumbnails
+---
 
+## IMAGE ZOOM MODAL (`id="imageModal"`)
+- Click `#main-image` → opens modal, sets `#modalImage` src
+- `.close` button or clicking outside modal → closes
+- Class `.modal`
 
-FEATURES SECTION
-id="features"
-Explains the main benefits of the product.
+---
 
+## STICKY BUY BAR (`id="stickyBuyBar"`, class `sticky-buy-bar`)
+Fixed bottom bar. Starts `display:none`.
+Contains `#stickyProductName` + `#stickyBuyBtn`.
+*(Visibility logic may not be fully wired — check script.js if activating)*
 
-WHAT'S INCLUDED SECTION
-id="included"
-List of components included in the product.
+---
 
+## CONTENT SECTIONS
 
-HOW IT WORKS SECTION
-id="how-works"
-Step-by-step cards (.step) with numbered circles (.step-number).
+| Section id | Description |
+|---|---|
+| `#why-need` | Marketing copy about why the trellis is needed |
+| `#features` | `<ul>` with Font Awesome icon bullets |
+| `#included` | Dynamic `id="included-list"` `<ul>` — updated by JS on product change |
+| `#how-works` | 3 `.step` cards with `.step-number` circles |
+| `#about` | Company background, veteran-owned story |
+| `#shipping` | Ships from Texas, 3–5 business day production |
+| `#faq` | 4 `.faq-item` cards (Q&A about compatibility, returns, etc.) |
+| `#final-cta` | Darker bg (`#0f2218`), headline + `.cta-shop-btn` Buy Now button |
 
+---
 
-ABOUT SECTION
-id="about"
-Information about VetROponics Systems — veteran-owned small business.
+## FOOTER
+Three-column `.footer-content` grid:
+- Column 1: brand name + tagline
+- Column 2: Quick Links (Home, Gallery, Features, About)
+- Column 3: Contact (email + "Contact via Etsy")
+- `.footer-bottom`: copyright line
 
+Leaf graphic: `footer::after` pseudo-element with `leaves_footer_image.png`. `z-index: 1`, `pointer-events: none`. Content at `z-index: 2`.
+Footer uses **hardcoded colors** (not CSS variables) — intentional.
 
-SHIPPING SECTION
-id="shipping"
-Logistics and fulfillment information.
+---
+
+## PROMO POPUP (`id="promo-popup"`, class `promo-popup`)
+Fixed, bottom-right. Appears at 35% scroll depth.
+- `#promo-popup-close` (X button) dismisses it
+- `sessionStorage` key `"promo_dismissed"` prevents re-showing in same session
+- CSS class `.promo-popup--visible` triggers slide-up + fade-in animation
+- Content: "Use code **AMERICA** for **10% off**" + "Thanks for supporting small creators."
+
+---
+
+## ANIMATION LAYER (`id="animation-layer"`)
+Fixed full-screen overlay. `pointer-events: none`, `z-index: 0`.
+Placeholder for future decorative animations.
+
+---
+
+## SCRIPT.JS DATA OBJECTS (quick reference)
+
+```js
+// Product variants
+const products = { single, '2pack', caps }
+// each has: name, price, description, mainImage, galleryImages, etsyUrl, hasColorSelector, includedItems
+
+// Cap color images
+const capColorImages = { copper, azure, scarlet, leaf, silver, custom }
+
+// Cap color purchase links (all empty — falls back to Etsy)
+const capLinks = { copper:'', azure:'', scarlet:'', leaf:'', silver:'', custom:'' }
+
+// Human-readable color labels
+const colorLabels = { copper:'Copper', azure:'Azure Blue', scarlet:'Scarlet Red', leaf:'Leaf Green', silver:'Silver Ash' }
+
+// Custom picker state
+const customQty = { copper:0, azure:0, scarlet:0, leaf:0, silver:0 }
+const CAP_TOTAL = 5
+
+// Key→Stripe metadata name mapping (used in Buy Now handler)
+const colorKeyMap = { copper:'copper', azure:'azure_blue', scarlet:'scarlet_red', leaf:'leaf_green', silver:'silver_ash' }
+```
 
 
 FAQ SECTION
@@ -132,73 +203,3 @@ Toggles body.light-theme class.
 Label: "☀ Light" (dark mode active) / "🌙 Dark" (light mode active)
 Persists choice via localStorage key "theme".
 
-
-PROMO POPUP
-id="promo-popup", class="promo-popup"
-Fixed position, bottom-right corner of screen.
-Shows after user scrolls 35% down the page.
-Closes via #promo-popup-close button (X).
-Dismissal stored in sessionStorage key "promo_dismissed" — does not reappear after close or page refresh within same session.
-Content: discount code AMERICA for 10% off + "Thanks for supporting small creators."
-Animation: fade-in + slide-up via CSS transition on .promo-popup--visible class.
-Mobile: stretches to full width minus margins on screens ≤ 480px.
-
-
-ANIMATION LAYER
-id="animation-layer"
-Fixed full-screen overlay, pointer-events: none, z-index: 0.
-Reserved for future decorative animations (floating leaves etc.).
-- high quality
-- customer focused
-
-
-SHIPPING SECTION
-Information about shipping.
-
-Key details:
-- ships from Texas
-- 3–5 business days
-- packed carefully
-
-
-FAQ SECTION
-Common customer questions.
-
-Example questions:
-- Is this compatible with Gardyn 2.0 or 3.0?
-- How easy is installation?
-- What material is it made from?
-- Do you offer a return policy?
-
-
-FOOTER
-Bottom section of the site.
-
-Contains:
-- business name
-- copyright
-- navigation links
-
-
-DESIGN SYSTEM NOTES
-
-The site is transitioning to a darker plant-themed ecommerce style.
-
-Design characteristics:
-
-- dark warm backgrounds
-- plant green accent colors
-- soft shadows
-- subtle gradients
-- rounded cards
-- modern ecommerce product presentation
-- premium feel
-
-
-IMPORTANT RULES
-
-Do not rebuild the page layout.
-
-Only improve styling or functionality inside the existing structure.
-
-All changes should stay compatible with the current HTML, CSS, and JavaScript files.

@@ -1,65 +1,122 @@
-PRODUCT DATA
+﻿# PRODUCT DATA — VetROponics Systems
+Last updated: 2026-03-11
 
-This file contains the structured data for all products sold on the website.
+---
 
-The purpose of this file is to provide a single reference point for product information so the AI does not need to search through the website code to determine product details.
+## BRAND
 
-When product information changes, update this file and ensure the website reflects the updated data.
+**Name:** VetROponics Systems  
+**Type:** Veteran-owned small business (founded by a Gulf War disabled veteran)  
+**Made in:** USA (3D printed)  
+**Tagline:** Veteran-owned hydroponic accessories  
+**Disclaimer:** Not affiliated with or endorsed by Gardyn Inc. Independent accessory designed to fit the Gardyn Home system.
 
+---
 
-MAIN PRODUCT
+## PRODUCTS
 
-Product Name
-Gardyn Home Trellis Kit
+### VARIANT 1 — Trellis Kit – Single
+**Price:** $29.99  
+**`products` key:** `single`  
+**Hero image:** `images/singleset_trellis_product_image.png`  
+**Gallery:** `image11.jpg` – `image77.jpg`  
+**Etsy URL:** `https://www.etsy.com/listing/4397538500/...` (trellis single listing)  
+**hasColorSelector:** `false`
 
-Brand
-VetROponics Systems
+**Description:** Single decorative trellis panel designed for the Gardyn Home hydroponic system.
 
-Category
-Hydroponic System Accessories
+**Included:**
+- 12 trellis panels
+- Top clips ×1
+- Panel clips ×1
+- Bottom brackets ×1
+- Hook and loop mounting sections
 
+**Compatible with:** Gardyn Home only  
+**NOT compatible with:** Gardyn 2.0, Gardyn 3.0
 
-PRODUCT VARIANTS
+---
 
+### VARIANT 2 — Trellis Kit – 2 Pack
+**Price:** $49.99  
+**`products` key:** `2pack`  
+**Hero image:** `images/setof_two_trellis_product_image.png`  
+**Gallery:** `image11.jpg` – `image77.jpg`  
+**Etsy URL:** trellis 2-pack listing  
+**hasColorSelector:** `false`
 
-VARIANT 1
+**Description:** Two trellis panels for supporting larger plants.
 
-Name
-Trellis Kit – Single
+**Included:**
+- 24 trellis panels
+- Top clips ×2
+- Panel clips ×2
+- Bottom brackets ×2
+- Hook and loop mounting sections
 
-Price
-$29.99
+**Compatible with:** Gardyn Home only  
+**NOT compatible with:** Gardyn 2.0, Gardyn 3.0
 
-Description
-A single vertical trellis kit designed to support climbing plants in the Gardyn Home indoor hydroponic system.
+---
 
-Includes one row of trellis panels and the required mounting clips.
+### VARIANT 3 — Gardyn Compatible Caps – 5 Pack
+**Price:** $18.49  
+**`products` key:** `caps`  
+**Hero image (default):** `images/cap_product_main_image.png`  
+**Hero image (color selected):** `images/cap_color_image_<color>.png`  
+**Gallery:** `cap_product_image2.jpg` – `cap_product_image7.jpg`  
+**Etsy URL:** `https://www.etsy.com/listing/4419864362/...` (caps listing — used as fallback)  
+**hasColorSelector:** `true`
 
+**Description:** Decorative 3D printed Gardyn compatible caps with epoxy leaf design.
 
-Images
+**Included:** 5 decorative Gardyn compatible caps (customer's choice of color/mix)
 
-trellis_product_image1.jpg
-product_review1.jpg
+**Compatible with:** Gardyn Home only  
+**NOT compatible with:** Gardyn 2.0, Gardyn 3.0
 
+#### Available Cap Colors
 
-Included Parts
+| Key (script.js) | Display Name | Stripe metadata key | Image |
+|---|---|---|---|
+| `copper` | Copper | `copper` | `cap_color_image_copper.png` |
+| `azure` | Azure Blue | `azure_blue` | `cap_color_image_azure_blue.png` |
+| `scarlet` | Scarlet Red | `scarlet_red` | `cap_color_image_scarlet_red.png` |
+| `leaf` | Leaf Green | `leaf_green` | `cap_color_image_light_green.png` |
+| `silver` | Silver Ash | `silver_ash` | `cap_color_image_silver_ash.png` |
+| `custom` | Custom (mix) | — | `cap_color_image_custom.png` |
 
-12 trellis panels  
-top clips  
-panel clips  
-bottom brackets  
-hook and loop bracket mounts
+#### Checkout method per color selection
+- **Specific color (non-custom):** `window.open(capLinks[color] || product.etsyUrl, '_blank')`  
+  `capLinks` object in `script.js` has all values empty → falls back to main caps Etsy listing  
+  *Fill in `capLinks` when per-color Stripe or Etsy listings are ready.*
+- **Custom mix:** POST `/api/create-checkout-session` → Stripe Checkout  
+  Stripe Price ID: `price_1T9vwK09XmoK39lfYim6yGw5` (note lowercase `l`)
 
+---
 
-Compatible With
+## PRODUCT FEATURES (all products)
+- Food-safe 3D printed material
+- Lightweight and durable
+- Reusable design
+- Simple installation (no tools required)
+- Designed and printed in the USA
+- Veteran-owned small business
 
-Gardyn Home
+---
 
+## SHIPPING
+- Ships from: Texas, USA
+- Production time: 3–5 business days (made to order)
+- Packaging: carefully packed to prevent damage
 
-Not Compatible With
+---
 
-Gardyn 2.0  
-Gardyn 3.0
+## AI USAGE RULES
+1. Always reference this file for product names, prices, and descriptions.
+2. Do not invent product details or compatibility claims.
+3. If pricing or descriptions change, update this file AND the `products` object in `script.js`.
+4. `capLinks` is intentionally empty — do not add placeholder URLs; only add real working URLs.
 
 
 

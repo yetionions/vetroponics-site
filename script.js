@@ -111,14 +111,14 @@ const capColorImages = {
     custom:  'images/cap_color_image_custom.png'
 };
 
-// Cap color purchase links (fill in URLs when ready)
+// Cap color purchase links
 const capLinks = {
     copper:  '',
     azure:   '',
-    scarlet: '',
+    scarlet: 'https://buy.stripe.com/bJe3cn9kM9sPeX6cjxcIE00',
     leaf:    '',
     silver:  '',
-    custom:  ''
+    custom:  'https://buy.stripe.com/cNi5kv7cE0Wj16gdnBcIE01'
 };
 
 // Default mixed gallery shown before any product is selected
@@ -336,7 +336,7 @@ modal.onclick = function(event) {
 
 // Add to cart functionality (product selector buttons only)
 document.querySelectorAll('.add-to-cart:not(.cta-shop-btn)').forEach(button => {
-    button.addEventListener('click', async () => {
+    button.addEventListener('click', () => {
         const selected = document.getElementById('product-selector').value;
         const product  = products[selected];
 
@@ -344,44 +344,16 @@ document.querySelectorAll('.add-to-cart:not(.cta-shop-btn)').forEach(button => {
             const color = document.getElementById('cap-color-selector').value;
 
             if (color === 'custom') {
-                // Map short keys to full Stripe metadata-safe names
-                const colorKeyMap = {
-                    copper:  'copper',
-                    azure:   'azure_blue',
-                    scarlet: 'scarlet_red',
-                    leaf:    'leaf_green',
-                    silver:  'silver_ash'
-                };
-                // Expand qty map into flat array: ["azure_blue","azure_blue","leaf_green",…]
-                const colorArray = Object.entries(customQty)
-                    .flatMap(([key, count]) => Array(count).fill(colorKeyMap[key]));
-
-                if (colorArray.length !== CAP_TOTAL) {
+                if (getTotalSelected() !== CAP_TOTAL) {
                     alert('Please select exactly 5 colors for your Custom pack.');
                     return;
                 }
-                // POST to backend and redirect to Stripe Checkout
-                try {
-                    button.disabled    = true;
-                    button.textContent = 'Redirecting…';
-                    const response = await fetch('/api/create-checkout-session', {
-                        method:  'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body:    JSON.stringify({ colors: colorArray })
-                    });
-                    if (!response.ok) throw new Error('Server error');
-                    const { url } = await response.json();
-                    window.location.href = url;
-                } catch (err) {
-                    console.error('Checkout error:', err);
-                    alert('Could not start checkout. Please try again.');
-                    button.textContent = 'Buy Now';
-                    updateBuyButtonState();
-                }
+                // Open Stripe payment link for Custom caps in a new tab
+                window.open(capLinks.custom, '_blank', 'noopener');
             } else {
                 // Non-custom cap color — open direct Stripe or Etsy link
                 const colorUrl = color && capLinks[color];
-                window.open(colorUrl || product.etsyUrl, '_blank');
+                window.open(colorUrl || product.etsyUrl, '_blank', 'noopener');
             }
         } else {
             // Trellis products — open Etsy listing

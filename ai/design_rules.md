@@ -1,61 +1,97 @@
-Brand color: deep forest green
-Accent color: light green glow
-Style: premium dark plant-themed ecommerce
-Focus: product conversion
+# DESIGN RULES — VetROponics Systems
+Last updated: 2026-03-11
 
+---
 
-DESIGN RULES
+## THEME
 
-Theme style:
-dark plant-themed modern product landing page (default)
-light theme available via body.light-theme toggle
+Default: dark forest-green plant aesthetic.
+Light mode available via `body.light-theme` class on `<body>`.
 
-Color direction (dark theme — default):
+---
 
-background: deep dark forest green (#111d16 → #0b1710 gradient)
-sections: slightly lighter dark green (#1a2e22)
-cards/containers: medium dark green (#253d2d)
-nav: darkest green tone (#0e1a12)
-accent: bright green (#72b876), glow green (#9dd49c)
-text: light mint green (#d4f0d8), muted green (#b4cfb8)
-border: subtle dark green (#2e4a35)
+## COLORS — CSS VARIABLES (`:root`)
 
-Color direction (light theme — body.light-theme):
+| Token | Value | Usage |
+|---|---|---|
+| `--bg-body` | `#111d16` → `#0b1710` gradient | Page background (vertical gradient on `body` only) |
+| `--bg-section` | `#1a2e22` | Section backgrounds |
+| `--bg-card` | `#253d2d` | Cards, containers |
+| `--bg-nav` | `#0e1a12` | Navbar |
+| `--accent-primary` | `#72b876` | Primary accent (buttons, highlights) |
+| `--accent-glow` | `#9dd49c` | Glow effects |
+| `--text-primary` | `#d4f0d8` | Main readable text |
+| `--text-muted` | `#b4cfb8` | Secondary text |
+| `--border` | `#2e4a35` | Subtle borders |
+| `--shadow` | dark green tone | Box shadows |
 
-background: soft sage (#f0f7ee)
-sections: pale green (#e4f0e0)
-cards: white (#ffffff)
-nav: white
-text: near-black dark green (#1a2e1e), muted green (#3a5c42)
-accent: deep forest green (#2e6b3a)
+## COLORS — Light Theme (`body.light-theme`)
 
-Footer:
-Background is warm khaki (#e8e2d0) with leaves_footer_image.png overlaid via ::after pseudo-element.
-Footer text uses explicit hardcoded colors (not CSS variables) so it is independent from global theme changes.
-Footer headings: #a8e6b0
-Footer body text / list items: #c8e8cc
-Footer links: #b0ddb8 (hover: #7FD99C with green glow)
-Footer copyright: #a8c8ae
+| Token | Value |
+|---|---|
+| Background | `#f0f7ee` |
+| Sections | `#e4f0e0` |
+| Cards | `#ffffff` |
+| Nav | `#ffffff` |
+| Text primary | `#1a2e1e` |
+| Text muted | `#3a5c42` |
+| Accent | `#2e6b3a` |
 
-UI rules:
+## COLORS — Footer (hardcoded, intentionally NOT using CSS variables)
 
-high contrast and excellent readability
-minimal, elegant, product-focused
-rounded corners
-soft shadows
-premium feel
-strong typography hierarchy
-plant-themed glow effects on interactive elements
+Footer is isolated from global theme changes by design — use hardcoded colors only.
 
-CSS variable system:
+| Element | Color |
+|---|---|
+| Footer background | `#e8e2d0` (warm khaki) |
+| Footer headings | `#a8e6b0` |
+| Footer body text / list items | `#c8e8cc` |
+| Footer links | `#b0ddb8` (hover: `#7FD99C` + green glow) |
+| Footer copyright | `#a8c8ae` |
 
-All theme colors are defined as CSS custom properties in :root.
-Light theme overrides are applied via body.light-theme selector block at the end of style.css.
-Do not hardcode colors on general page elements — use CSS variables.
-Footer colors ARE hardcoded as an intentional exception to isolate them from global theme changes.
+Footer decorative leaf: `leaves_footer_image.png` via `footer::after` pseudo-element. `z-index: 1`, `pointer-events: none`. Footer content container is `z-index: 2`.
 
-Gradient rule:
+---
 
-The vertical page gradient exists only on the body background.
-Cards, sections, and containers must NOT contain diagonal gradients.
-Gradient overlays (::before, ::after) on cards and sections should be set to background: none.
+## TYPOGRAPHY
+
+- Font: **Poppins** (Google Fonts) — weights 300, 400, 600, 700
+- Icons: **Font Awesome 6**
+- Hierarchy: h1 (product title) > h2 (section titles) > h3 (card titles) > p (body)
+
+---
+
+## LAYOUT
+
+- Container max-width: ~1200px, centered with `margin: 0 auto`
+- Sections use consistent vertical padding
+- Cards and containers use `border-radius` (rounded corners)
+- Soft `box-shadow` on cards
+
+---
+
+## GRADIENTS
+
+**Rule:** vertical `linear-gradient(180deg, ...)` exists ONLY on `body` background.
+Cards, sections, and containers must NOT have diagonal gradients.
+If any card/section has a `::before` or `::after` gradient overlay: set `background: none`.
+
+---
+
+## ANIMATIONS
+
+- Promo popup: `slide-up + fade-in` CSS animation via `.promo-popup--visible` class
+- Interactive elements: green glow on focus/hover (`box-shadow` with accent color)
+- No heavy animations on product content — keep performance clean
+
+---
+
+## UI CONSISTENCY REQUIREMENTS
+
+- All interactive elements (buttons, dropdowns, inputs) use CSS variables — never hardcoded colors
+- Buy Now button: `.add-to-cart` class; disabled state uses `opacity: 0.45`, `cursor: not-allowed`
+- All dropdowns (`#product-selector`, `#cap-color-selector`) styled identically — same padding, border-radius, border, background, glow focus ring
+- Color swatch images use `.color-circle` class (circular display)
+- Custom qty cards use `.custom-qty-card` class with `.has-qty` highlight state
+- Light theme overrides live at the **END** of `style.css` — do not insert overrides elsewhere
+- Do NOT hardcode colors on general page elements — use CSS variables (footer is the only exception)

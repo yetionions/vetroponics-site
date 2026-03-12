@@ -1,83 +1,126 @@
-AI DEVELOPMENT RULES
+# AI DEVELOPMENT RULES — VetROponics Systems
+Last updated: 2026-03-11
 
-These rules define how the AI should interact with this project.
+---
 
-The goal is to maintain a stable, clean ecommerce landing page without unnecessary rewrites or structural changes.
+## MANDATORY FIRST STEP
 
-
-GENERAL BEHAVIOR
-
-Always read the AI context files before making changes.
-
+Before making any changes, read all 7 AI context files:
+```
 ai/project_map.md
 ai/project_context.md
 ai/design_rules.md
 ai/components.md
 ai/current_state.md
+ai/product_data.md
+ai/ai_rules.md
+```
+These are the source of truth. Do not guess at project structure.
 
-These files contain the summarized project structure and must be used as the primary reference before editing code.
+---
 
+## CODE MODIFICATION RULES
 
-CODE MODIFICATION RULES
+- Do NOT rewrite entire files unless explicitly requested.
+- Do NOT rebuild or restructure HTML sections.
+- Do NOT remove existing sections from the page.
+- Make the smallest possible change to accomplish the task.
+- Prefer CSS changes over HTML structural changes when possible.
+- Keep JavaScript minimal — no frameworks, no build tools.
 
-Do NOT rewrite entire files unless explicitly requested.
+---
 
-Do NOT rebuild the site layout.
+## CRITICAL COMPONENTS — DO NOT BREAK
 
-Do NOT remove existing sections unless instructed.
+These are fully implemented and functional. Never remove or interfere with them:
 
-Only modify the smallest amount of code necessary to accomplish the requested change.
+| Component | Details |
+|---|---|
+| Theme toggle | `#theme-toggle`, `body.light-theme` CSS block |
+| Promo popup | `#promo-popup`, sessionStorage dismissal, scroll trigger |
+| Product selector | `#product-selector`, dynamic hero/gallery/included updates |
+| Cap color selector | `#cap-color-selector`, 3-state panel logic |
+| Custom qty picker | `#custom-color-picker`, `customQty` object, `CAP_TOTAL` |
+| Buy Now button | `.add-to-cart` (hero), disabled state, async Stripe path |
+| Stripe function | `functions/api/create-checkout-session.js`, do not change Price ID without intent |
+| Footer leaf graphic | `footer::after` pseudo-element — do not alter z-index or positioning |
+| CSS variable system | `:root` block in `style.css` |
+| Mobile hamburger menu | `.hamburger`, `.nav-links.active` |
+| Image zoom modal | `#imageModal`, `#modalImage` |
+| Scroll event listener | Handles header shadow + promo trigger — do not replace |
 
-Prefer updating CSS styling rather than altering HTML structure whenever possible.
+---
 
-Keep JavaScript simple and minimal.
+## CSS RULES
 
+- Use CSS variables from `:root` for all colors on general page elements.
+- Do NOT hardcode colors on generic elements — exception: footer (intentional).
+- Footer text colors are hardcoded by design — do not convert them to CSS variables.
+- Light theme override block lives at the **END** of `style.css` — add light overrides there only.
+- Do NOT add diagonal gradients to cards, sections, or containers.
+- Vertical page gradient belongs **only** on `body` background.
 
-CRITICAL COMPONENTS — DO NOT BREAK
+---
 
-These components are implemented and functional. Do not remove or interfere with them:
+## FILE STRUCTURE RULES
 
-- Theme toggle button (#theme-toggle) and body.light-theme CSS block
-- Promo popup (#promo-popup) and its sessionStorage dismissal logic
-- Product variant dropdown and its dynamic update system
-- Buy Now button → Etsy URL redirect
-- Footer leaf graphic layering (footer::after pseudo-element)
-- CSS variable system (:root block in style.css)
-- Mobile hamburger menu
-- Image zoom modal
-- scroll event listener (handles header shadow, promo trigger, and should not be replaced)
+```
+index.html          ← single HTML file, all sections inline
+style.css           ← all styling
+script.js           ← all frontend logic
+tiny_plant_icon.png ← root-level asset
+leaves_footer_image.png ← root-level asset
+favicon.png         ← root-level asset
+images/             ← all product and gallery images
+functions/api/create-checkout-session.js  ← Cloudflare Pages Function
+server.js           ← local dev only
+package.json        ← local dev only
+.env.example        ← env var documentation
+ai/                 ← AI context files only
+```
 
+- Do not create new files unless explicitly required.
+- Do not reorganize the folder structure.
+- Never put `STRIPE_SECRET_KEY` in frontend code or commit `.env` to git.
 
-CSS RULES
+---
 
-All colors on general page elements must use CSS variables from :root.
-Do NOT hardcode colors on general page elements.
-Footer text colors ARE hardcoded by design — do not change them to use CSS variables.
-The light theme override block (body.light-theme {...}) lives at the END of style.css.
-Do not add diagonal gradients to cards, sections, or containers.
-The vertical page gradient lives only on body background.
+## DEPLOYMENT RULES
 
+- Site is deployed on **Cloudflare Pages** from a GitHub repo.
+- Pushing to GitHub triggers an automatic Cloudflare Pages deployment.
+- `STRIPE_SECRET_KEY` must be set via the Cloudflare Pages dashboard (Settings → Environment Variables).
+- Do NOT add npm packages to the Cloudflare Function — it uses Workers-native `fetch`, no node_modules.
+- `server.js` and `package.json` are local development utilities only.
 
-FILE STRUCTURE RULES
+---
 
-Current project files:
+## STRIPE RULES
 
-index.html
-style.css
-script.js
-images/
-tiny_plant_icon.png
-leaves_footer_image.png
-ai/
+- The Cloudflare Function is the only place that calls Stripe.
+- Price ID: `price_1T9vwK09XmoK39lfYim6yGw5` — contains lowercase `l`, not capital `I` (common typo risk).
+- Never expose `STRIPE_SECRET_KEY` in `index.html` or `script.js`.
+- Custom caps checkout flow: frontend POSTs `{ colors: [...] }` → function validates → creates session → returns `{ url }` → frontend redirects.
 
-Do not create unnecessary files.
+---
 
-Do not reorganize the project structure unless specifically instructed.
+## PRODUCT DATA RULES
 
+- Always check `ai/product_data.md` before modifying product names, prices, or descriptions.
+- `capLinks` in `script.js` is intentionally empty — do not add placeholder URLs.
+- If adding per-color purchase links, fill in `capLinks` with real working Stripe or Etsy URLs.
+- If product pricing changes, update BOTH `script.js` (`products` object) AND `ai/product_data.md`.
 
-DESIGN RULES
+---
 
-The current design is a dark forest-green plant-themed aesthetic.
+## DESIGN RULES (summary)
+
+- Dark forest-green theme is default — maintain this aesthetic.
+- All new UI elements must use CSS variables (not hardcoded colors).
+- Match existing component styles — buttons, dropdowns, cards should look consistent.
+- Light theme overrides go at the END of `style.css`.
+- No diagonal gradients anywhere except body background.
+- See `ai/design_rules.md` for full color reference.
 
 Visual goals:
 

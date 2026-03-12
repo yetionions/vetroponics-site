@@ -1,67 +1,100 @@
-# CURRENT STATE — VetROponics Systems Website
+﻿# CURRENT STATE — VetROponics Systems
 Last updated: 2026-03-11
 
 ---
 
-# ACTIVE FEATURES (fully implemented and working)
+## COMPLETED FEATURES (fully implemented and working)
 
-## Theme System
-- Default theme is **dark forest-green** (CSS variables in `:root`)
-- **Light theme** is available via `body.light-theme` CSS override block at the end of style.css
-- Theme toggle button (`#theme-toggle`, `.theme-toggle`) sits in the navigation bar
-- Button label: "☀ Light" in dark mode / "🌙 Dark" in light mode
-- Theme preference persists across page loads via `localStorage` key `"theme"`
+### Theme System
+- Default: **dark forest-green** (CSS variables in `:root`)
+- Light theme: `body.light-theme` override block at the END of `style.css`
+- Toggle: `#theme-toggle` button in nav — label "☀ Light" / "🌙 Dark"
+- Persists via `localStorage` key `"theme"`
 
-## Product Variant Dropdown
-- Dropdown (`#product-selector`) has a disabled placeholder as default: "Choose Product Option"
-- No product is pre-selected on page load
-- **Price is hidden on page load** — `.price` div starts with `visibility: hidden`
-- Price only becomes visible after the user selects a real product option
-- If the placeholder is re-selected, price hides again
-- Selecting a variant updates: hero title, hero price (shown), hero description, hero image, gallery main image, gallery thumbnails, and Buy Now Etsy URL
+### Navigation
+- Sticky header with logo, nav links, theme toggle, hamburger
+- Mobile hamburger menu collapses nav links
+- Header gains `.scrolled` class (shadow) on scroll
 
-## Buy Now Button
-- Clicking Buy Now opens the Etsy listing for the selected product in a new tab
-- If no product is selected, user is prompted to choose first
+### Product Variant System
+- `#product-selector` dropdown — 3 products
+- Selects update: hero title, price, description, hero image, gallery images, "What's Included" list
+- Price hidden on page load (`visibility: hidden`), shown on selection, hidden again if placeholder re-selected
+- Shows/hides `#color-selector` based on `product.hasColorSelector`
 
-## Product Gallery
-- Modern layout: large main image + horizontal scrollable thumbnail row
-- Clicking thumbnail updates main image and sets `.active` highlight
-- Clicking main image opens full-size zoom modal
-- Gallery images update dynamically when variant changes
+### Cap Color Selector (shown only when Caps product selected)
+- `#cap-color-selector` dropdown with 7 options: Select Color, Copper, Azure Blue, Scarlet Red, Leaf Green, Silver Ash, Custom
+- Selecting a color updates the hero product image to matching color swatch
+- **3-state panel system:**
+  - Select Color → 6-swatch static grid (`#color-options-preview`)
+  - Specific color → 5 identical cap preview cards (`#cap-preview-grid`, rendered by `renderPreviewCaps()`)
+  - Custom → quantity picker (`#custom-color-picker`)
 
-## Footer
-- Background: warm khaki `#e8e2d0` with `leaves_footer_image.png` overlaid as a decorative element via `footer::after` pseudo-element
-- Leaf graphic is `pointer-events: none`, `z-index: 1`; footer content container is `z-index: 2`
-- Footer text uses **hardcoded hex colors** (not CSS variables) so it is fully isolated from global theme changes
-- Footer text is bright and high-contrast for readability
+### Custom Color Picker
+- 5 `.custom-qty-card` cards (Copper, Azure Blue, Scarlet Red, Leaf Green, Silver Ash)
+- Each card: color image, name, `[-] qty [+]` controls
+- State: `customQty` object + `CAP_TOTAL = 5` constant
+- `refreshQtyUI()` updates qty spans, toggles `.has-qty`, disables buttons at limits
+- Counter: `#custom-color-counter` shows "N / 5 selected"
+- Grid layout: 6-column track, last 2 cards centered via `nth-child(4)` and `nth-child(5)` explicit placement
 
-## Promotional Popup
-- Appears after user scrolls 35% down the page
-- Bottom-right corner, non-intrusive
-- Content: "Use code AMERICA for 10% off your order. / Thanks for supporting small creators."
-- Close button (X) dismisses it; dismissal stored in `sessionStorage` key `"promo_dismissed"`
-- Does not reappear after close or on page refresh within the same session
-- Slide-up + fade-in CSS animation via `.promo-popup--visible` class
-- Responsive: full width on mobile (≤ 480px)
-- Light theme CSS overrides included
+### Buy Now Button (`.add-to-cart`, first instance only)
+- Trellis: `window.open(product.etsyUrl, '_blank')`
+- Caps + specific color: `window.open(capLinks[color] || product.etsyUrl, '_blank', 'noopener')` — Scarlet Red uses live Stripe link; others fall back to Etsy
+- Caps + Custom: `window.open(capLinks.custom, '_blank', 'noopener')` → direct Stripe payment link (no longer POSTs to backend)
+- Disabled (opacity 0.45, cursor not-allowed) when Custom active and total ≠ 5
 
-## Navigation
-- Fixed sticky header
-- Hamburger menu on mobile (collapses nav links)
-- Header gains shadow class on scroll
+### Live Stripe Payment Links (in `capLinks`)
+- Scarlet Red: `https://buy.stripe.com/bJe3cn9kM9sPeX6cjxcIE00`
+- Custom:      `https://buy.stripe.com/cNi5kv7cE0Wj16gdnBcIE01`
 
-## CSS Architecture
-- All theme colors defined as CSS custom properties in `:root`
-- Body background uses a vertical `linear-gradient(180deg, ...)`, not diagonal
-- Cards and section `::before` overlays set to `background: none` (no diagonal gradient artifacts)
-- Final CTA has a distinct darker background (`#0f2218`) for visual separation
-- Light theme block lives at the END of style.css
+### Stripe Checkout (`functions/api/create-checkout-session.js`)
+- Cloudflare Pages Function, route: `POST /api/create-checkout-session`
+- Accepts `{ colors: ["copper", "azure_blue", ...] }` (exactly 5 values)
+- Validates each color against `VALID_COLORS`
+- Creates Stripe Checkout Session (REST API, Workers-native fetch)
+- Metadata: `cap1`–`cap5` + `selected_colors` (human-readable summary)
+- `custom_text[submit][message]` displays color summary on Stripe checkout page
+- Price ID: `price_1T9vwK09XmoK39lfYim6yGw5` (lowercase `l`)
+- Success/cancel URL: `https://vetroponics-site.pages.dev/`
+- Secret key: `env.STRIPE_SECRET_KEY` (Cloudflare Pages dashboard env var)
+
+### Gallery
+- `#gallery` section with `.gallery-modern` container
+- Main image + horizontal scrollable thumbnail row
+- `loadGallery(images, altPrefix)` rebuilds thumbnails on product change
+- Default gallery (page load): mixed trellis + caps images
+- Main image click opens zoom modal (`#imageModal`)
+
+### Promo Popup
+- `#promo-popup` — appears after 35% scroll depth
+- Discount code: AMERICA 10% off
+- `#promo-popup-close` dismisses; `sessionStorage` key `"promo_dismissed"` prevents re-showing
+
+### Final CTA
+- `#final-cta` section with `.cta-shop-btn` button
+- Opens Etsy shop page in new tab (hardcoded)
 
 ---
 
-# RECENT CHANGES (2026-03-11 — latest)
-- Added Custom color picker UI (`#custom-color-picker`) inside `#color-selector` in `index.html` — hidden by default, only shown when "Custom" is selected from the Leaf Color dropdown
+## DEPLOYMENT STATUS
+
+- **Live on Cloudflare Pages:** `https://vetroponics-site.pages.dev/`
+- **Source:** GitHub repo, auto-deploys on push
+- **Stripe env var:** `STRIPE_SECRET_KEY` set in Cloudflare Pages dashboard
+- `server.js` / `package.json` are local dev only — not used in production
+
+---
+
+## KNOWN INCOMPLETE / FUTURE WORK
+
+| Item | Status |
+|---|---|
+| `capLinks` object | All values empty — non-custom cap colors fall back to Etsy |
+| Per-color Stripe or Etsy purchase links | Not yet created/filled |
+| Sticky buy bar (`#stickyBuyBar`) | Present in HTML but not fully wired in JS |
+| Review/testimonial section | Not implemented |
+| Shopify migration | Long-term goal, not started |
 - Picker contains 5 toggle chip buttons (Copper, Azure Blue, Scarlet Red, Leaf Green, Silver Ash) + a "0 / 5 selected" counter
 - Added `customSelections` array + `resetCustomPicker()` + `updateBuyButtonState()` helper functions in `script.js`
 - Buy Now button is disabled (opacity 0.45) whenever Custom is active and fewer than 5 colors are chosen; re-enables at exactly 5
