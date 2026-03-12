@@ -358,7 +358,34 @@ document.querySelector('.buy-now-btn:not(.cta-shop-btn)').addEventListener('clic
             alert('Please select exactly 5 colors for your Custom pack.');
             return;
         }
-        stripeUrl = capLinks[color];
+        if (color === 'custom') {
+            // POST quantities to API so Stripe metadata contains color breakdown
+            const btn = document.querySelector('.buy-now-btn:not(.cta-shop-btn)');
+            btn.disabled    = true;
+            btn.textContent = 'Redirecting…';
+            fetch('/api/create-checkout-session', {
+                method:  'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    copper:      customQty.copper,
+                    azure_blue:  customQty.azure,
+                    scarlet_red: customQty.scarlet,
+                    leaf_green:  customQty.leaf,
+                    silver_ash:  customQty.silver,
+                }),
+            })
+            .then(res => res.ok ? res.json() : res.json().then(d => Promise.reject(d.error || `Server error ${res.status}`)))
+            .then(data => { window.location.href = data.url; })
+            .catch(err => {
+                console.error('[Checkout] Failed:', err);
+                alert(`Checkout failed: ${err}`);
+                btn.disabled    = false;
+                btn.textContent = 'Buy Now';
+            });
+            return;
+        } else {
+            stripeUrl = capLinks[color];
+        }
     } else {
         stripeUrl = products[selected].stripeUrl;
     }
