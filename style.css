@@ -277,6 +277,26 @@ label[for="product-selector"] {
     box-shadow: 0 4px 20px rgba(30, 90, 68, 0.2);
 }
 
+#cap-color-selector {
+    width: 100%;
+    max-width: 450px;
+    padding: 1.5rem;
+    font-size: 1.2rem;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    background: var(--bg-card);
+    color: var(--text-primary);
+    box-shadow: 0 4px 16px var(--shadow);
+    margin-bottom: 1.5rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+#cap-color-selector:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 4px 20px rgba(30, 90, 68, 0.2);
+}
+
 .add-to-cart {
     background: var(--button-primary);
     color: var(--button-text);
@@ -428,6 +448,8 @@ label[for="product-selector"] {
   max-width: 700px;
   width: 100%;
   height: auto;
+  max-height: 500px;
+  object-fit: contain;
   border-radius: 12px;
   box-shadow: 0 6px 18px rgba(0,0,0,0.07);
   margin-bottom: 18px;
@@ -1170,6 +1192,165 @@ a:hover {
     -webkit-tap-highlight-color: transparent;
 }
 
+/* 5-cap preview grid (shown when a single color is chosen) */
+#cap-preview-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1.4rem;
+    justify-content: center;
+    margin-bottom: 0;
+    max-width: 420px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Each preview card spans 2 tracks → 3-per-row layout */
+#cap-preview-grid .color-option {
+    grid-column: span 2;
+}
+
+/* Center last two caps (4th and 5th) in row 2 */
+#cap-preview-grid .color-option:nth-child(4) { grid-column: 2 / 4; }
+#cap-preview-grid .color-option:nth-child(5) { grid-column: 4 / 6; }
+
+/* Custom color picker (caps — Custom option) */
+#custom-color-picker {
+    margin: 0.8rem 0 1.2rem 0;
+    text-align: center;
+}
+
+.custom-picker-heading {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--accent-primary);
+    margin: 0 0 0.9rem 0;
+    letter-spacing: 0.3px;
+}
+
+.custom-color-picker-grid {
+    display: grid;
+    /* 6-column base — each card spans 2 cols, giving a 3-per-row visual layout.
+       The 4th and 5th cards are placed explicitly to center the last row. */
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.7rem;
+    margin: 0 auto 1rem auto;
+    max-width: 420px;
+}
+
+/* Every card spans 2 columns (matches the 3-per-row width) */
+.custom-qty-card {
+    grid-column: span 2;
+}
+
+/* Center last row: card 4 sits at cols 2-4, card 5 at cols 4-6,
+   leaving col 1 and col 6 empty — visually centered. */
+.custom-qty-card:nth-child(4) { grid-column: 2 / 4; }
+.custom-qty-card:nth-child(5) { grid-column: 4 / 6; }
+
+@media (max-width: 380px) {
+    .custom-color-picker-grid {
+        /* 4-column base at small sizes → 2-per-row visual layout */
+        grid-template-columns: repeat(4, 1fr);
+    }
+    /* Reset explicit placement so cards flow naturally 2-per-row */
+    .custom-qty-card:nth-child(4),
+    .custom-qty-card:nth-child(5) {
+        grid-column: span 2;
+    }
+}
+
+.custom-qty-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    background: var(--bg-secondary);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 0.65rem 0.4rem 0.55rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.custom-qty-card.has-qty {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 8px rgba(114, 184, 118, 0.3);
+}
+
+.custom-qty-card img {
+    width: 62px;
+    height: 62px;
+    object-fit: cover;
+    border-radius: 8px;
+    pointer-events: none;
+    display: block;
+}
+
+.custom-qty-name {
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    text-align: center;
+    line-height: 1.2;
+    font-family: inherit;
+}
+
+.custom-qty-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.qty-btn {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    background: var(--bg-card);
+    color: var(--text-primary);
+    font-size: 1rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    font-family: inherit;
+    transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+
+.qty-btn:hover:not(:disabled) {
+    border-color: var(--accent-primary);
+    background: var(--accent-primary);
+    color: #0e1a12;
+}
+
+.qty-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.qty-number {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    min-width: 1.4ch;
+    text-align: center;
+    display: inline-block;
+}
+
+.custom-color-counter {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+/* Disabled Buy Now state (active when Custom picker has < 5 colors) */
+.add-to-cart:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    box-shadow: none;
+    pointer-events: none;
+}
+
 /* Light theme overrides for popup */
 body.light-theme .promo-popup {
     background: #e8f5ea;
@@ -1309,6 +1490,31 @@ body.light-theme #product-selector {
     background: var(--bg-card);
     color: var(--text-primary);
     border-color: var(--border);
+}
+
+body.light-theme #cap-color-selector {
+    background: var(--bg-card);
+    color: var(--text-primary);
+    border-color: var(--border);
+}
+
+body.light-theme .custom-qty-card {
+    background: #f0f7ee;
+    border-color: var(--border);
+}
+
+body.light-theme .custom-qty-card.has-qty {
+    border-color: var(--accent-primary);
+}
+
+body.light-theme .qty-btn {
+    background: #ffffff;
+    color: var(--text-primary);
+    border-color: var(--border);
+}
+
+body.light-theme .qty-number {
+    color: var(--text-primary);
 }
 
 body.light-theme .gallery {

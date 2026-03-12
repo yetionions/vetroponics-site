@@ -61,6 +61,24 @@ Last updated: 2026-03-11
 ---
 
 # RECENT CHANGES (2026-03-11 — latest)
+- Added Custom color picker UI (`#custom-color-picker`) inside `#color-selector` in `index.html` — hidden by default, only shown when "Custom" is selected from the Leaf Color dropdown
+- Picker contains 5 toggle chip buttons (Copper, Azure Blue, Scarlet Red, Leaf Green, Silver Ash) + a "0 / 5 selected" counter
+- Added `customSelections` array + `resetCustomPicker()` + `updateBuyButtonState()` helper functions in `script.js`
+- Buy Now button is disabled (opacity 0.45) whenever Custom is active and fewer than 5 colors are chosen; re-enables at exactly 5
+- Buy Now handler updated to `async`: custom path POSTs `{ colors }` to `/api/create-checkout-session` and redirects to returned Stripe Checkout URL; non-custom caps path unchanged (opens `capLinks[color]` or Etsy fallback)
+- Created `server.js`: Node.js/Express server that serves static files and handles `POST /api/create-checkout-session` — validates 5 colors, creates a Stripe Checkout Session with `color1…color5` metadata, returns `{ url }`
+- Created `package.json` (dependencies: express, stripe, dotenv)
+- Created `.env.example` (documents `STRIPE_SECRET_KEY`, `STRIPE_PRICE_ID_CUSTOM`, `SITE_URL`, `PORT`)
+- Added CSS for `.custom-color-btn`, `.custom-color-btn.selected`, `.custom-color-counter`, `.custom-picker-heading`, `.add-to-cart:disabled`, and light-theme overrides
+
+# RECENT CHANGES (2026-03-11 — previous)
+- Replaced Leaf Color tile swatches with a `<select id="cap-color-selector">` dropdown (options: Select Color, Copper, Azure Blue, Scarlet Red, Leaf Green, Silver Ash, Custom)
+- Added `capColorImages` mapping in `script.js` — selecting a color updates the hero product image to the matching color PNG
+- Added `capPurchaseLinks` placeholder object in `script.js` (all URLs empty, ready to fill in)
+- Color dropdown resets to "Select Color" and hero image resets to default multicolor cap image whenever the caps variant is re-selected from the product selector
+- Buy Now handler updated: for caps, uses `capPurchaseLinks[color]` if set, otherwise falls back to the default caps Etsy URL
+
+# RECENT CHANGES (2026-03-11 — previous)
 - Hero product image replaced with `images/trellis_product_image_with_vines.png` (was `trellis_product_image1.jpg`)
 - Hero image `max-width` increased from `500px` to `720px` for a larger display
 - Both trellis product variants (Single and 2 Pack) updated in `script.js` to use the new `trellis_product_image_with_vines.png` as their `mainImage`
