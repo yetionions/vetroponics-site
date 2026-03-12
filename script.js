@@ -112,7 +112,6 @@ const capColorImages = {
     scarlet: 'images/cap_color_image_scarlet_red.png',
     leaf:    'images/cap_color_image_light_green.png',
     silver:  'images/cap_color_image_silver_ash.png',
-    custom:  'images/cap_color_image_custom.png'
 };
 
 // Cap color purchase links
@@ -122,7 +121,6 @@ const capLinks = {
     scarlet: 'https://buy.stripe.com/9B628jcwY6gDaGQ1ETcIE08',
     leaf:    'https://buy.stripe.com/bJe4gr2WofRd3eo97lcIE0c',
     silver:  'https://buy.stripe.com/3cI3cn68A20n6qAgzNcIE09',
-    custom:  'https://buy.stripe.com/9B6fZ98gI6gD2akbftcIE0a'
 };
 
 // Default mixed gallery shown before any product is selected
@@ -184,57 +182,20 @@ productSelector.addEventListener('change', function() {
         if (product.hasColorSelector) {
             document.getElementById('cap-color-selector').value = '';
         }
-        // Always reset custom picker when switching products
-        resetCustomPicker();
-        document.getElementById('custom-color-picker').style.display = 'none';
         updateBuyButtonState();
     } else {
         priceEl.style.visibility = 'hidden';
         loadGallery(defaultGalleryImages, 'Product');
         document.getElementById('color-selector').style.display = 'none';
-        resetCustomPicker();
-        document.getElementById('custom-color-picker').style.display = 'none';
         updateBuyButtonState();
     }
 });
-
-// -- Custom color picker state (quantity per color) --
-const customQty = { copper: 0, azure: 0, scarlet: 0, leaf: 0, silver: 0 };
-const CAP_TOTAL = 5;
-
-function getTotalSelected() {
-    return Object.values(customQty).reduce((sum, n) => sum + n, 0);
-}
-
-function refreshQtyUI() {
-    const total = getTotalSelected();
-    Object.keys(customQty).forEach(color => {
-        const numEl = document.getElementById('qty-' + color);
-        if (!numEl) return;
-        const card  = document.querySelector(`.custom-qty-card[data-color="${color}"]`);
-        const minus = document.querySelector(`.qty-minus[data-color="${color}"]`);
-        const plus  = document.querySelector(`.qty-plus[data-color="${color}"]`);
-
-        numEl.textContent = customQty[color];
-        if (card)  card.classList.toggle('has-qty', customQty[color] > 0);
-        if (minus) minus.disabled = (customQty[color] === 0);
-        if (plus)  plus.disabled  = (total >= CAP_TOTAL);
-    });
-    const counter = document.getElementById('custom-color-counter');
-    if (counter) counter.textContent = `${total} / ${CAP_TOTAL} selected`;
-}
-
-function resetCustomPicker() {
-    Object.keys(customQty).forEach(k => { customQty[k] = 0; });
-    refreshQtyUI();
-}
 
 function updateBuyButtonState() {
     const productVal  = document.getElementById('product-selector').value;
     const colorVal    = document.getElementById('cap-color-selector').value;
     const buyBtn      = document.querySelector('.buy-now-btn:not(.cta-shop-btn)');
-    const needsCustom = productVal === 'caps' && colorVal === 'custom';
-    const ready       = !needsCustom || getTotalSelected() === CAP_TOTAL;
+    const ready       = productVal !== 'caps' || colorVal !== '';
     buyBtn.disabled        = !ready;
     buyBtn.style.opacity   = ready ? '' : '0.45';
     buyBtn.style.cursor    = ready ? '' : 'not-allowed';
@@ -265,13 +226,12 @@ function renderPreviewCaps(color) {
     }
 }
 
-// Cap color dropdown — updates hero image, shows/hides custom picker
+// Cap color dropdown — updates hero image, shows preview
 const capColorSelector = document.getElementById('cap-color-selector');
 capColorSelector.addEventListener('change', function () {
-    const color      = this.value;
-    const heroImg    = document.querySelector('.hero-image img');
-    const picker     = document.getElementById('custom-color-picker');
-    const sixGrid    = document.getElementById('color-options-preview');
+    const color       = this.value;
+    const heroImg     = document.querySelector('.hero-image img');
+    const sixGrid     = document.getElementById('color-options-preview');
     const previewGrid = document.getElementById('cap-preview-grid');
 
     // Update hero product image
@@ -281,42 +241,18 @@ capColorSelector.addEventListener('change', function () {
         heroImg.src = 'images/' + products.caps.mainImage;
     }
 
-    resetCustomPicker();
-
-    if (color === 'custom') {
-        // Custom: show picker only
-        picker.style.display      = 'block';
-        sixGrid.style.display     = 'none';
-        previewGrid.style.display = 'none';
-    } else if (color === '') {
+    if (color === '') {
         // Select Color: show normal 6-color grid
-        picker.style.display      = 'none';
         sixGrid.style.display     = '';
         previewGrid.style.display = 'none';
     } else {
         // Specific color: show 5 identical preview caps
-        picker.style.display      = 'none';
         sixGrid.style.display     = 'none';
         previewGrid.style.display = 'grid';
         renderPreviewCaps(color);
     }
 
     updateBuyButtonState();
-});
-
-// Quantity +/- button logic for custom color cards
-document.querySelectorAll('.qty-minus, .qty-plus').forEach(btn => {
-    btn.addEventListener('click', () => {
-        const color  = btn.dataset.color;
-        const isPlus = btn.classList.contains('qty-plus');
-        if (isPlus) {
-            if (getTotalSelected() < CAP_TOTAL) customQty[color]++;
-        } else {
-            if (customQty[color] > 0) customQty[color]--;
-        }
-        refreshQtyUI();
-        updateBuyButtonState();
-    });
 });
 
 // Modal functionality for image zoom
@@ -354,37 +290,7 @@ document.querySelector('.buy-now-btn:not(.cta-shop-btn)').addEventListener('clic
             alert('Please select a color first.');
             return;
         }
-        if (color === 'custom' && getTotalSelected() !== CAP_TOTAL) {
-            alert('Please select exactly 5 colors for your Custom pack.');
-            return;
-        }
-        if (color === 'custom') {
-            const btn = document.querySelector('.buy-now-btn:not(.cta-shop-btn)');
-            btn.disabled    = true;
-            btn.textContent = 'Redirecting…';
-            fetch('/api/create-checkout-session', {
-                method:  'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    copper:      customQty.copper,
-                    azure_blue:  customQty.azure,
-                    scarlet_red: customQty.scarlet,
-                    leaf_green:  customQty.leaf,
-                    silver_ash:  customQty.silver,
-                }),
-            })
-            .then(res => res.ok ? res.json() : res.json().then(d => Promise.reject(d.error || `Server error ${res.status}`)))
-            .then(data => { window.location.href = data.url; })
-            .catch(err => {
-                console.error('[Checkout] Failed:', err);
-                alert(`Checkout failed: ${err}`);
-                btn.disabled    = false;
-                btn.textContent = 'Buy Now';
-            });
-            return;
-        } else {
-            stripeUrl = capLinks[color];
-        }
+        stripeUrl = capLinks[color];
     } else {
         stripeUrl = products[selected].stripeUrl;
     }
