@@ -5,7 +5,8 @@
  * Body: { colors: ["copper", "azure_blue", "azure_blue", "leaf_green", "scarlet_red"] }
  *
  * Creates a Stripe Checkout Session for the Custom Caps 5-Pack.
- * Attaches each selected color as metadata (cap1 … cap5).
+ * Attaches each selected color as metadata (cap1 … cap5 + selected_colors summary).
+ * Displays a readable color summary on the Stripe Checkout page via custom_text.
  * Returns: { url } — the Stripe-hosted Checkout URL for the frontend to redirect to.
  *
  * Environment variables required (set in Cloudflare Pages dashboard):
@@ -17,6 +18,33 @@ const SUCCESS_URL  = 'https://vetroponics-site.pages.dev/thank-you';
 const CANCEL_URL   = 'https://vetroponics-site.pages.dev/';
 const VALID_COLORS = ['copper', 'azure_blue', 'scarlet_red', 'leaf_green', 'silver_ash'];
 const CAP_COUNT    = 5;
+
+// Human-readable display names for each color key
+const COLOR_LABELS = {
+    copper:     'Copper',
+    azure_blue: 'Azure Blue',
+    scarlet_red:'Scarlet Red',
+    leaf_green: 'Leaf Green',
+    silver_ash: 'Silver Ash',
+};
+
+/**
+ * Build a readable color summary from the flat colors array.
+ * Example output:
+ *   Copper ×2
+ *   Azure Blue ×1
+ *   Leaf Green ×1
+ *   Silver Ash ×1
+ */
+function buildColorSummary(colors) {
+    const counts = {};
+    for (const c of colors) {
+        counts[c] = (counts[c] || 0) + 1;
+    }
+    return Object.entries(counts)
+        .map(([key, qty]) => `${COLOR_LABELS[key] || key} ×${qty}`)
+        .join('\n');
+}
 
 // Only handle POST requests
 export async function onRequestPost(context) {
@@ -44,22 +72,31 @@ export async function onRequestPost(context) {
         }
     }
 
-    // Build metadata object: cap1, cap2, … cap5
+    // Build per-cap metadata: cap1, cap2, … cap5
     const metadata = {};
     colors.forEach((c, i) => { metadata[`cap${i + 1}`] = c; });
 
+    // Build human-readable color summary and store as metadata
+    const colorSummary = buildColorSummary(colors);
+    metadata.selected_colors = colorSummary;
+
+    // Text displayed on the Stripe Checkout page near the pay button
+    const checkoutMessage = `Selected Colors:\n${colorSummary}`;
+
     // Build Stripe Checkout Session via REST API
-    // The Stripe Node library is not needed — fetch works natively in Workers.
+    // URLSearchParams + fetch works natively in the Workers runtime (no npm needed).
     const params = new URLSearchParams({
-        'payment_method_types[0]':                             'card',
-        'line_items[0][price]':                                PRICE_ID,
-        'line_items[0][quantity]':                             '1',
-        'mode':                                                'payment',
-        'success_url':                                         SUCCESS_URL,
-        'cancel_url':                                          CANCEL_URL,
+        'payment_method_types[0]':      'card',
+        'line_items[0][price]':         PRICE_ID,
+        'line_items[0][quantity]':      '1',
+        'mode':                         'payment',
+        'success_url':                  SUCCESS_URL,
+        'cancel_url':                   CANCEL_URL,
+        // Show the color summary on the Stripe hosted checkout page
+        'custom_text[submit][message]': checkoutMessage,
     });
 
-    // Append metadata entries
+    // Append all metadata entries (cap1…cap5 + selected_colors)
     Object.entries(metadata).forEach(([key, value]) => {
         params.append(`metadata[${key}]`, value);
     });
@@ -103,3 +140,4 @@ function jsonError(message, status) {
         headers: { 'Content-Type': 'application/json' },
     });
 }
+
