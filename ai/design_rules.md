@@ -5,7 +5,8 @@ Last updated: 2026-03-11
 
 ## THEME
 
-Default: dark forest-green plant aesthetic.
+Default on first visit: **Light Mode** (`body.light-theme` applied unless `localStorage` key `"theme"` is `"dark"`).
+Dark mode available via theme toggle button in the navbar.
 Light mode available via `body.light-theme` class on `<body>`.
 
 ---

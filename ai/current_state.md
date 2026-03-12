@@ -3,13 +3,41 @@ Last updated: 2026-03-11
 
 ---
 
+## RECENT CHANGES (2026-03-11)
+- **Swapped Light/Dark theme palettes** in `style.css`:
+  - `:root` now holds the **light sage** palette (was dark forest-green)
+  - `body.light-theme` CSS variable block now holds the **dark forest-green** palette (was light sage)
+  - `body` background gradient swapped to light (`#e8f4e4 → #f0f7ee`)
+  - `body.light-theme` background gradient swapped to dark (`#0b1710 → #111d16`)
+  - `body::before` and `body.light-theme::before` gradients swapped accordingly
+  - All hardcoded `rgba()` and hex color values in `body.light-theme` structural rules updated to dark palette equivalents (toggle, logo, container, hero, qty cards, gallery, sections, steps, FAQ, final CTA)
+- JS toggle logic unchanged — `body.light-theme` class is still the trigger; it now produces the **dark forest-green** appearance (default on first visit per previous change)
+
+---
+- Changed default theme from Dark to **Light Mode**: site now loads in light mode on first visit (no saved preference). `localStorage` key `"theme"` still overrides — saved `"dark"` loads dark, saved `"light"` or nothing loads light.
+- Theme toggle button now initializes as `"🌙 Dark"` on fresh load (was `"☀ Light"`).
+- Updated `ai/design_rules.md` and `ai/current_state.md` to reflect new default.
+
+---
+
+## REMOVED FEATURES
+
+### Promotional Popup (removed 2026-03-11)
+- Scroll-triggered promo popup (AMERICA 10% off) fully removed.
+- Removed: `#promo-popup` HTML block from `index.html`
+- Removed: all promo JS (`promoPopup`, `promoClose`, `showPromo()`, sessionStorage logic, 35% scroll trigger) from `script.js`
+- Removed: all `.promo-popup*` CSS (dark theme, light theme overrides, mobile media query) from `style.css`
+- Scroll listener preserved for header shadow (`.scrolled` class).
+
+---
+
 ## COMPLETED FEATURES (fully implemented and working)
 
 ### Theme System
-- Default: **dark forest-green** (CSS variables in `:root`)
-- Light theme: `body.light-theme` override block at the END of `style.css`
-- Toggle: `#theme-toggle` button in nav — label "☀ Light" / "🌙 Dark"
-- Persists via `localStorage` key `"theme"`
+- Default: **light** (sage green — `body.light-theme` applied on first visit)
+- Dark theme: applied when `localStorage` key `"theme"` is `"dark"`
+- Toggle: `#theme-toggle` button in nav — label "🌙 Dark" (when light) / "☀ Light" (when dark)
+- Persists via `localStorage` key `"theme"`; no saved value → light mode
 
 ### Navigation
 - Sticky header with logo, nav links, theme toggle, hamburger

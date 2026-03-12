@@ -14,10 +14,12 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 // Theme toggle
 const themeToggleBtn = document.getElementById('theme-toggle');
-const savedTheme = localStorage.getItem('theme');
-if (savedTheme === 'light') {
+const savedTheme = localStorage.getItem('theme') || 'light';
+if (savedTheme !== 'dark') {
     document.body.classList.add('light-theme');
     themeToggleBtn.textContent = '🌙 Dark';
+} else {
+    themeToggleBtn.textContent = '☀ Light';
 }
 themeToggleBtn.addEventListener('click', () => {
     const isLight = document.body.classList.toggle('light-theme');
@@ -370,22 +372,6 @@ document.querySelector('.cta-shop-btn').addEventListener('click', () => {
 });
 
 // Header background on scroll
-const promoPopup = document.getElementById('promo-popup');
-const promoClose = document.getElementById('promo-popup-close');
-const PROMO_KEY = 'promo_dismissed';
-let promoShown = false;
-
-function showPromo() {
-    if (promoShown || sessionStorage.getItem(PROMO_KEY)) return;
-    promoShown = true;
-    promoPopup.classList.add('promo-popup--visible');
-}
-
-promoClose.addEventListener('click', () => {
-    promoPopup.classList.remove('promo-popup--visible');
-    sessionStorage.setItem(PROMO_KEY, '1');
-});
-
 window.addEventListener('scroll', () => {
     const header = document.querySelector('header');
     if (window.scrollY > 100) {
@@ -393,10 +379,6 @@ window.addEventListener('scroll', () => {
     } else {
         header.classList.remove('scrolled');
     }
-
-    // Show promo after 35% scroll
-    const scrolled = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
-    if (scrolled >= 0.35) showPromo();
 });
 
 // Add CSS for animations and mobile menu
