@@ -180,7 +180,10 @@ productSelector.addEventListener('change', function() {
         document.getElementById('color-selector').style.display =
             product.hasColorSelector ? 'block' : 'none';
         if (product.hasColorSelector) {
-            document.getElementById('cap-color-selector').value = '';
+            const sel = document.getElementById('cap-color-selector');
+            const placeholder = sel.querySelector('option[value=""]');
+            if (placeholder) placeholder.disabled = false;
+            sel.value = '';
         }
         updateBuyButtonState();
     } else {
@@ -197,8 +200,9 @@ function updateBuyButtonState() {
     const buyBtn      = document.querySelector('.buy-now-btn:not(.cta-shop-btn)');
     const ready       = productVal !== 'caps' || colorVal !== '';
     buyBtn.disabled        = !ready;
-    buyBtn.style.opacity   = ready ? '' : '0.45';
+    buyBtn.style.opacity   = ready ? '' : '0';
     buyBtn.style.cursor    = ready ? '' : 'not-allowed';
+    buyBtn.style.pointerEvents = ready ? '' : 'none';
 }
 
 
@@ -233,6 +237,12 @@ capColorSelector.addEventListener('change', function () {
     const heroImg     = document.querySelector('.hero-image img');
     const sixGrid     = document.getElementById('color-options-preview');
     const previewGrid = document.getElementById('cap-preview-grid');
+
+    // Once a real color is chosen, lock out the placeholder
+    if (color !== '') {
+        const placeholder = this.querySelector('option[value=""]');
+        if (placeholder) placeholder.disabled = true;
+    }
 
     // Update hero product image
     if (color && capColorImages[color]) {
