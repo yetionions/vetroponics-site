@@ -360,7 +360,10 @@ async function checkout() {
             headers: { 'Content-Type': 'application/json' },
             body:    JSON.stringify({ items: cart.map(({ price, quantity }) => ({ price, quantity })) })
         });
-        if (!response.ok) throw new Error('Server error');
+        if (!response.ok) {
+            const errData = await response.json().catch(() => ({}));
+            throw new Error(errData.error || `Server error ${response.status}`);
+        }
         const { url } = await response.json();
         clearCart();
         window.location.href = url;
