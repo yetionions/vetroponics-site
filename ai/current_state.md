@@ -39,13 +39,18 @@ Last updated: 2026-03-11
 - Grid layout: 6-column track, last 2 cards centered via `nth-child(4)` and `nth-child(5)` explicit placement
 
 ### Buy Now Button (`.add-to-cart`, first instance only)
-- Trellis: `window.open(product.etsyUrl, '_blank')`
-- Caps + specific color: `window.open(capLinks[color] || product.etsyUrl, '_blank', 'noopener')` — Scarlet Red uses live Stripe link; others fall back to Etsy
-- Caps + Custom: `window.open(capLinks.custom, '_blank', 'noopener')` → direct Stripe payment link (no longer POSTs to backend)
+- Trellis Single: `window.open(product.stripeUrl, '_blank', 'noopener')` → `https://buy.stripe.com/eVq3cngNe5cz4isbftcIE06`
+- Trellis 2 Pack: `window.open(product.stripeUrl, '_blank', 'noopener')` → `https://buy.stripe.com/cNi7sD2WofRdg1a97lcIE07`
+- Caps + specific color: `window.open(capLinks[color] || product.etsyUrl, '_blank', 'noopener')`
+- Caps + Custom: `window.open(capLinks.custom, '_blank', 'noopener')`
 - Disabled (opacity 0.45, cursor not-allowed) when Custom active and total ≠ 5
 
 ### Live Stripe Payment Links (in `capLinks`)
+- Copper:      `https://buy.stripe.com/8x228j8gIeN95mwcjxcIE03`
+- Azure Blue:  `https://buy.stripe.com/6oU5kvaoQ5cz16ggzNcIE04`
 - Scarlet Red: `https://buy.stripe.com/bJe3cn9kM9sPeX6cjxcIE00`
+- Leaf Green:  `https://buy.stripe.com/6oUaEPcwY48v5mw0APcIE02`
+- Silver Ash:  `https://buy.stripe.com/aFa28jcwY34r16g3N1cIE05`
 - Custom:      `https://buy.stripe.com/cNi5kv7cE0Wj16gdnBcIE01`
 
 ### Stripe Checkout (`functions/api/create-checkout-session.js`)

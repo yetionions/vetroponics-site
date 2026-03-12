@@ -59,6 +59,7 @@ const products = {
         name: 'Trellis – Single',
         price: '$29.99',
         description: 'Single decorative trellis panel designed for the Gardyn Home hydroponic system.',
+        stripeUrl: 'https://buy.stripe.com/eVq3cngNe5cz4isbftcIE06',
         mainImage: 'singleset_trellis_product_image.png',
         galleryImages: ['image11.jpg', 'image22.jpg', 'image33.jpg', 'image44.jpg', 'image55.jpg', 'image66.jpg', 'image77.jpg'],
         hasColorSelector: false,
@@ -74,6 +75,7 @@ const products = {
         name: 'Trellis – 2 Pack',
         price: '$49.99',
         description: 'Two trellis panels for supporting larger plants.',
+        stripeUrl: 'https://buy.stripe.com/cNi7sD2WofRdg1a97lcIE07',
         mainImage: 'setof_two_trellis_product_image.png',
         galleryImages: ['image11.jpg', 'image22.jpg', 'image33.jpg', 'image44.jpg', 'image55.jpg', 'image66.jpg', 'image77.jpg'],
         hasColorSelector: false,
@@ -113,11 +115,11 @@ const capColorImages = {
 
 // Cap color purchase links
 const capLinks = {
-    copper:  '',
-    azure:   '',
+    copper:  'https://buy.stripe.com/8x228j8gIeN95mwcjxcIE03',
+    azure:   'https://buy.stripe.com/6oU5kvaoQ5cz16ggzNcIE04',
     scarlet: 'https://buy.stripe.com/bJe3cn9kM9sPeX6cjxcIE00',
-    leaf:    '',
-    silver:  '',
+    leaf:    'https://buy.stripe.com/6oUaEPcwY48v5mw0APcIE02',
+    silver:  'https://buy.stripe.com/aFa28jcwY34r16g3N1cIE05',
     custom:  'https://buy.stripe.com/cNi5kv7cE0Wj16gdnBcIE01'
 };
 
@@ -356,8 +358,8 @@ document.querySelectorAll('.add-to-cart:not(.cta-shop-btn)').forEach(button => {
                 window.open(colorUrl || product.etsyUrl, '_blank', 'noopener');
             }
         } else {
-            // Trellis products — open Etsy listing
-            window.open(product.etsyUrl, '_blank');
+            // Trellis products — open Stripe checkout
+            window.open(product.stripeUrl, '_blank', 'noopener');
         }
     });
 });

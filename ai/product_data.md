@@ -20,6 +20,7 @@ Last updated: 2026-03-11
 **`products` key:** `single`  
 **Hero image:** `images/singleset_trellis_product_image.png`  
 **Gallery:** `image11.jpg` – `image77.jpg`  
+**Stripe URL:** `https://buy.stripe.com/eVq3cngNe5cz4isbftcIE06`  
 **Etsy URL:** `https://www.etsy.com/listing/4397538500/...` (trellis single listing)  
 **hasColorSelector:** `false`
 
@@ -42,6 +43,7 @@ Last updated: 2026-03-11
 **`products` key:** `2pack`  
 **Hero image:** `images/setof_two_trellis_product_image.png`  
 **Gallery:** `image11.jpg` – `image77.jpg`  
+**Stripe URL:** `https://buy.stripe.com/cNi7sD2WofRdg1a97lcIE07`  
 **Etsy URL:** trellis 2-pack listing  
 **hasColorSelector:** `false`
 
