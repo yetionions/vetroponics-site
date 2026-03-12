@@ -354,22 +354,26 @@ async function checkout() {
     const checkoutBtn = document.getElementById('checkout-btn');
     checkoutBtn.disabled    = true;
     checkoutBtn.textContent = 'Redirecting…';
+    const items = cart.map(({ price, quantity }) => ({ price, quantity }));
+    console.log('[Checkout] Sending cart items:', items);
     try {
         const response = await fetch('/api/create-checkout-session', {
             method:  'POST',
             headers: { 'Content-Type': 'application/json' },
-            body:    JSON.stringify({ items: cart.map(({ price, quantity }) => ({ price, quantity })) })
+            body:    JSON.stringify({ items })
         });
         if (!response.ok) {
             const errData = await response.json().catch(() => ({}));
-            throw new Error(errData.error || `Server error ${response.status}`);
+            const msg = errData.error || `Server error ${response.status}`;
+            console.error(`[Checkout] Server responded ${response.status}:`, msg);
+            throw new Error(msg);
         }
         const { url } = await response.json();
         clearCart();
         window.location.href = url;
     } catch (err) {
-        console.error('Checkout error:', err);
-        alert('Could not start checkout. Please try again.');
+        console.error('[Checkout] Failed:', err.message);
+        alert(`Checkout failed: ${err.message}`);
         checkoutBtn.disabled    = false;
         checkoutBtn.textContent = 'Secure Checkout';
     }
