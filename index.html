@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VetROponics Systems</title>
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -35,9 +38,21 @@
     </header>
 
     <section id="hero" class="hero">
-        <div class="container hero-image">
+        <div class="container hero-image" id="hero-main-image" style="display:none;">
             <img src="images/trellis_product_image_with_vines.png" alt="Trellis Kit for Gardyn Home">
         </div>
+
+        <!-- Before/After toggle comparison (visible on page load, hidden when product selected) -->
+        <div id="before-after-section" class="before-after-section">
+            <div class="ba-image-container">
+                <img id="ba-display-img" src="images/trellis_system_image_before.png" alt="Before trellis installation" draggable="false">
+            </div>
+            <div class="ba-toggle-row">
+                <button id="ba-btn-before" class="ba-toggle-btn ba-toggle-btn--active" type="button">Before</button>
+                <button id="ba-btn-after" class="ba-toggle-btn" type="button">After</button>
+            </div>
+        </div>
+
         <div class="hero-content">
             <h1>Trellis Kit for Gardyn Home Hydroponic System</h1>
             <div class="price" style="visibility:hidden"><img src="tiny_plant_icon.png" alt="" class="price-icon"> <span class="price-text"></span> <img src="tiny_plant_icon.png" alt="" class="price-icon"></div>
@@ -100,14 +115,18 @@
                 <div class="main-image-modern">
                     <img id="main-image" src="images/image11.jpg" alt="Trellis Kit Main Image">
                 </div>
-                <div class="thumbnail-row">
-                    <img src="images/image11.jpg" alt="Trellis Kit Image 1" class="active" onclick="changeImage(this.src, this)">
-                    <img src="images/image22.jpg" alt="Trellis Kit Image 2" onclick="changeImage(this.src, this)">
-                    <img src="images/image33.jpg" alt="Trellis Kit Image 3" onclick="changeImage(this.src, this)">
-                    <img src="images/image44.jpg" alt="Trellis Kit Image 4" onclick="changeImage(this.src, this)">
-                    <img src="images/image55.jpg" alt="Trellis Kit Image 5" onclick="changeImage(this.src, this)">
-                    <img src="images/image66.jpg" alt="Trellis Kit Image 6" onclick="changeImage(this.src, this)">
-                    <img src="images/image77.jpg" alt="Trellis Kit Image 7" onclick="changeImage(this.src, this)">
+                <div class="thumbnail-nav">
+                    <button class="thumb-arrow thumb-arrow--left" id="thumbArrowLeft" aria-label="Scroll thumbnails left"><i class="fas fa-chevron-left"></i></button>
+                    <div class="thumbnail-row" id="thumbnailRow">
+                        <img src="images/image11.jpg" alt="Trellis Kit Image 1" class="active" onclick="changeImage(this.src, this)">
+                        <img src="images/image22.jpg" alt="Trellis Kit Image 2" onclick="changeImage(this.src, this)">
+                        <img src="images/image33.jpg" alt="Trellis Kit Image 3" onclick="changeImage(this.src, this)">
+                        <img src="images/image44.jpg" alt="Trellis Kit Image 4" onclick="changeImage(this.src, this)">
+                        <img src="images/image55.jpg" alt="Trellis Kit Image 5" onclick="changeImage(this.src, this)">
+                        <img src="images/image66.jpg" alt="Trellis Kit Image 6" onclick="changeImage(this.src, this)">
+                        <img src="images/image77.jpg" alt="Trellis Kit Image 7" onclick="changeImage(this.src, this)">
+                    </div>
+                    <button class="thumb-arrow thumb-arrow--right" id="thumbArrowRight" aria-label="Scroll thumbnails right"><i class="fas fa-chevron-right"></i></button>
                 </div>
             </div>
         </div>

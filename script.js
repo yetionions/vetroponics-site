@@ -161,7 +161,6 @@ productSelector.addEventListener('change', function() {
     if (product) {
         document.querySelector('.hero h1').textContent = product.name;
         document.querySelector('.hero p').textContent = product.description;
-        document.querySelector('.hero-image img').src = 'images/' + product.mainImage;
         document.querySelector('.hero .price-text').textContent = product.price;
         priceEl.style.visibility = 'visible';
 
@@ -185,11 +184,16 @@ productSelector.addEventListener('change', function() {
             if (placeholder) placeholder.disabled = false;
             sel.value = '';
         }
+        document.getElementById('before-after-section').style.display = 'none';
+        document.getElementById('hero-main-image').style.display = '';
+        document.querySelector('#hero-main-image img').src = 'images/' + product.mainImage;
         updateBuyButtonState();
     } else {
         priceEl.style.visibility = 'hidden';
         loadGallery(defaultGalleryImages, 'Product');
         document.getElementById('color-selector').style.display = 'none';
+        document.getElementById('before-after-section').style.display = '';
+        document.getElementById('hero-main-image').style.display = 'none';
         updateBuyButtonState();
     }
 });
@@ -206,6 +210,28 @@ function updateBuyButtonState() {
 }
 
 
+
+// Before/After toggle
+(function () {
+    var btnBefore = document.getElementById('ba-btn-before');
+    var btnAfter  = document.getElementById('ba-btn-after');
+    var dispImg   = document.getElementById('ba-display-img');
+    if (!btnBefore) return;
+
+    btnBefore.addEventListener('click', function () {
+        dispImg.src = 'images/trellis_system_image_before.png';
+        dispImg.alt = 'Before trellis installation';
+        btnBefore.classList.add('ba-toggle-btn--active');
+        btnAfter.classList.remove('ba-toggle-btn--active');
+    });
+
+    btnAfter.addEventListener('click', function () {
+        dispImg.src = 'images/trellis_system_image_after.png';
+        dispImg.alt = 'After trellis installation';
+        btnAfter.classList.add('ba-toggle-btn--active');
+        btnBefore.classList.remove('ba-toggle-btn--active');
+    });
+}());
 
 // Human-readable label for each cap color key
 const colorLabels = {
@@ -234,7 +260,7 @@ function renderPreviewCaps(color) {
 const capColorSelector = document.getElementById('cap-color-selector');
 capColorSelector.addEventListener('change', function () {
     const color       = this.value;
-    const heroImg     = document.querySelector('.hero-image img');
+    const heroImg     = document.querySelector('#hero-main-image img');
     const sixGrid     = document.getElementById('color-options-preview');
     const previewGrid = document.getElementById('cap-preview-grid');
 
@@ -264,6 +290,16 @@ capColorSelector.addEventListener('change', function () {
 
     updateBuyButtonState();
 });
+
+// Thumbnail carousel arrows
+(function () {
+    var row   = document.getElementById('thumbnailRow');
+    var left  = document.getElementById('thumbArrowLeft');
+    var right = document.getElementById('thumbArrowRight');
+    if (!row || !left || !right) return;
+    left.addEventListener('click',  function () { row.scrollBy({ left: -200, behavior: 'smooth' }); });
+    right.addEventListener('click', function () { row.scrollBy({ left:  200, behavior: 'smooth' }); });
+}());
 
 // Modal functionality for image zoom
 const modal = document.getElementById('imageModal');
