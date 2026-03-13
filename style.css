@@ -178,12 +178,12 @@ nav {
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-height: 90vh;
-    padding: 140px 2rem 6rem;
+    min-height: auto;
+    padding: 120px 2rem 3rem;
     background: radial-gradient(ellipse at 50% 0%, rgba(114,184,118,0.10) 0%, var(--bg-secondary) 58%);
     text-align: center;
     position: relative;
-    margin-bottom: 6rem;
+    margin-bottom: 3rem;
     border-bottom: 1px solid var(--border);
 }
 
@@ -199,11 +199,13 @@ nav {
 }
 
 .hero-image {
-    margin-bottom: 3rem;
+    margin-bottom: 1.5rem;
 }
 
 .hero-image img {
-    max-width: 720px;
+    max-width: 560px;
+    max-height: 45vh;
+    width: 100%;
     height: auto;
     border-radius: 20px;
     box-shadow: 0 20px 60px var(--shadow);
@@ -219,9 +221,9 @@ nav {
 }
 
 .hero h1 {
-    font-size: 3.5rem;
+    font-size: 2.6rem;
     font-weight: 700;
-    margin-bottom: 2.5rem;
+    margin-bottom: 1rem;
     color: var(--text-primary);
     text-shadow: 0 2px 4px var(--shadow);
 }
@@ -230,27 +232,27 @@ nav {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 3rem;
+    margin-bottom: 1rem;
 }
 
 .price-text {
-    font-size: 3.5rem;
+    font-size: 2.4rem;
     font-weight: 700;
     color: var(--accent-primary);
     text-shadow: 0 2px 4px var(--shadow);
 }
 
 .price-icon {
-    width: 60px;
-    height: 60px;
+    width: 44px;
+    height: 44px;
     margin: 0 8px;
 }
 
 .hero p {
-    font-size: 1.3rem;
-    margin-bottom: 3rem;
+    font-size: 1.05rem;
+    margin-bottom: 1.2rem;
     color: var(--text-secondary);
-    line-height: 1.7;
+    line-height: 1.6;
 }
 
 label[for="product-selector"] {
@@ -264,14 +266,14 @@ label[for="product-selector"] {
 #product-selector {
     width: 100%;
     max-width: 450px;
-    padding: 1.5rem;
-    font-size: 1.2rem;
+    padding: 0.85rem 1.2rem;
+    font-size: 1rem;
     border: 2px solid var(--border);
     border-radius: 12px;
     background: var(--bg-card);
     color: var(--text-primary);
     box-shadow: 0 4px 16px var(--shadow);
-    margin-bottom: 3rem;
+    margin-bottom: 1.5rem;
     transition: border-color 0.3s, box-shadow 0.3s;
 }
 
@@ -284,14 +286,14 @@ label[for="product-selector"] {
 #cap-color-selector {
     width: 100%;
     max-width: 450px;
-    padding: 1.5rem;
-    font-size: 1.2rem;
+    padding: 0.85rem 1.2rem;
+    font-size: 1rem;
     border: 2px solid var(--border);
     border-radius: 12px;
     background: var(--bg-card);
     color: var(--text-primary);
     box-shadow: 0 4px 16px var(--shadow);
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.2rem;
     transition: border-color 0.3s, box-shadow 0.3s;
 }
 
@@ -862,30 +864,102 @@ a:hover {
 }
 
 /* Responsive Design */
+@media (max-width: 1024px) {
+    .hero {
+        padding: 100px 1.5rem 2.5rem;
+        min-height: auto;
+    }
+
+    .hero-image {
+        margin-bottom: 1.2rem;
+    }
+
+    .hero-image img {
+        max-width: 90%;
+        max-height: 40vh;
+    }
+
+    .hero h1 {
+        font-size: 2.2rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .hero .price {
+        margin-bottom: 0.75rem;
+    }
+
+    .price-text {
+        font-size: 2rem;
+    }
+
+    .price-icon {
+        width: 36px;
+        height: 36px;
+    }
+
+    .hero p {
+        font-size: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    #product-selector {
+        margin-bottom: 1.2rem;
+    }
+}
+
 @media (max-width: 768px) {
     .hero {
         flex-direction: column;
         text-align: center;
-        padding-top: 140px; /* Increased to account for taller header */
+        padding: 90px 1.5rem 2rem;
+        min-height: auto;
     }
 
     .hero-content {
         padding-left: 0;
-        margin-top: 2rem;
+        margin-top: 0.75rem;
+    }
+
+    .hero-image {
+        margin-bottom: 1rem;
     }
 
     .hero-image img {
         max-width: 90vw;
+        max-height: 35vh;
         width: 100%;
         height: auto;
     }
 
     .hero h1 {
-        font-size: 2.2rem;
+        font-size: 1.9rem;
+        margin-bottom: 0.6rem;
     }
 
     .hero .price {
-        font-size: 2.2rem;
+        margin-bottom: 0.6rem;
+    }
+
+    .price-text {
+        font-size: 1.8rem;
+    }
+
+    .price-icon {
+        width: 30px;
+        height: 30px;
+    }
+
+    .hero p {
+        font-size: 0.95rem;
+        margin-bottom: 0.8rem;
+        line-height: 1.55;
+    }
+
+    #product-selector,
+    #cap-color-selector {
+        padding: 0.75rem 1rem;
+        font-size: 0.95rem;
+        margin-bottom: 1rem;
     }
 
     .nav-links {
@@ -1001,12 +1075,46 @@ a:hover {
         padding: 1rem 1rem 1rem 70px; /* Further reduced left padding */
     }
 
+    .hero {
+        padding: 80px 1rem 1.5rem;
+    }
+
+    .hero-image {
+        margin-bottom: 0.75rem;
+    }
+
+    .hero-image img {
+        max-height: 28vh;
+    }
+
     .hero h1 {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
+        margin-bottom: 0.5rem;
     }
 
     .hero .price {
-        font-size: 1.8rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .price-text {
+        font-size: 1.5rem;
+    }
+
+    .price-icon {
+        width: 24px;
+        height: 24px;
+    }
+
+    .hero p {
+        font-size: 0.9rem;
+        margin-bottom: 0.7rem;
+    }
+
+    #product-selector,
+    #cap-color-selector {
+        padding: 0.7rem 0.9rem;
+        font-size: 0.9rem;
+        margin-bottom: 0.9rem;
     }
 
     .logo img {
