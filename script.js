@@ -164,14 +164,6 @@ productSelector.addEventListener('change', function() {
         document.querySelector('.hero .price-text').textContent = product.price;
         priceEl.style.visibility = 'visible';
 
-        // Update What's Included
-        const includedList = document.getElementById('included-list');
-        if (includedList) {
-            includedList.innerHTML = product.includedItems.map(
-                item => `<li><i class="${item.icon}"></i> ${item.text}</li>`
-            ).join('');
-        }
-
         // Show/hide color selector
         document.getElementById('color-selector').style.display =
             product.hasColorSelector ? 'block' : 'none';
