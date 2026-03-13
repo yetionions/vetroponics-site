@@ -14,7 +14,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 // Theme toggle
 const themeToggleBtn = document.getElementById('theme-toggle');
-const savedTheme = localStorage.getItem('theme') || 'light';
+const savedTheme = localStorage.getItem('theme') || 'dark';
 if (savedTheme !== 'dark') {
     document.body.classList.add('light-theme');
     themeToggleBtn.textContent = '🌙 Dark';
@@ -60,32 +60,32 @@ const products = {
     single: {
         name: 'Trellis – Single',
         price: '$29.99',
-        description: 'Single decorative trellis panel designed for the Gardyn Home hydroponic system.',
+        description: 'Includes 6 decorative trellis panels designed for the Gardyn Home hydroponic system. This set fills one full growing column and provides sturdy vertical support for climbing plants like tomatoes, cucumbers, beans, and peas.',
         stripeUrl: 'https://buy.stripe.com/7sY7sD8gI8oL8yI6ZdcIE0f',
         mainImage: 'singleset_trellis_product_image.png',
         galleryImages: ['image11.jpg', 'image22.jpg', 'image33.jpg', 'image44.jpg', 'image55.jpg', 'image66.jpg', 'image77.jpg'],
         hasColorSelector: false,
         includedItems: [
-            { icon: 'fas fa-cubes',       text: '12 trellis panels' },
-            { icon: 'fas fa-link',        text: 'Top clips x1' },
+            { icon: 'fas fa-layer-group', text: 'Trellis panels' },
+            { icon: 'fas fa-paperclip',   text: 'Top clips x1' },
             { icon: 'fas fa-paperclip',   text: 'Panel clips x1' },
-            { icon: 'fas fa-bracket-curly', text: 'Bottom brackets x1' },
+            { icon: 'fas fa-paperclip',   text: 'Bottom brackets x1' },
             { icon: 'fas fa-hand-paper',  text: 'Hook and loop mounting sections' }
         ]
     },
     '2pack': {
         name: 'Trellis – 2 Pack',
         price: '$49.99',
-        description: 'Two trellis panels for supporting larger plants.',
+        description: 'Includes 12 decorative trellis panels designed for the Gardyn Home hydroponic system. This full set fills both growing columns and provides strong vertical support for climbing plants across the entire system.',
         stripeUrl: 'https://buy.stripe.com/fZu00b54w5cz9CM1ETcIE0e',
         mainImage: 'setof_two_trellis_product_image.png',
         galleryImages: ['image11.jpg', 'image22.jpg', 'image33.jpg', 'image44.jpg', 'image55.jpg', 'image66.jpg', 'image77.jpg'],
         hasColorSelector: false,
         includedItems: [
-            { icon: 'fas fa-cubes',       text: '24 trellis panels' },
-            { icon: 'fas fa-link',        text: 'Top clips x2' },
+            { icon: 'fas fa-layer-group', text: '24 trellis panels' },
+            { icon: 'fas fa-paperclip',   text: 'Top clips x2' },
             { icon: 'fas fa-paperclip',   text: 'Panel clips x2' },
-            { icon: 'fas fa-bracket-curly', text: 'Bottom brackets x2' },
+            { icon: 'fas fa-paperclip',   text: 'Bottom brackets x2' },
             { icon: 'fas fa-hand-paper',  text: 'Hook and loop mounting sections' }
         ]
     },
@@ -164,9 +164,6 @@ productSelector.addEventListener('change', function() {
         document.querySelector('.hero .price-text').textContent = product.price;
         priceEl.style.visibility = 'visible';
 
-        // Update gallery
-        loadGallery(product.galleryImages, product.name);
-
         // Update What's Included
         const includedList = document.getElementById('included-list');
         if (includedList) {
@@ -190,7 +187,6 @@ productSelector.addEventListener('change', function() {
         updateBuyButtonState();
     } else {
         priceEl.style.visibility = 'hidden';
-        loadGallery(defaultGalleryImages, 'Product');
         document.getElementById('color-selector').style.display = 'none';
         document.getElementById('before-after-section').style.display = '';
         document.getElementById('hero-main-image').style.display = 'none';
