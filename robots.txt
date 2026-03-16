@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://vetroponics-site.pages.dev/sitemap.xml
+Sitemap: https://vetroponics.com/sitemap.xml

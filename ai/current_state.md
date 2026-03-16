@@ -3,6 +3,14 @@ Last updated: 2026-03-12
 
 ---
 
+## RECENT CHANGES (2026-03-15)
+
+### Domain Migrated to vetroponics.com
+- Replaced all instances of `https://vetroponics-site.pages.dev` with `https://vetroponics.com` across the entire project.
+- Updated files: `sitemap.xml`, `robots.txt`, `functions/api/create-checkout-session.js`, `ai/project_map.md`, `ai/project_context.md`, `ai/current_state.md`.
+
+---
+
 ## RECENT CHANGES (2026-03-14)
 
 ### sitemap.xml Updated
@@ -139,7 +147,7 @@ Last updated: 2026-03-12
 - Creates Stripe Checkout Session via REST API (Workers-native fetch, no npm packages)
 - Metadata: `cap_copper`, `cap_azure_blue`, `cap_scarlet_red`, `cap_leaf_green`, `cap_silver_ash`, `cap_selection_summary`
 - Price ID: `price_1TA1iK0Bp5FXtpozxKMw6UaL` (Custom Mix)
-- Success/cancel URL: `https://vetroponics-site.pages.dev/`
+- Success/cancel URL: `https://vetroponics.com/`
 - Secret key: `env.STRIPE_SECRET_KEY` (Cloudflare Pages dashboard env var)
 - **NOTE**: `custom_text[submit][message]` is NOT yet added — this is the pending task (see PENDING TASK section above)
 
@@ -163,7 +171,7 @@ Last updated: 2026-03-12
 
 ## DEPLOYMENT STATUS
 
-- **Live on Cloudflare Pages:** `https://vetroponics-site.pages.dev/`
+- **Live on Cloudflare Pages:** `https://vetroponics.com/`
 - **Source:** GitHub repo, auto-deploys on push
 - **Stripe env var:** `STRIPE_SECRET_KEY` set in Cloudflare Pages dashboard
 - `server.js` / `package.json` are local dev only — not used in production
@@ -528,7 +536,7 @@ Removed remaining green accent colors and replaced with warm amber/bourbon tones
 
 - Mobile layout tightened: reduced .container padding (40px -> 22px/16px at 768px/480px), section vertical spacing, .gallery outer margin/padding, .gallery-modern card padding, thumbnail sizes, .step card padding + .step-number sizing, .faq-item padding, and .final-cta margin/padding. Desktop layout unchanged.
 - Verification update: AI assistant successfully modified this file.
-- SEO audit completed: verified sitemap.xml, robots.txt, canonical URL, meta description, title, viewport, charset, and Open Graph tags. Fixed og:image URL to reference correct Cloudflare Pages domain (vetroponics-site.pages.dev).
+- SEO audit completed: verified sitemap.xml, robots.txt, canonical URL, meta description, title, viewport, charset, and Open Graph tags. Fixed og:image URL to reference correct domain (vetroponics.com).
 - Full SEO and Google Search Console audit completed. Verified sitemap.xml, robots.txt, canonical URL, meta description, title, viewport, charset, OG tags, section IDs, and image paths. Fixed missing favicon link tag (added <link rel=icon> pointing to images/favicon.png).
 - Full Cloudflare Pages deployment and Google indexing audit: sitemap.xml, robots.txt, SEO head tags, image paths, and section IDs all verified correct. Noted broken header nav anchors (#home, #catalog, #accessories, #contact) — do not affect indexing but should be updated to match actual section IDs (#hero, #gallery, #included, #about). No critical SEO fixes required.
 - Added Schema.org Product JSON-LD structured data to index.html <head> to enable Google Product Rich Results in search (name, brand, description, image, price, currency, availability).

@@ -8,7 +8,7 @@ Last updated: 2026-03-11
 Single-product ecommerce landing page for **VetROponics Systems** — a veteran-owned small business selling handmade 3D-printed hydroponic accessories.
 
 **Stack:** HTML + CSS + Vanilla JavaScript (no frameworks)
-**Deployed:** Cloudflare Pages (`https://vetroponics-site.pages.dev/`)
+**Deployed:** Cloudflare Pages (`https://vetroponics.com/`)
 **Source:** GitHub repository (auto-deploys to Cloudflare on push)
 **Payment:** Stripe (Checkout Sessions via Cloudflare Pages Function)
 
@@ -68,7 +68,7 @@ User selects Caps → selects "Custom" → custom quantity picker appears
 → POST /api/create-checkout-session { colors: ["copper","azure_blue",...] }
 → Cloudflare Function validates → creates Stripe Checkout Session
 → Returns { url } → window.location.href = url (redirect to Stripe hosted checkout)
-→ After payment: Stripe redirects to https://vetroponics-site.pages.dev/
+→ After payment: Stripe redirects to https://vetroponics.com/
 ```
 
 ### Stripe Configuration
@@ -76,7 +76,7 @@ User selects Caps → selects "Custom" → custom quantity picker appears
 - Mode: `payment` (one-time)
 - Metadata: `cap_copper`, `cap_azure_blue`, `cap_scarlet_red`, `cap_leaf_green`, `cap_silver_ash`, `cap_selection_summary`
 - Body format: `{ copper, azure_blue, scarlet_red, leaf_green, silver_ash }` (integer quantities)
-- Success/cancel URL: `https://vetroponics-site.pages.dev/`
+- Success/cancel URL: `https://vetroponics.com/`
 
 ---
 

@@ -15,8 +15,8 @@
 
 const PRICE_ID    = 'price_1TA1iK0Bp5FXtpozxKMw6UaL'; // Caps – Custom Mix
 const CAP_TOTAL   = 5;
-const SUCCESS_URL = 'https://vetroponics-site.pages.dev/';
-const CANCEL_URL  = 'https://vetroponics-site.pages.dev/';
+const SUCCESS_URL = 'https://vetroponics.com/';
+const CANCEL_URL  = 'https://vetroponics.com/';
 
 const COLOR_KEYS = ['copper', 'azure_blue', 'scarlet_red', 'leaf_green', 'silver_ash'];
 

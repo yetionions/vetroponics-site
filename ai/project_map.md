@@ -95,7 +95,7 @@ Page sections (in order):
 ## DEPLOYMENT
 
 - Deployed on **Cloudflare Pages**
-- Live URL: `https://vetroponics-site.pages.dev/`
+- Live URL: `https://vetroponics.com/`
 - Source pushed to **GitHub**, auto-deployed by Cloudflare on push
 - `STRIPE_SECRET_KEY` set as **environment variable** in Cloudflare Pages dashboard
 - `package.json` / `server.js` are for local development only — ignored by Cloudflare
