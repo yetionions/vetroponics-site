@@ -5,6 +5,14 @@ Last updated: 2026-03-12
 
 ## RECENT CHANGES (2026-03-15)
 
+### SEO Improvements Applied to index.html
+- Updated `<title>` to include product and brand keywords: "Trellis Kits & Caps for Gardyn Home Hydroponic Systems".
+- Added `<meta name="description">`, `<link rel="canonical">`, and Open Graph tags (`og:title`, `og:description`, `og:url`, `og:type`, `og:image`).
+- Improved section headings for semantic clarity: "Features" → "Hydroponic Trellis Kit Features"; "How It Works" → "How to Install Your Gardyn Home Trellis Kit"; "Product Gallery" → "Trellis Kit & Caps Product Gallery".
+- Expanded Why You Need section body copy to mention vertical hydroponic gardening, indoor growing, and climbing plants.
+- Expanded About section to explicitly mention 3D printed hydroponic accessories and Gardyn Home specialization.
+- Added 4 new FAQ items: plant types that benefit from trellis, food-safety of material, Gardyn 2.0/3.0 incompatibility, and reusability.
+
 ### Default Theme Changed to Dark Mode
 - Changed `|| 'dark'` to `|| 'light'` in `script.js` theme init.
 - Fresh visits (no saved preference) now load in dark mode (`body.light-theme` class added, which produces dark forest-green appearance per the swapped CSS palette).
