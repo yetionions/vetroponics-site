@@ -5,6 +5,11 @@ Last updated: 2026-03-12
 
 ## RECENT CHANGES (2026-03-15)
 
+### Default Theme Changed to Dark Mode
+- Changed `|| 'dark'` to `|| 'light'` in `script.js` theme init.
+- Fresh visits (no saved preference) now load in dark mode (`body.light-theme` class added, which produces dark forest-green appearance per the swapped CSS palette).
+- Toggle still works normally; saved preferences in `localStorage` are respected.
+
 ### Domain Migrated to vetroponics.com
 - Replaced all instances of `https://vetroponics-site.pages.dev` with `https://vetroponics.com` across the entire project.
 - Updated files: `sitemap.xml`, `robots.txt`, `functions/api/create-checkout-session.js`, `ai/project_map.md`, `ai/project_context.md`, `ai/current_state.md`.

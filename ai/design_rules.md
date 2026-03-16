@@ -5,7 +5,7 @@ Last updated: 2026-03-11
 
 ## THEME
 
-Default on first visit: **Light Mode** (`body.light-theme` applied unless `localStorage` key `"theme"` is `"dark"`).
+Default on first visit: **Dark Mode** (`body.light-theme` applied on first visit — this class produces the dark forest-green appearance due to palette swap).
 Dark mode available via theme toggle button in the navbar.
 Light mode available via `body.light-theme` class on `<body>`.
 

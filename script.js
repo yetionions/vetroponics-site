@@ -14,7 +14,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 // Theme toggle
 const themeToggleBtn = document.getElementById('theme-toggle');
-const savedTheme = localStorage.getItem('theme') || 'dark';
+const savedTheme = localStorage.getItem('theme') || 'light';
 if (savedTheme !== 'dark') {
     document.body.classList.add('light-theme');
     themeToggleBtn.textContent = '🌙 Dark';
