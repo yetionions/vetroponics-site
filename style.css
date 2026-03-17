@@ -901,6 +901,20 @@ section i {
     transform: translateY(-3px);
 }
 
+/* Etsy CTA button — contained glow, no pseudo-element overflow */
+#etsy-cta .buy-now-btn {
+    overflow: hidden;
+    box-shadow: 0 0 8px var(--glow-primary), 0 4px 12px rgba(0,0,0,0.1);
+}
+
+#etsy-cta .buy-now-btn::before {
+    content: none;
+}
+
+#etsy-cta .buy-now-btn:hover {
+    box-shadow: 0 0 14px var(--glow-primary), 0 6px 20px rgba(0,0,0,0.12);
+}
+
 /* Footer */
 footer {
     background: #e8e2d0;
