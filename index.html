@@ -318,5 +318,65 @@
     <div id="animation-layer"></div>
 
     <script src="script.js"></script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": "Trellis Kit – 2 Pack",
+      "description": "Includes 12 decorative trellis panels designed for the Gardyn Home hydroponic system. Fills both growing columns and provides strong vertical support for climbing plants.",
+      "image": "https://vetroponics.com/images/setof_two_trellis_product_image.png",
+      "brand": {
+        "@type": "Brand",
+        "name": "VetROponics Systems"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://vetroponics.com/",
+        "priceCurrency": "USD",
+        "price": "49.99",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock",
+        "seller": {
+          "@type": "Organization",
+          "name": "VetROponics Systems"
+        },
+        "shippingDetails": {
+          "@type": "OfferShippingDetails",
+          "shippingRate": {
+            "@type": "MonetaryAmount",
+            "value": "0",
+            "currency": "USD"
+          },
+          "shippingDestination": {
+            "@type": "DefinedRegion",
+            "addressCountry": "US"
+          },
+          "deliveryTime": {
+            "@type": "ShippingDeliveryTime",
+            "businessDays": {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"]
+            },
+            "cutoffTime": "17:00:00-06:00",
+            "handlingTime": {
+              "@type": "QuantitativeValue",
+              "minValue": 3,
+              "maxValue": 5,
+              "unitCode": "DAY"
+            }
+          }
+        },
+        "hasMerchantReturnPolicy": {
+          "@type": "MerchantReturnPolicy",
+          "applicableCountry": "US",
+          "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+          "merchantReturnDays": 7,
+          "returnMethod": "https://schema.org/ReturnByMail",
+          "returnFees": "https://schema.org/FreeReturn"
+        }
+      }
+    }
+    </script>
 </body>
 </html>
