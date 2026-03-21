@@ -1,4 +1,4 @@
-// Smooth scrolling for navigation links
+﻿// Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -190,7 +190,7 @@ function updateBuyButtonState() {
     const productVal  = document.getElementById('product-selector').value;
     const colorVal    = document.getElementById('cap-color-selector').value;
     const buyBtn      = document.querySelector('.buy-now-btn:not(.cta-shop-btn)');
-    const ready       = productVal !== 'caps' || colorVal !== '';
+    const ready       = productVal !== '' && (productVal !== 'caps' || colorVal !== '');
     buyBtn.disabled        = !ready;
     buyBtn.style.opacity   = ready ? '' : '0';
     buyBtn.style.cursor    = ready ? '' : 'not-allowed';
@@ -340,6 +340,9 @@ document.querySelector('.cta-shop-btn').addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
+// Initialize buy button state on load
+updateBuyButtonState();
+
 // Header background on scroll
 window.addEventListener('scroll', () => {
     const header = document.querySelector('header');
@@ -387,3 +390,14 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
+
+// Gallery FAB scroll
+document.addEventListener('DOMContentLoaded', function() {
+    var fab = document.getElementById('gallery-fab');
+    if (fab) {
+        fab.addEventListener('click', function() {
+            document.getElementById('gallery').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+    }
+});

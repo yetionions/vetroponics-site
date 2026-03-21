@@ -1,4 +1,4 @@
-/* Reset and base styles */
+﻿/* Reset and base styles */
 * {
     margin: 0;
     padding: 0;
@@ -108,15 +108,15 @@ nav {
 .logo img {
     height: 80px;
     width: auto;
-    border-radius: 14px;
-    background: var(--bg-card);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.15), 0 0 25px var(--glow-primary);
-    transition: transform 0.3s, box-shadow 0.3s;
+    transition: transform 0.3s;
+
+
+
 }
 
 .logo img:hover {
     transform: scale(1.05);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.18), 0 0 32px var(--glow-secondary);
+
 }
 
 .nav-links {
@@ -341,6 +341,9 @@ label[for="product-selector"] {
     color: var(--text-primary);
     box-shadow: 0 4px 16px var(--shadow);
     margin-bottom: 1.5rem;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
     transition: border-color 0.3s, box-shadow 0.3s;
 }
 
@@ -373,6 +376,7 @@ label[for="product-selector"] {
 .buy-now-btn {
     background: var(--button-primary);
     color: var(--button-text);
+    text-decoration: none;
     border: none;
     padding: 14px 34px;
     font-size: 1.2rem;
@@ -855,19 +859,58 @@ section i {
     font-weight: 600;
 }
 
+/* Combined CTA Row */
+.cta-combined {
+    margin: 6rem 0;
+}
+
+.cta-row {
+    display: flex;
+    gap: 2rem;
+    align-items: stretch;
+}
+
+.cta-card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: center;
+    padding: 4rem 2rem;
+}
+
+.cta-card .buy-now-btn {
+    margin-top: auto;
+}
+
+#etsy-cta {
+    background: #0f2218;
+    border: 1px solid rgba(114,184,118,0.10);
+    border-top: 1px solid rgba(114,184,118,0.18);
+    box-shadow: 0 12px 40px var(--shadow);
+    border-radius: 24px;
+    overflow: hidden;
+}
+
+#etsy-cta p {
+    color: var(--text-primary);
+    font-size: 3.2rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+}
+
 /* Final CTA Section */
 .final-cta {
     background: #0f2218;
     color: var(--text-primary);
     text-align: center;
     border-radius: 24px;
-    margin: 6rem 0;
     border: 1px solid rgba(114,184,118,0.10);
     border-top: 1px solid rgba(114,184,118,0.18);
     box-shadow: 0 12px 40px var(--shadow);
     position: relative;
     overflow: hidden;
-    padding: 8rem 0;
 }
 
 .final-cta::before {
@@ -911,18 +954,11 @@ section i {
     transform: translateY(-3px);
 }
 
-/* Etsy CTA button — contained glow, no pseudo-element overflow */
-#etsy-cta .buy-now-btn {
-    overflow: hidden;
-    box-shadow: 0 0 8px var(--glow-primary), 0 4px 12px rgba(0,0,0,0.1);
-}
-
-#etsy-cta .buy-now-btn::before {
-    content: none;
-}
-
-#etsy-cta .buy-now-btn:hover {
-    box-shadow: 0 0 14px var(--glow-primary), 0 6px 20px rgba(0,0,0,0.12);
+/* Combined CTA responsive */
+@media (max-width: 768px) {
+    .cta-row {
+        flex-direction: column;
+    }
 }
 
 /* Footer */
@@ -1013,6 +1049,14 @@ a {
     color: var(--glow-primary);
     text-decoration: none;
     transition: color 0.2s, text-decoration 0.2s;
+}
+
+a.buy-now-btn,
+a.buy-now-btn:visited,
+a.buy-now-btn:hover,
+a.buy-now-btn:active {
+    color: var(--button-text);
+    text-decoration: none;
 }
 a:hover {
     color: var(--accent-secondary);
@@ -1611,8 +1655,8 @@ body.light-theme header {
 }
 
 body.light-theme .logo img {
-    background: var(--bg-card);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.4), 0 0 16px rgba(127,183,126,0.3);
+
+
 }
 
 body.light-theme .nav-links a {
@@ -1795,4 +1839,27 @@ body.light-theme .footer-bottom,
 body.light-theme .footer-bottom p {
     color: #a8c8ae;
     border-top-color: #a8c8ae;
+}
+
+/* Gallery FAB */
+#gallery-fab {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: transparent;
+    color: var(--button-text);
+    border: 2px solid var(--accent-primary);
+    padding: 12px 20px;
+    border-radius: 40px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+
+    z-index: 999;
+}
+
+#gallery-fab:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3), 0 0 16px var(--glow-primary);
 }
