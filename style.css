@@ -1052,9 +1052,16 @@ a {
 }
 
 a.buy-now-btn,
-a.buy-now-btn:visited,
+a.buy-now-btn:visited {
+    display: inline-block;
+    background: var(--button-primary);
+    color: var(--button-text);
+    text-decoration: none;
+}
 a.buy-now-btn:hover,
 a.buy-now-btn:active {
+    display: inline-block;
+    background: var(--button-primary-hover);
     color: var(--button-text);
     text-decoration: none;
 }
