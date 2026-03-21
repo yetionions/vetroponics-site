@@ -1564,7 +1564,7 @@ a:hover {
     gap: 0.4rem;
 }
 
-.qty-btn {
+ qty-btn {
     width: 26px;
     height: 26px;
     border-radius: 50%;
@@ -1582,18 +1582,18 @@ a:hover {
     transition: border-color 0.15s, background 0.15s, color 0.15s;
 }
 
-.qty-btn:hover:not(:disabled) {
+ qty-btn:hover:not(:disabled) {
     border-color: var(--accent-primary);
     background: var(--accent-primary);
     color: #0e1a12;
 }
 
-.qty-btn:disabled {
+ qty-btn:disabled {
     opacity: 0.3;
     cursor: not-allowed;
 }
 
-.qty-number {
+ qty-number {
     font-size: 1rem;
     font-weight: 700;
     color: var(--text-primary);
@@ -1801,8 +1801,12 @@ body.light-theme .final-cta {
 }
 
 body.light-theme .final-cta h2,
+body.light-theme #etsy-cta p {
+    color: #b6ff6c;
+}
+
 body.light-theme .final-cta p {
-    color: var(--text-primary);
+    color: var(--text-secondary);
 }
 
 body.light-theme .final-cta .price {
@@ -1853,7 +1857,7 @@ body.light-theme .footer-bottom p {
     position: fixed;
     bottom: 2rem;
     right: 2rem;
-    background: transparent;
+    background: var(--bg-secondary);
     color: var(--button-text);
     border: 2px solid var(--accent-primary);
     padding: 12px 20px;
@@ -1869,4 +1873,8 @@ body.light-theme .footer-bottom p {
 #gallery-fab:hover {
     transform: translateY(-3px);
     box-shadow: 0 8px 24px rgba(0,0,0,0.3), 0 0 16px var(--glow-primary);
+}
+
+body:not(.light-theme) #gallery-fab {
+    color: #1a2e22;
 }
